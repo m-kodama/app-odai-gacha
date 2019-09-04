@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>お題ガチャ</title>
-  <script src="anime.min.js"></script>
+  <script src="js/lib/anime.min.js"></script>
   <script>
     // お題データ
     const odai = {
@@ -61,7 +61,7 @@
     const startGacha = () => {
       document.getElementById('touch-eater').style.display = 'block'
       isPicking = false
-      const gacha = document.getElementById('gacha-red')
+      const gacha = document.getElementById('gacha-body')
       const timeline = anime.timeline()
       timeline
       .add({
@@ -83,20 +83,20 @@
         duration: 450,
         easing: 'easeOutSine',
         complete: () => {
-          popCapsule()
+          popEgg()
         }
       })
     }
     // カプセル排出
-    const popCapsule = () => {
-      const gacha = document.getElementById('gacha-red')
-      let capsules = document.getElementsByClassName('capsule')
-      capsule = capsules[getRandomInt(7) % 4]
-      capsule.style.visibility = 'visible'
+    const popEgg = () => {
+      const gacha = document.getElementById('gacha-body')
+      let eggs = document.getElementsByClassName('egg')
+      egg = eggs[getRandomInt(7) % 4]
+      egg.style.visibility = 'visible'
       const timeline = anime.timeline()
       timeline
       .add({
-        targets: capsule,
+        targets: egg,
         translateY: gacha.height * 0.2,
         rotate: 70,
         duration: 1000,
@@ -109,7 +109,7 @@
         easing: 'easeOutSine'
       }, 750)
       .add({
-        targets: capsule,
+        targets: egg,
         translateY: -1 * gacha.clientHeight * 0.5,
         rotate: 20,
         duration: 800,
@@ -174,10 +174,10 @@
       odaiView.style.opacity = 0
       odaiView.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)'
       odaiView.style.display = 'none'
-      let capsules = document.getElementsByClassName('capsule')
-      for (capsule of capsules) {
-        capsule.style.visibility = 'hidden'
-        capsule.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)'
+      let eggs = document.getElementsByClassName('egg')
+      for (egg of eggs) {
+        egg.style.visibility = 'hidden'
+        egg.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)'
       }
     }
 
@@ -185,7 +185,7 @@
     const init = () => {
       // サイズ調整
       const stage = document.getElementById('stage')
-      const gacha = document.getElementById('gacha-red')
+      const gacha = document.getElementById('gacha-body')
       const widthRate = (stage.clientWidth * 0.85) / gacha.width
       const heightRate = (stage.clientHeight * 0.85) / gacha.height
       const imgScale = widthRate > heightRate ? heightRate : widthRate
@@ -195,30 +195,24 @@
       }
 
       // 初期配置
-      const coinslotBack = document.getElementById('coinslot-back')
-      const coinslotFront = document.getElementById('coinslot-front')
       const handle = document.getElementById('handle')
-      const capsuleLose = document.getElementById('capsule-lose')
-      const capsuleSilver = document.getElementById('capsule-sliver')
-      const capsuleGold = document.getElementById('capsule-gold')
-      const capsuleRainbow = document.getElementById('capsule-rainbow')
+      const eggNormal = document.getElementById('egg-normal')
+      const eggSilver = document.getElementById('egg-sliver')
+      const eggGold = document.getElementById('egg-gold')
+      const eggPlatinum = document.getElementById('egg-platinum')
       // left
       gacha.style.left = calcCenteringLeftParam(gacha, stage) + 'px'
-      coinslotBack.style.left = calcCenteringLeftParam(coinslotBack, gacha) + 'px'
-      coinslotFront.style.left = calcCenteringLeftParam(coinslotFront, gacha) + 'px'
       handle.style.left = calcCenteringLeftParam(handle, gacha) + 'px'
-      capsuleLose.style.left = calcCenteringLeftParam(capsuleLose, gacha) + 6 + 'px'
-      capsuleSilver.style.left = capsuleLose.style.left
-      capsuleGold.style.left = capsuleLose.style.left
-      capsuleRainbow.style.left = capsuleLose.style.left
+      eggNormal.style.left = calcCenteringLeftParam(eggNormal, gacha) + 6 + 'px'
+      eggSilver.style.left = eggNormal.style.left
+      eggGold.style.left = eggNormal.style.left
+      eggPlatinum.style.left = eggNormal.style.left
       // top
-      coinslotBack.style.top = gacha.clientHeight * 0.61 + 'px'
-      coinslotFront.style.top = coinslotBack.style.top
       handle.style.top = gacha.clientHeight * 0.67 + 'px'
-      capsuleLose.style.top = gacha.clientHeight * 0.83 + 'px'
-      capsuleSilver.style.top = capsuleLose.style.top
-      capsuleGold.style.top = capsuleLose.style.top
-      capsuleRainbow.style.top = capsuleLose.style.top
+      eggNormal.style.top = gacha.clientHeight * 0.83 + 'px'
+      eggSilver.style.top = eggNormal.style.top
+      eggGold.style.top = eggNormal.style.top
+      eggPlatinum.style.top = eggNormal.style.top
 
       // イベント設定
       handle.addEventListener('mousedown', onHandleMouseDown, false)
@@ -266,7 +260,7 @@
         -webkit-user-select: none;
         user-select: none;
     }
-    img.capsule {
+    img.egg {
       visibility:hidden;
     }
     #touch-eater {
@@ -369,14 +363,12 @@
   </div>
   <div id="stage">
       <div id="touch-eater"></div>
-      <img src="img/gacha_body.png" alt="" id="gacha-red" class="gacha" draggable="false">
-      <img src="coinslot-back.png" alt="" id="coinslot-back" class="gacha" draggable="false">
-      <img src="coinslot-front.png" alt="" id="coinslot-front" class="gacha" draggable="false">
+      <img src="img/gacha_body.png" alt="" id="gacha-body" class="gacha" draggable="false">
       <img src="img/gacha_handle.png" alt="" id="handle" class="gacha" draggable="false">
-      <img src="capsule-lose.png" alt="" id="capsule-lose" class="capsule" draggable="false">
-      <img src="capsule-sliver.png" alt="" id="capsule-sliver" class="capsule" draggable="false">
-      <img src="capsule-gold.png" alt="" id="capsule-gold" class="capsule" draggable="false">
-      <img src="capsule-rainbow.png" alt="" id="capsule-rainbow" class="capsule" draggable="false">
+      <img src="img/egg_normal.png" alt="" id="egg-normal" class="egg" draggable="false">
+      <img src="img/egg_silver.png" alt="" id="egg-sliver" class="egg" draggable="false">
+      <img src="img/egg_gold.png" alt="" id="egg-gold" class="egg" draggable="false">
+      <img src="img/egg_platinum.png" alt="" id="egg-platinum" class="egg" draggable="false">
       <div id="odai">
         <div id="odai-text"></div>
         <button id="close-btn">閉じる</button>

@@ -97,7 +97,7 @@
       timeline
       .add({
         targets: egg,
-        translateY: gacha.height * 0.2,
+        translateY: 2 * gacha.height * 0.2,
         rotate: 70,
         duration: 1000,
       })
@@ -106,18 +106,11 @@
         scale: 1,
         translateY: 0,
         duration: 300,
-        easing: 'easeOutSine'
-      }, 750)
-      .add({
-        targets: egg,
-        translateY: -1 * gacha.clientHeight * 0.5,
-        rotate: 20,
-        duration: 800,
         easing: 'easeOutSine',
         complete: () => {
           showOdai()
         }
-      }, 800)
+      }, 750)
     }
     // お題表示
     const showOdai = () => {
@@ -203,13 +196,13 @@
       // left
       gacha.style.right =  0 + 'px'
       handle.style.right = 275 + 'px'
-      eggNormal.style.left = calcCenteringLeftParam(eggNormal, gacha) + 6 + 'px'
-      eggSilver.style.left = eggNormal.style.left
-      eggGold.style.left = eggNormal.style.left
-      eggPlatinum.style.left = eggNormal.style.left
+      eggNormal.style.right = calcCenteringLeftParam(eggNormal, gacha) + 350 + 'px'
+      eggSilver.style.right = eggNormal.style.right
+      eggGold.style.right = eggNormal.style.right
+      eggPlatinum.style.right = eggNormal.style.right
       // top
       handle.style.top = gacha.clientHeight * 0.2 + 'px'
-      eggNormal.style.top = gacha.clientHeight * 0.83 + 'px'
+      eggNormal.style.top = gacha.clientHeight * 0.55 + 'px'
       eggSilver.style.top = eggNormal.style.top
       eggGold.style.top = eggNormal.style.top
       eggPlatinum.style.top = eggNormal.style.top

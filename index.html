@@ -98,14 +98,36 @@
       timeline
       .add({
         targets: egg,
-        translateY: 2 * gacha.height * 0.2,
+        translateY: 1 * gacha.height * 0.2,
+        translateX: -0.5 * gacha.height * 0.2,
         rotate: 70,
         duration: 1000,
       })
       .add({
         targets: egg,
-        translateY: 1,
-        translateX: -2 * gacha.height * 0.3,
+        translateY: -0.5 * gacha.height * 0.2,
+        translateX: -1 * gacha.height * 0.3,
+        rotate: 70,
+        duration: 1000,
+      })
+      .add({
+        targets: egg,
+        translateY: 1 * gacha.height * 0.2,
+        translateX: -1.5 * gacha.height * 0.3,
+        rotate: 70,
+        duration: 1000,
+      })
+      .add({
+        targets: egg,
+        translateY: -0.5 * gacha.height * 0.2,
+        translateX: -2.0 * gacha.height * 0.3,
+        rotate: 70,
+        duration: 1000,
+      })
+      .add({
+        targets: egg,
+        translateY: 1 * gacha.height * 0.2,
+        translateX: -2.5 * gacha.height * 0.3,
         rotate: 70,
         duration: 1000,
       })
@@ -115,9 +137,6 @@
         translateY: 0,
         duration: 300,
         easing: 'easeOutSine',
-        // complete: () => {
-        //   showOdai()
-        // }
       }, 750)
       .add({
         targets: '#stage',
@@ -125,9 +144,6 @@
         translateY: 0,
         duration: 300,
         easing: 'easeOutSine',
-        complete: () => {
-          showOdai()
-        }
       }, 750)
       .add({
         targets: '#stage',

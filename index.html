@@ -202,13 +202,13 @@
       const eggPlatinum = document.getElementById('egg-platinum')
       // left
       gacha.style.left = calcCenteringLeftParam(gacha, stage) + 'px'
-      handle.style.left = calcCenteringLeftParam(handle, gacha) + 'px'
+      handle.style.left = calcCenteringLeftParam(handle, gacha) - 31 + 'px'
       eggNormal.style.left = calcCenteringLeftParam(eggNormal, gacha) + 6 + 'px'
       eggSilver.style.left = eggNormal.style.left
       eggGold.style.left = eggNormal.style.left
       eggPlatinum.style.left = eggNormal.style.left
       // top
-      handle.style.top = gacha.clientHeight * 0.67 + 'px'
+      handle.style.top = gacha.clientHeight * 0.49 + 'px'
       eggNormal.style.top = gacha.clientHeight * 0.83 + 'px'
       eggSilver.style.top = eggNormal.style.top
       eggGold.style.top = eggNormal.style.top

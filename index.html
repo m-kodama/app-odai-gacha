@@ -66,8 +66,9 @@
       timeline
       .add({
         targets: '#handle',
-        rotate: 360,
+        rotate: 0,
         duration: 1500,
+        easing: 'spring(2, 100, 10, 30)'
       })
       .add({
         targets: '.gacha',
@@ -171,8 +172,8 @@
       else if (diffDeg > 180) diffDeg -=360
       rotate += diffDeg
       preDeg = clacDeg(e, handleCenter)
-      if (rotate < 0) return
-      if (rotate <= 95) {
+      if (rotate > 0) return
+      if (rotate >= -35) {
         const handle = document.getElementById('handle')
         handle.style.transform = `rotate(${rotate}deg)`
         return
@@ -378,7 +379,7 @@
   <div class="cp_ipselect cp_sl01">
       <select required onchange="onSelectBoxChange(this)">
         <option value="question" selected>シンクロナイズド・シンキング</option>
-        <option value="denpo">デンポー</option>
+        <option value="denpo">デンポ</option>
       </select>
   </div>
   <div id="stage">

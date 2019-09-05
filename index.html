@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>お題ガチャ</title>
+  <script src="js/lib/anime.min.js"></script>
+  <script>
+    // お題データ
+    const odai = {
+      question: [
+        "好きな映画", "苦手な食べ物", "好きな飲み物"
+      ],
+      denpo: [
+        "ハリー・ポッター", "プログラマー", "ドラえもん", "遊園地"
+      ]
+    }
+    let odaiType = 'question'
+
+    // ハンドルを掴んでいるか否か
+    let isPicking = false
+    // ハンドルの中点座標
+    const handleCenter = {x:0, y:0}
+    // 1つ前のmousemoveイベント座標
+    let preDeg = 0
+    // ハンドルの回転角
+    let rotate = 0
+
+    // 0からmax-1までの範囲でランダムな数値を生成
+    const getRandomInt = (max) => {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+    // 左右中央揃えになるleft値を返す
+    const calcCenteringLeftParam = (element, targetElement) => {
+      const targetLeft = Number(targetElement.style.left.replace('px', ''))
+      return (targetElement.clientWidth - element.clientWidth) / 2 + targetLeft
+    }
+    // 角度を計算する
+    const clacDeg = (pos, center) => {
+      const base = pos.x - center.x
+      const height = pos.y - center.y
+      const hypotenuse = Math.sqrt(base * base + height * height)
+      const rad = Math.acos(base / hypotenuse)
+      let deg = rad / Math.PI * 180
+      if (height < 0) deg *= -1
+      return deg
+    }
+
+    // 元の角度にアニメーション付きで戻す
+    const resetHandleRotate = () => {
+      isPicking = false
+      rotate = 0
+      anime({
+        targets: '#handle',
+        rotate: 0,
+        duration: 500,
+      })
+    }
+    // ガチャを回す
+    const startGacha = () => {
+      document.getElementById('touch-eater').style.display = 'block'
+      isPicking = false
+      const gacha = document.getElementById('gacha-body')
+      const timeline = anime.timeline()
+      timeline
+      .add({
+        targets: '#handle',
+        rotate: 0,
+        duration: 1500,
+        easing: 'spring(2, 100, 10, 30)'
+      })
+      .add({
+        targets: '.gacha',
+        translateX: [10,-7,6,-9,4,-10,10,-8,0],
+        translateY: [3,2,-1,-2,0,-3,3,-2,0],
+        duration: 750,
+        easing: 'easeInOutCirc',
+      })
+      .add({
+        targets: '#stage',
+        scale: 1.3,
+        translateY: -1 * gacha.height * 0.2,
+        duration: 450,
+        easing: 'easeOutSine',
+        complete: () => {
+          popEgg()
+        }
+      })
+    }
+    // カプセル排出
+    const popEgg = () => {
+      const gacha = document.getElementById('gacha-body')
+      let eggs = document.getElementsByClassName('egg')
+      egg = eggs[getRandomInt(7) % 4]
+      egg.style.visibility = 'visible'
+      const timeline = anime.timeline()
+      timeline
+      .add({
+        targets: egg,
+        translateY: gacha.height * 0.2,
+        rotate: 70,
+        duration: 1000,
+      })
+      .add({
+        targets: '#stage',
+        scale: 1,
+        translateY: 0,
+        duration: 300,
+        easing: 'easeOutSine'
+      }, 750)
+      .add({
+        targets: egg,
+        translateY: -1 * gacha.clientHeight * 0.5,
+        rotate: 20,
+        duration: 800,
+        easing: 'easeOutSine',
+        complete: () => {
+          showOdai()
+        }
+      }, 800)
+    }
+    // お題表示
+    const showOdai = () => {
+      document.getElementById('odai-text').innerText = odai[odaiType][getRandomInt(odai[odaiType].length)]
+      document.getElementById('odai').style.display = 'block'
+      anime({
+        targets: '#odai',
+        opacity: 1,
+        translateY: -40,
+        duration: 1500,
+        complete: () => {
+          document.getElementById('close-btn').style.pointerEvents = 'auto'
+        }
+      })
+    }
+
+    // マウスイベント
+    const onHandleMouseDown = (e) => {
+      const handle = e.target
+      isPicking = true
+      handleCenter.x = handle.width / 2 + handle.x
+      handleCenter.y = handle.height / 2 + handle.y
+      preDeg = clacDeg(e, handleCenter)
+    }
+    const onStageMouseMove = (e) => {
+      if (!isPicking) return
+      // 角度を求める
+      let deg = clacDeg(e, handleCenter)
+      let diffDeg = deg - preDeg
+      if (diffDeg < -180) diffDeg += 360
+      else if (diffDeg > 180) diffDeg -=360
+      rotate += diffDeg
+      preDeg = clacDeg(e, handleCenter)
+      if (rotate > 0) return
+      if (rotate >= -35) {
+        const handle = document.getElementById('handle')
+        handle.style.transform = `rotate(${rotate}deg)`
+        return
+      }
+      startGacha()
+    }
+    const onStageMouseUp = (e) => {
+      if (!isPicking) return
+      preDeg = 0
+      resetHandleRotate()
+    }
+
+    const onClickCloseBtn = () => {
+      document.getElementById('touch-eater').style.display = 'none'
+      document.getElementById('close-btn').style.pointerEvents = 'none'
+      document.getElementById('handle').style.transform = 'rotate(0deg)'
+      rotate = 0
+      const odaiView = document.getElementById('odai')
+      odaiView.style.opacity = 0
+      odaiView.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)'
+      odaiView.style.display = 'none'
+      let eggs = document.getElementsByClassName('egg')
+      for (egg of eggs) {
+        egg.style.visibility = 'hidden'
+        egg.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)'
+      }
+    }
+
+    // 初期化
+    const init = () => {
+      // サイズ調整
+      const stage = document.getElementById('stage')
+      const gacha = document.getElementById('gacha-body')
+      const widthRate = (stage.clientWidth * 0.85) / gacha.width
+      const heightRate = (stage.clientHeight * 0.85) / gacha.height
+      const imgScale = widthRate > heightRate ? heightRate : widthRate
+      const imgs = document.getElementsByTagName('img')
+      for(let img of imgs) {
+        img.width *= imgScale
+      }
+
+      // 初期配置
+      const handle = document.getElementById('handle')
+      const eggNormal = document.getElementById('egg-normal')
+      const eggSilver = document.getElementById('egg-sliver')
+      const eggGold = document.getElementById('egg-gold')
+      const eggPlatinum = document.getElementById('egg-platinum')
+      // left
+      gacha.style.right =  0 + 'px'
+      handle.style.right = 375 + 'px'
+      eggNormal.style.left = calcCenteringLeftParam(eggNormal, gacha) + 6 + 'px'
+      eggSilver.style.left = eggNormal.style.left
+      eggGold.style.left = eggNormal.style.left
+      eggPlatinum.style.left = eggNormal.style.left
+      // top
+      handle.style.top = gacha.clientHeight * 0.2 + 'px'
+      eggNormal.style.top = gacha.clientHeight * 0.83 + 'px'
+      eggSilver.style.top = eggNormal.style.top
+      eggGold.style.top = eggNormal.style.top
+      eggPlatinum.style.top = eggNormal.style.top
+
+      // イベント設定
+      handle.addEventListener('mousedown', onHandleMouseDown, false)
+      stage.addEventListener('mouseup', onStageMouseUp, false)
+      stage.addEventListener('mousemove', onStageMouseMove, false)
+
+      // お題
+      const odaiView = document.getElementById('odai')
+      const odaiText = document.getElementById('odai-text')
+      const closeBtn = document.getElementById('close-btn')
+      odaiView.style.height =  gacha.clientHeight * 0.3 + 'px'
+      odaiText.style.lineHeight = odaiView.style.height
+      odaiView.style.left = calcCenteringLeftParam(odaiView, stage) + 'px'
+      odaiView.style.top = gacha.clientHeight * 0.25 + 'px'
+      closeBtn.style.height = gacha.clientHeight * 0.05 + 'px'
+      closeBtn.style.top = -1 * gacha.clientHeight * 0.05 - 8 + 'px'
+      closeBtn.addEventListener('click', onClickCloseBtn, false)
+      odaiView.style.display = 'none'
+    }
+    window.onload = init
+
+    const onSelectBoxChange = (e) => {
+      var idx = e.selectedIndex;
+      odaiType = e.options[idx].value;
+    }
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(#fefefe, #777777);
+      height: 100vh;
+    }
+    #stage {
+      position: relative;
+      top: -35px;
+      z-index: 100;
+      margin: 0 auto;
+      width: 100%;
+      height: 100vh;
+    }
+    img {
+      position: absolute;
+      -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    img.egg {
+      visibility:hidden;
+    }
+    #touch-eater {
+      display: none;
+      position: absolute;
+      z-index: 99;
+      width: 100%;
+      height: 100%;
+    }
+    #odai {
+      opacity: 0;
+      width: 90%;
+      position: absolute;
+      z-index: 100;
+      border-radius: 8px;
+      color: #333;
+      background-color: #ffffff;
+      box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
+      border: solid 16px #0054a6;
+      text-align: center;
+    }
+    #odai-text {
+      font-size: 48px;
+      font-weight: bold;
+      background: -webkit-linear-gradient(#3498db 0%, #9b59b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #close-btn {
+      width: 30%;
+      position: relative;
+      padding: 0.8em;
+      color: #1B1B1B;
+      background: #fff;
+      border:1px solid #fff;
+      transition: all  0.3s ease;
+      pointer-events: none;
+    }
+    #close-btn:hover {
+      background: #F2F2F2;
+      cursor: pointer;
+    }
+/* 以下コピペ （お題選択のセレクトボックス）*/
+  .cp_ipselect {
+    width: 200px;
+    height: 33px;
+  }
+  .cp_ipselect select {
+    width: 100%;
+    padding-right: 1em;
+    cursor: pointer;
+    text-indent: 0.01px;
+    text-overflow: ellipsis;
+    border: none;
+    outline: none;
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .cp_ipselect select::-ms-expand {
+    display: none;
+  }
+  .cp_ipselect.cp_sl01 {
+    position: relative;
+      top: 16px;
+      left: 16px;
+      z-index: 101;
+    border: 1px solid #bbbbbb;
+    border-radius: 2px;
+    background: #ffffff;
+  }
+  .cp_ipselect.cp_sl01::before {
+    position: absolute;
+    top: 0.8em;
+    right: 0.9em;
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #666666;
+    pointer-events: none;
+  }
+  .cp_ipselect.cp_sl01 select {
+    padding: 8px 38px 8px 8px;
+    color: #666666;
+  }
+  </style>
+
+</head>
+<body>
+  <div class="cp_ipselect cp_sl01">
+      <select required onchange="onSelectBoxChange(this)">
+        <option value="question" selected>シンクロナイズド・シンキング</option>
+        <option value="denpo">デンポ</option>
+      </select>
+  </div>
+  <div id="stage">
+      <div id="touch-eater"></div>
+      <img src="img/gacha_body.png" alt="" id="gacha-body" class="gacha" draggable="false">
+      <img src="img/gacha_handle.png" alt="" id="handle" class="gacha" draggable="false">
+      <img src="img/egg_normal.png" alt="" id="egg-normal" class="egg" draggable="false">
+      <img src="img/egg_silver.png" alt="" id="egg-sliver" class="egg" draggable="false">
+      <img src="img/egg_gold.png" alt="" id="egg-gold" class="egg" draggable="false">
+      <img src="img/egg_platinum.png" alt="" id="egg-platinum" class="egg" draggable="false">
+      <div id="odai">
+        <div id="odai-text"></div>
+        <button id="close-btn">閉じる</button>
+      </div>
+  </div>
+</body>
+</html>

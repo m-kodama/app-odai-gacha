@@ -67,7 +67,7 @@
       .add({
         targets: '#handle',
         rotate: 0,
-        duration: 1500,
+        duration: 750,
         easing: 'spring(2, 100, 10, 30)'
       })
       .add({
@@ -79,8 +79,8 @@
       })
       .add({
         targets: '#stage',
-        scale: 1,
-        translateY: 0,
+        scale: 1.3,
+        translateX: 150,
         duration: 450,
         easing: 'easeOutSine',
         complete: () => {
@@ -98,44 +98,27 @@
       timeline
       .add({
         targets: egg,
-        translateY: 1 * gacha.height * 0.2,
-        translateX: -0.5 * gacha.height * 0.2,
-        rotate: 70,
-        duration: 1000,
-      })
-      .add({
-        targets: egg,
-        translateY: -0.6* gacha.height * 0.2,
-        translateX: -1 * gacha.height * 0.3,
-        rotate: 70,
-        duration: 1000,
-      })
-      .add({
-        targets: egg,
-        translateY: 1.3 * gacha.height * 0.2,
-        translateX: -1.5 * gacha.height * 0.3,
-        rotate: 70,
-        duration: 1000,
-      })
-      .add({
-        targets: egg,
-        translateY: -0.2 * gacha.height * 0.2,
-        translateX: -2.0 * gacha.height * 0.3,
-        rotate: 70,
-        duration: 1000,
-      })
-      .add({
-        targets: egg,
-        translateY: 1.5 * gacha.height * 0.2,
-        translateX: -2.5 * gacha.height * 0.3,
-        rotate: 70,
-        duration: 1000,
+        translateX: {
+          value: -350,
+          duration: 1200,
+          easing: 'easeOutSine',
+        },
+        translateY: {
+          value: 400,
+          duration: 1000,
+          easing: 'easeOutBounce',
+        },
+        rotate: {
+          value: -360,
+          duration: 1200,
+          easing: 'easeOutSine',
+        }
       })
       .add({
         targets: '#stage',
         scale: 1,
-        translateY: 0,
-        duration: 300,
+        translateX: 0,
+        duration: 250,
         easing: 'easeOutSine',
         complete: () => {
           showOdai()
@@ -226,13 +209,13 @@
       // left
       gacha.style.right =  0 + 'px'
       handle.style.right = 275 + 'px'
-      eggNormal.style.right = calcCenteringLeftParam(eggNormal, gacha) + 350 + 'px'
+      eggNormal.style.right = calcCenteringLeftParam(eggNormal, gacha) + 400 + 'px'
       eggSilver.style.right = eggNormal.style.right
       eggGold.style.right = eggNormal.style.right
       eggPlatinum.style.right = eggNormal.style.right
       // top
       handle.style.top = gacha.clientHeight * 0.2 + 'px'
-      eggNormal.style.top = gacha.clientHeight * 0.55 + 'px'
+      eggNormal.style.top = gacha.clientHeight * 0.35 + 'px'
       eggSilver.style.top = eggNormal.style.top
       eggGold.style.top = eggNormal.style.top
       eggPlatinum.style.top = eggNormal.style.top

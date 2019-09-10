@@ -1,8 +1,13 @@
+html{
+  overscroll-behavior: none;
+}
+
 body {
   margin: 0;
   background: linear-gradient(#fefefe, #777777);
   height: 100vh;
   overscroll-behavior: none;
+  overflow: hidden;
 }
 #stage {
   touch-action: none;

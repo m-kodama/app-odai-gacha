@@ -67,7 +67,7 @@ const startGacha = () => {
   .add({
     targets: '#stage',
     scale: 1.3,
-    translateX: 150,
+    translateX: gacha.clientWidth * 0.06,
     duration: 450,
     easing: 'easeOutSine',
     complete: () => {
@@ -86,12 +86,12 @@ const popEgg = () => {
   .add({
     targets: egg,
     translateX: {
-      value: -350,
+      value: gacha.clientWidth * -0.3 ,
       duration: 1200,
       easing: 'easeOutSine',
     },
     translateY: {
-      value: 400,
+      value: gacha.clientHeight * 0.44,
       duration: 1000,
       easing: 'easeOutBounce',
     },
@@ -196,9 +196,9 @@ const init = () => {
   const eggGold = document.getElementById('egg-gold')
   const eggPlatinum = document.getElementById('egg-platinum')
   // left
-  gacha.style.right =  0 + 'px'
-  handle.style.right = gacha.clientWidth * 0.40 + 'px'
-  eggNormal.style.right = calcCenteringLeftParam(eggNormal, gacha) + 400 + 'px'
+  gacha.style.right = gacha.clientWidth * -0.30 + 'px'
+  handle.style.right = gacha.clientWidth * 0.1 + 'px'
+  eggNormal.style.right = gacha.clientWidth * 0.6 + 'px'
   eggSilver.style.right = eggNormal.style.right
   eggGold.style.right = eggNormal.style.right
   eggPlatinum.style.right = eggNormal.style.right

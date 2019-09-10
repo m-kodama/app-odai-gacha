@@ -129,14 +129,12 @@ const showOdai = () => {
 // マウスイベント
 const onHandleMouseDown = (e) => {
   const handle = e.target || e.targetTouches[0].target
-  console.log(handle)
   isPicking = true
   handleCenter.x = handle.width / 2 + handle.x
   handleCenter.y = handle.height / 2 + handle.y
   preDeg = clacDeg(e, handleCenter)
 }
 const onStageMouseMove = (e) => {
-  console.log(e.x)
   if (!isPicking) return
   // 角度を求める
   let deg = clacDeg(e, handleCenter)

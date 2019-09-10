@@ -53,23 +53,15 @@ const startGacha = () => {
   timeline
   .add({
     targets: '#handle',
+    rotate: 360,
+    duration: 1000,
+    easing: 'easeOutBounce'
+  })
+  .add({
+    targets: '#handle',
     rotate: 0,
-    duration: 750,
-    easing: 'spring(2, 100, 10, 30)'
-  })
-  .add({
-    targets: '.gacha',
-    translateX: [10,-7,6,-9,4,-10,10,-8,0],
-    translateY: [3,2,-1,-2,0,-3,3,-2,0],
-    duration: 750,
-    easing: 'easeInOutCirc',
-  })
-  .add({
-    targets: '#stage',
-    scale: 1.3,
-    translateX: gacha.clientWidth * 0.06,
     duration: 450,
-    easing: 'easeOutSine',
+    easing: 'easeOutBounce',
     complete: () => {
       popEgg()
     }
@@ -84,9 +76,16 @@ const popEgg = () => {
   const timeline = anime.timeline()
   timeline
   .add({
+    targets: '#stage',
+    scale: 1.4,
+    translateX: gacha.clientWidth * 0.4,
+    duration: 450,
+    easing: 'easeOutSine',
+  })
+  .add({
     targets: egg,
     translateX: {
-      value: gacha.clientWidth * -0.3 ,
+      value: gacha.clientWidth * -0.8,
       duration: 1200,
       easing: 'easeOutSine',
     },
@@ -100,7 +99,7 @@ const popEgg = () => {
       duration: 1200,
       easing: 'easeOutSine',
     }
-  })
+  }, -450)
   .add({
     targets: '#stage',
     scale: 1,
@@ -110,7 +109,7 @@ const popEgg = () => {
     complete: () => {
       showOdai()
     }
-  })
+  },1000)
 }
 // お題表示
 const showOdai = () => {
@@ -198,7 +197,7 @@ const init = () => {
   // left
   gacha.style.right = gacha.clientWidth * -0.30 + 'px'
   handle.style.right = gacha.clientWidth * 0.1 + 'px'
-  eggNormal.style.right = gacha.clientWidth * 0.6 + 'px'
+  eggNormal.style.right = gacha.clientWidth * 0.4 + 'px'
   eggSilver.style.right = eggNormal.style.right
   eggGold.style.right = eggNormal.style.right
   eggPlatinum.style.right = eggNormal.style.right

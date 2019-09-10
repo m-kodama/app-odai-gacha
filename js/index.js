@@ -129,13 +129,15 @@ const showOdai = () => {
 
 // マウスイベント
 const onHandleMouseDown = (e) => {
-  const handle = e.target
+  const handle = e.target || e.targetTouches[0].target
+  console.log(handle)
   isPicking = true
   handleCenter.x = handle.width / 2 + handle.x
   handleCenter.y = handle.height / 2 + handle.y
   preDeg = clacDeg(e, handleCenter)
 }
 const onStageMouseMove = (e) => {
+  console.log(e.x)
   if (!isPicking) return
   // 角度を求める
   let deg = clacDeg(e, handleCenter)
@@ -195,7 +197,7 @@ const init = () => {
   const eggPlatinum = document.getElementById('egg-platinum')
   // left
   gacha.style.right =  0 + 'px'
-  handle.style.right = 332 + 'px'
+  handle.style.right = gacha.clientWidth * 0.40 + 'px'
   eggNormal.style.right = calcCenteringLeftParam(eggNormal, gacha) + 400 + 'px'
   eggSilver.style.right = eggNormal.style.right
   eggGold.style.right = eggNormal.style.right
@@ -208,9 +210,9 @@ const init = () => {
   eggPlatinum.style.top = eggNormal.style.top
 
   // イベント設定
-  handle.addEventListener('mousedown', onHandleMouseDown, false)
-  stage.addEventListener('mouseup', onStageMouseUp, false)
-  stage.addEventListener('mousemove', onStageMouseMove, false)
+  handle.addEventListener('pointerdown', onHandleMouseDown, false)
+  stage.addEventListener('pointerup', onStageMouseUp, false)
+  stage.addEventListener('pointermove', onStageMouseMove, false)
 
   // お題
   const odaiView = document.getElementById('odai')

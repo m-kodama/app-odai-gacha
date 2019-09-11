@@ -1,0 +1,5 @@
+class ImageElement {
+    constructor() {
+        
+    }
+}

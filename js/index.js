@@ -83,8 +83,15 @@ const calcCenteringLeftParam = (element, targetElement) => {
 // ガチャを回す
 const startGacha = () => {
   document.getElementById('touch-eater').style.display = 'block';
+  const gacha = document.getElementById('gacha-body');
+  const odai = GACHA.getOdai();
+  const eggs = document.getElementsByClassName('egg');
+  egg = eggs[odai.rarity];
+
+  // アニメーション開始
   const timeline = anime.timeline();
   timeline
+    // ハンドルのアニメーション
     .add({
       targets: '#handle',
       rotate: 360,
@@ -96,20 +103,13 @@ const startGacha = () => {
       rotate: 0,
       duration: 450,
       easing: 'easeOutBounce',
-      complete: () => {
-        popEgg();
+      update: (anim) => {
+        if (anim.progress > 50 && anim.progress < 60) {
+          egg.style.visibility = 'visible';
+        }
       }
-    });
-};
-// カプセル排出
-const popEgg = () => {
-  const gacha = document.getElementById('gacha-body');
-  const odai = GACHA.getOdai();
-  const eggs = document.getElementsByClassName('egg');
-  egg = eggs[odai.rarity];
-  egg.style.visibility = 'visible';
-  const timeline = anime.timeline();
-  timeline
+    })
+    // カプセル排出アニメーション
     .add({
       targets: '#stage',
       scale: 1.4,
@@ -117,9 +117,9 @@ const popEgg = () => {
       duration: 450,
       easing: 'easeOutSine'
     })
-    .add(
-      {
+    .add({
         targets: egg,
+        delay: -1 * (450 * 0.5 + 450),
         translateX: {
           value: gacha.clientWidth * -0.8,
           duration: 1200,
@@ -135,22 +135,18 @@ const popEgg = () => {
           duration: 1200,
           easing: 'easeOutSine'
         }
-      },
-      -450
-    )
-    .add(
-      {
-        targets: '#stage',
-        scale: 1,
-        translateX: 0,
-        duration: 250,
-        easing: 'easeOutSine',
-        complete: () => {
-          showOdai(odai);
-        }
-      },
-      1000
-    );
+    })
+    .add({
+      targets: '#stage',
+      scale: 1,
+      translateX: 0,
+      duration: 250,
+      delay: 200,
+      easing: 'easeOutSine',
+      complete: () => {
+        showOdai(odai);
+      }
+    });
 };
 // お題表示
 const showOdai = odai => {

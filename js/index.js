@@ -35,14 +35,11 @@ const init = () => {
   const odaiView = document.getElementById('odai');
   const odaiText = document.getElementById('odai-text');
   const closeBtn = document.getElementById('close-btn');
-  odaiView.style.height = gacha.clientHeight * 0.3 + 'px';
-  odaiText.style.lineHeight = odaiView.style.height;
-  odaiView.style.left = calcCenteringLeftParam(odaiView, stage) + 'px';
-  odaiView.style.top = gacha.clientHeight * 0.25 + 'px';
-  closeBtn.style.height = gacha.clientHeight * 0.05 + 'px';
-  closeBtn.style.top = -1 * gacha.clientHeight * 0.05 - 8 + 'px';
-  closeBtn.addEventListener('click', onClickCloseBtn, false);
-  odaiView.style.display = 'none';
+  odaiView.style.left = calcCenteringLeftParam(odaiView, stage) + "px";
+  odaiView.style.top = gacha.clientHeight * 0.25 + "px";
+  closeBtn.style.top = -1 * gacha.clientHeight * 0.05 - 8 + "px";
+  closeBtn.addEventListener("click", onClickCloseBtn, false);
+  odaiView.style.display = "none";
 
   // クラス生成
   const handleAnime = new Handle(document.getElementById('handle'));
@@ -150,8 +147,18 @@ const startGacha = () => {
 };
 // お題表示
 const showOdai = odai => {
-  document.getElementById('odai-text').innerText = odai.text;
-  document.getElementById('odai').style.display = 'block';
+  const odaiText = document.getElementById("odai-text");
+  odaiText.innerText = odai.text;
+  document.getElementById('odai').style.display = 'flex';
+
+  // 1行に収める
+  odaiTextFontSize = 48;
+  odaiText.style.fontSize = odaiTextFontSize + "px";
+  while (odaiText.clientHeight > 62) {
+    odaiTextFontSize -= 1;
+    odaiText.style.fontSize = odaiTextFontSize + "px";
+  }
+
   anime({
     targets: '#odai',
     opacity: 1,

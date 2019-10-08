@@ -33,5 +33,12 @@
         <button id="close-btn">閉じる</button>
       </div>
   </div>
+
+  <script>
+    // お題を読み込む
+    GACHA.odai = @json($odai)
+
+    GACHA.setOdaiType(Object.keys(GACHA.odai)[0])
+  </script>
 </body>
 </html>

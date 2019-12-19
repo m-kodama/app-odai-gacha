@@ -15,6 +15,8 @@ class TopicsTableSeeder extends Seeder
             'gacha_id' => 1,
             'topic' => '',
             'password' => bcrypt('admin1234'),  //TODO: 今はいい　あとで変更
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
     }
 }

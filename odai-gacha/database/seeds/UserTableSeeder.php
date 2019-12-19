@@ -15,6 +15,8 @@ class UserTableSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@odaigacha',
             'password' => bcrypt('admin1234'),  //TODO: 今はいい　あとで変更
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
     }
 }

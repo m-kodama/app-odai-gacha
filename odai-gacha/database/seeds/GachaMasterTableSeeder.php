@@ -14,6 +14,8 @@ class GachaMasterTableSeeder extends Seeder
         DB::table('gacha_master')->insert([
             'gacha_name' => 'シンクロナイズドシンキング',
             'user_id' => 1,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
     }
 }

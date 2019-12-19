@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(GachaMasterTableSeeder::class);
         $this->call(RarityTableSeeder::class);
+        $this->call(TopicsTableSeeder::class);
     }
 }

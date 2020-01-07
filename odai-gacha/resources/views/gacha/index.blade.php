@@ -13,12 +13,6 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <div class="cp_ipselect cp_sl01">
-      <select required onchange="onSelectBoxChange(this)">
-        <option value="question" selected>シンクロナイズド・シンキング</option>
-        <option value="denpo">デンポー</option>
-      </select>
-  </div>
   <div id="stage">
       <div id="touch-eater"></div>
       <img src="img/gacha_body.png" alt="" id="gacha-body" class="gacha" draggable="false">
@@ -36,9 +30,7 @@
 
   <script>
     // お題を読み込む
-    GACHA.odai = @json($odai)
-
-    GACHA.setOdaiType(Object.keys(GACHA.odai)[0])
+    GACHA.odai = @json($odai);
   </script>
 </body>
 </html>

@@ -4,25 +4,22 @@
 const GACHA = {
   // お題データ
   odai: {},
-  // お題の種類
-  odaiType: 'question',
-  setOdaiType: odaiType => {
-    GACHA.odaiType = odaiType;
-  },
   // お題を取得
   getOdai: () => {
-    const config = GACHA.odai[GACHA.odaiType];
+    const config = GACHA.odai;
     const rval = getRandomInt(1001);
     let odaiCount = 0;
-    for (const entry of config) {
+    for (const key of Object.keys(config)) {
+      const entry = config[key];
       odaiCount += entry.texts.length;
     }
-    if (odaiCount === 0)
+    if (odaiCount === 0) {
       alert('お題がなくなりました。ブラウザを再読み込みしてください。');
-
+    }
     let accum = 0;
     let groupIndex = 0;
-    for (const entry of config) {
+    for (const key of Object.keys(config)) {
+      const entry = config[key];
       let textIndex = 0;
       for (const text of entry.texts) {
         accum += entry.prob / entry.texts.length;
@@ -35,7 +32,7 @@ const GACHA = {
       }
       groupIndex += 1;
     }
-    return getOdaiIndex();
+    return GACHA.getOdai();
   }
 };
 

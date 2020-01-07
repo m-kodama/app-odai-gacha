@@ -185,8 +185,3 @@ const onClickCloseBtn = () => {
     egg.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)';
   }
 };
-
-const onSelectBoxChange = e => {
-  var idx = e.selectedIndex;
-  odaiType = e.options[idx].value;
-};

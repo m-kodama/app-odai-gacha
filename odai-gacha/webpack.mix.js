@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,11 +11,10 @@ const mix = require('laravel-mix');
  |
  */
 
-
 mix.browserSync({
-    proxy: '0.0.0.0:8000', // アプリの起動アドレス
+    proxy: "0.0.0.0:8000", // アプリの起動アドレス
     open: false // ブラウザを自動で開かない
 })
-    .js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
+    .js("resources/js/app.js", "public/js")
+    .sass("resources/sass/app.scss", "public/css")
     .version();

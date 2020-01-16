@@ -14,5 +14,10 @@
 Route::get('/', function () {
     return view('index');
 });
-
 Route::get('/gacha', 'GachaController@index');
+Route::get('/gacha/{gachaId}/edit', 'GachaController@edit');
+Route::get('/gacha/create', 'GachaController@create');
+Route::post('/gacha', 'GachaController@createGachaDetail');
+Route::put('/gacha/{gachaId}', 'GachaController@updateGacha');
+Route::delete('/gacha/{gachaId}', 'GachaController@deleteGacha');
+Route::get('/gacha/{gachaId}/machine', 'GachaController@getMachine');

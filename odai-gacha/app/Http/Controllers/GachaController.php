@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
+use App\Gacha;
+
 class GachaController extends Controller
 {
-    public function index() {
+    public function index() {//一覧
+        $gachas = Gacha::all();
+        return view('gacha/index', compact('gachas'));
+    }
+
+    public function getMachine($gachaId) {
         $gachaId = 1;   // TODO 一旦ガチャIDは固定
         $topics = DB::table('gacha_master')
             ->select(DB::raw('gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability'))
@@ -33,7 +40,42 @@ class GachaController extends Controller
 
             $odai[$topic->rarity]['texts'][] = $topic->topic;
         }
-        return view('gacha/index', compact('odai'));
+        return view('gacha/machine', compact('odai'));
+    }
+
+    public function createGachaDetail(Request $request) {
+        $gacha = new Gacha();
+        $gacha->gacha_name = $request->gacha_name;
+        $gacha->user_id = 1;
+        $gacha->save();
+
+        return redirect("/gacha");
+    }
+
+    public function updateGacha(Request $request, $gachaId) {
+        $gacha = Gacha::findOrFail($gachaId);
+        // TODO パスワードチェック
+        $gacha->gacha_name = $request->gacha_name;
+        $gacha->save();
+        
+        return redirect("/gacha");
+    }
+
+    public function deleteGacha($gachaId) {
+        $gacha = Gacha::findOrFail($gachaId);
+        // TODO パスワードチェック
+        $gacha->delete();
+        
+        return redirect("/gacha");
+    }
+
+    public function create() {
+        return view('gacha/edit');
+    }
+    
+    public function edit($gachaId) {
+        $gacha = Gacha::findOrFail($gachaId);
+        return view('gacha/edit', compact('gacha'));
     }
 }
 

@@ -15,20 +15,20 @@ new Vue({
         theme: {
             themes: {
                 light: {
-                    primary: colors.purple,
-                    secondary: colors.grey.darken1,
-                    accent: colors.shades.black,
-                    error: colors.red.accent3
+                    primary: "#F0134D",
+                    secondary: "#F5F0E3",
+                    accent: "#40BFC1",
+                    warning: "#FF6F5E"
                 },
                 dark: {
-                    primary: colors.purple,
-                    secondary: colors.grey.darken1,
-                    accent: colors.shades.black,
-                    error: colors.red.accent3
+                    primary: "#F0134D",
+                    secondary: "#F5F0E3",
+                    accent: "#40BFC1",
+                    warning: "#FF6F5E"
                 }
             }
         }
     }),
-    template: "<App/>",
-    components: { App: App }
+    // template: "<App />",
+    components: { App }
 });

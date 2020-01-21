@@ -10,6 +10,7 @@
 </head>
 <body>
   <div id="app">
+    <App test="テスト"></App>
   </div>
   <!-- <div>
   @foreach($gachas as $gacha)

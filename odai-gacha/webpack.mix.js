@@ -16,5 +16,4 @@ mix.browserSync({
     open: false // ブラウザを自動で開かない
 })
     .js("resources/js/gacha/app.js", "public/js/gacha")
-    .js("resources/js/gacha/App.vue", "public/js/gacha")
     .version();

@@ -17,6 +17,7 @@ class CreateRarityTable extends Migration
             $table->bigIncrements('rarity_id');
             $table->unsignedTinyInteger('rarity');
             $table->integer('probability');
+            $table->string('rarity_name');
             $table->timestamps();
         });
     }

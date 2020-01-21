@@ -13,24 +13,10 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <div id="stage">
-      <div id="touch-eater"></div>
-      <img src="img/gacha_body.png" alt="" id="gacha-body" class="gacha" draggable="false">
-      <img src="img/gacha_handle.png" alt="" id="handle" class="gacha" draggable="false">
-      <img src="img/egg_normal.png" alt="" id="egg-normal" class="egg" draggable="false">
-      <img src="img/egg_silver.png" alt="" id="egg-sliver" class="egg" draggable="false">
-      <img src="img/egg_gold.png" alt="" id="egg-gold" class="egg" draggable="false">
-      <img src="img/egg_platinum.png" alt="" id="egg-platinum" class="egg" draggable="false">
-      <div id="odai">
-        <div id="odai-text"></div>
-        <div style="height: 8px;"></div>
-        <button id="close-btn">閉じる</button>
-      </div>
+  <div>
+  @foreach($gachas as $gacha)
+  <p><a href="http://localhost:8000/gacha/{{$gacha->gacha_id}}/edit">{{$gacha->gacha_name}}</a></p>
+  @endforeach
   </div>
-
-  <script>
-    // お題を読み込む
-    GACHA.odai = @json($odai);
-  </script>
 </body>
 </html>

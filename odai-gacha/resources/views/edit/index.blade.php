@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>お題ガチャ</title>
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/edit/app.js') }}" defer></script>
     <link rel="stylesheet" href="..css/app.css">
 </head>
 <body>

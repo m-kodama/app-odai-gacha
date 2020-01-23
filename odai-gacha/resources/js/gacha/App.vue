@@ -2,7 +2,8 @@
   <v-app>
     <v-content>
       <Header />
-      <div style="padding-top:100px;">{{ test }}</div>
+      <div v-if="isVisible" style="padding-top:100px;">{{ gachas[0].gacha_name }}</div>
+      <button v-on:click="isVisible　=　!isVisible" style="padding-top:100px;">ボタン</button>
     </v-content>
   </v-app>
 </template>
@@ -15,11 +16,18 @@ export default {
     Header
   },
   props: {
-    test: String
+    _gachas: String
+  },
+  data: function () {
+    return {
+      isVisible: true,
+    }
+  },
+  computed: {
+    gachas: function() {
+      return JSON.parse(this._gachas);
+    }
   }
-  // data: () => ({
-  //   message: 'こんにちはvue'
-  // }),
 };
 </script>
 

@@ -212,9 +212,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      infoDialog: false
+    };
+  }
+});
 
 /***/ }),
 
@@ -237,17 +241,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Header: _components_Header__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    test: String
-  } // data: () => ({
-  //   message: 'こんにちはvue'
-  // }),
-
+    _gachas: String
+  },
+  data: function data() {
+    return {
+      isVisible: true
+    };
+  },
+  computed: {
+    gachas: function gachas() {
+      return JSON.parse(this._gachas);
+    }
+  }
 });
 
 /***/ }),
@@ -1406,6 +1418,10 @@ var render = function() {
         [
           _c("v-app-bar-nav-icon"),
           _vm._v(" "),
+          _c("v-img", {
+            attrs: { src: "../img/logo_icon.png", "max-width": "30" }
+          }),
+          _vm._v(" "),
           _c(
             "v-toolbar-title",
             { staticClass: "primary--text font-weight-bold" },
@@ -1414,56 +1430,58 @@ var render = function() {
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { icon: "" } },
-            [_c("v-icon", [_vm._v("mdi-home")])],
-            1
-          ),
+          _c("v-text-field", {
+            staticStyle: { height: "100%" },
+            attrs: {
+              outlined: "",
+              solo: "",
+              flat: "",
+              placeholder: "検索",
+              dense: "",
+              clearable: ""
+            }
+          }),
           _vm._v(" "),
           _c(
             "v-btn",
-            { attrs: { icon: "" } },
-            [_c("v-icon", [_vm._v("mdi-apple")])],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-menu",
-            {
-              attrs: { left: "", bottom: "" },
-              scopedSlots: _vm._u([
-                {
-                  key: "activator",
-                  fn: function(ref) {
-                    var on = ref.on
-                    return [
-                      _c(
-                        "v-btn",
-                        _vm._g({ attrs: { icon: "" } }, on),
-                        [_c("v-icon", [_vm._v("mdi-dots-vertical")])],
-                        1
-                      )
-                    ]
-                  }
-                }
-              ])
-            },
+            { attrs: { depressed: "", color: "#F5F0E3" } },
             [
-              _vm._v(" "),
-              _c(
-                "v-list",
-                _vm._l(5, function(n) {
-                  return _c(
-                    "v-list-item",
-                    { key: n, on: { click: function() {} } },
-                    [_c("v-list-item-title", [_vm._v("Option " + _vm._s(n))])],
-                    1
-                  )
-                }),
-                1
-              )
+              _c("v-icon", { attrs: { color: "grey darken-1" } }, [
+                _vm._v("mdi-magnify")
+              ])
             ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { icon: "" },
+              on: {
+                click: function($event) {
+                  _vm.infoDialog = true
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("mdi-information-outline")])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: { "max-width": "700" },
+              model: {
+                value: _vm.infoDialog,
+                callback: function($$v) {
+                  _vm.infoDialog = $$v
+                },
+                expression: "infoDialog"
+              }
+            },
+            [_c("v-card", [_vm._v("がちゃです")])],
             1
           )
         ],
@@ -1503,9 +1521,24 @@ var render = function() {
         [
           _c("Header"),
           _vm._v(" "),
-          _c("div", { staticStyle: { "padding-top": "100px" } }, [
-            _vm._v(_vm._s(_vm.test))
-          ])
+          _vm.isVisible
+            ? _c("div", { staticStyle: { "padding-top": "100px" } }, [
+                _vm._v(_vm._s(_vm.gachas[0].gacha_name))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticStyle: { "padding-top": "100px" },
+              on: {
+                click: function($event) {
+                  _vm.isVisible = !_vm.isVisible
+                }
+              }
+            },
+            [_vm._v("ボタン")]
+          )
         ],
         1
       )
@@ -54947,7 +54980,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
+module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
 
 
 /***/ })

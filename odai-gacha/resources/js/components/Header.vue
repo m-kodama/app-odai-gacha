@@ -6,18 +6,21 @@
       <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-text-field 
-        outlined 
-        solo 
-        flat 
-        placeholder="検索" 
-        dense 
-        clearable 
-        style="height:100%"
-      ></v-text-field>
-      <v-btn depressed color="#F5F0E3">
-        <v-icon color="grey darken-1">mdi-magnify</v-icon>
-      </v-btn>
+      <div class="d-flex compact-form" style="max-width: 700px; width: 50%;">
+        <v-text-field
+          color="accent"
+          outlined
+          solo
+          flat
+          placeholder="検索"
+          dense
+          clearable
+          hide-details
+        ></v-text-field>
+        <v-btn depressed color="#F5F0E3" class="ml-1" style="height: 40px;">
+          <v-icon color="grey darken-1">mdi-magnify</v-icon>
+        </v-btn>
+      </div>
       <v-spacer></v-spacer>
 
       <v-btn icon @click="infoDialog=true">
@@ -32,13 +35,17 @@
 
 <script>
 export default {
-    data: function () {
+  data: function() {
     return {
-      infoDialog: false,
-    }
-  },
+      infoDialog: false
+    };
+  }
 };
 </script>
 
 <style>
+.compact-form {
+  transform: scale(0.9);
+  transform-origin: left;
+}
 </style>

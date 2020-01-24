@@ -2,8 +2,11 @@
   <v-app>
     <v-content>
       <Header />
-      <div v-if="isVisible" style="padding-top:100px;">{{ gachas[0].gacha_name }}</div>
-      <button v-on:click="isVisible　=　!isVisible" style="padding-top:100px;">ボタン</button>
+      <div class="main-content">
+        <div v-if="isVisible" style="padding-top:100px;">{{ gachas[0].gacha_name }}</div>
+        <button v-on:click="isVisible　=　!isVisible" style="padding-top:100px;">ボタン</button>
+        <div style="height:2000px;"></div>
+      </div>
     </v-content>
   </v-app>
 </template>
@@ -18,10 +21,10 @@ export default {
   props: {
     _gachas: String
   },
-  data: function () {
+  data: function() {
     return {
-      isVisible: true,
-    }
+      isVisible: true
+    };
   },
   computed: {
     gachas: function() {
@@ -32,4 +35,9 @@ export default {
 </script>
 
 <style>
+.main-content {
+  margin-top: 64px;
+  margin-left: 240px;
+  width: 100%;
+}
 </style>

@@ -30,6 +30,19 @@
         <v-card>がちゃです</v-card>
       </v-dialog>
     </v-app-bar>
+    <div class="side-bar white">
+      <div class="my-3">
+        <v-btn large color="accent" depressed style="width: 100%;" class="side-menu-button">
+          <v-icon left>mdi-plus-box</v-icon>ガチャ作成
+        </v-btn>
+      </div>
+      <div class="my-3">
+        <v-btn large color="grey darken-3" text style="width: 100%;" class="side-menu-button">
+          <v-icon left>mdi-alert-box-outline</v-icon>本サイトについて
+        </v-btn>
+      </div>
+      <div style="height: 2000px;"></div>
+    </div>
   </div>
 </template>
 
@@ -47,5 +60,20 @@ export default {
 .compact-form {
   transform: scale(0.9);
   transform-origin: left;
+}
+.side-bar {
+  position: fixed;
+  width: 240px;
+  height: 100vh;
+  margin-top: 64px;
+  padding: 16px 16px 16px 16px;
+  overflow: scroll;
+}
+.side-menu-button {
+  /* padding: 0 16px !important; */
+  font-weight: normal !important;
+}
+.side-menu-button .v-btn__content {
+  justify-content: flex-start !important;
 }
 </style>

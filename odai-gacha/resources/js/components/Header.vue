@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar color="white" elevation="0" fixed>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon style="margin:0;"></v-app-bar-nav-icon>
       <v-img src="../img/logo_icon.png" max-width="30"></v-img>
       <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
 
@@ -41,7 +41,6 @@
           <v-icon left>mdi-alert-box-outline</v-icon>本サイトについて
         </v-btn>
       </div>
-      <div style="height: 2000px;"></div>
     </div>
   </div>
 </template>

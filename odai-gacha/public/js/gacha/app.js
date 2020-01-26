@@ -227,7 +227,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1533,7 +1532,7 @@ var render = function() {
         "v-app-bar",
         { attrs: { color: "white", elevation: "0", fixed: "" } },
         [
-          _c("v-app-bar-nav-icon"),
+          _c("v-app-bar-nav-icon", { staticStyle: { margin: "0" } }),
           _vm._v(" "),
           _c("v-img", {
             attrs: { src: "../img/logo_icon.png", "max-width": "30" }
@@ -1663,9 +1662,7 @@ var render = function() {
             )
           ],
           1
-        ),
-        _vm._v(" "),
-        _c("div", { staticStyle: { height: "2000px" } })
+        )
       ])
     ],
     1

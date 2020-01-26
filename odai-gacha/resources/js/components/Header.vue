@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar color="white" elevation="0" fixed>
-      <v-app-bar-nav-icon style="margin:0;"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon style="margin:0;" @click="isSidebarExpanded = !isSidebarExpanded"></v-app-bar-nav-icon>
       <v-img src="../img/logo_icon.png" max-width="30"></v-img>
       <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
 
@@ -30,16 +30,22 @@
         <v-card>がちゃです</v-card>
       </v-dialog>
     </v-app-bar>
-    <div class="side-bar white">
+    <div class="side-bar white" :class="{expand: isSidebarExpanded}">
       <div class="my-3">
-        <v-btn large color="accent" depressed style="width: 100%;" class="side-menu-button">
-          <v-icon left>mdi-plus-box</v-icon>ガチャ作成
-        </v-btn>
+        <div
+          class="side-bar-button accent white--text"
+          :class="{expand: isSidebarExpanded}"
+          v-ripple
+        >
+          <v-icon left color="white">mdi-plus-box</v-icon>
+          <span v-if="isSidebarExpanded">ガチャ作成</span>
+        </div>
       </div>
       <div class="my-3">
-        <v-btn large color="grey darken-3" text style="width: 100%;" class="side-menu-button">
-          <v-icon left>mdi-alert-box-outline</v-icon>本サイトについて
-        </v-btn>
+        <div class="side-bar-button" :class="{expand: isSidebarExpanded}" v-ripple>
+          <v-icon left>mdi-alert-box-outline</v-icon>
+          <span v-if="isSidebarExpanded">本サイトについて</span>
+        </div>
       </div>
     </div>
   </div>
@@ -49,7 +55,8 @@
 export default {
   data: function() {
     return {
-      infoDialog: false
+      infoDialog: false,
+      isSidebarExpanded: true
     };
   }
 };
@@ -62,17 +69,28 @@ export default {
 }
 .side-bar {
   position: fixed;
-  width: 240px;
+  width: 80px;
   height: 100vh;
   margin-top: 64px;
   padding: 16px 16px 16px 16px;
   overflow: scroll;
+  transition: width 0.2s ease-out;
 }
-.side-menu-button {
-  /* padding: 0 16px !important; */
-  font-weight: normal !important;
+.side-bar.expand {
+  width: 240px;
 }
-.side-menu-button .v-btn__content {
-  justify-content: flex-start !important;
+.side-bar-button {
+  padding: 0 12px;
+  height: 48px;
+  width: 48px;
+  line-height: 48px;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: width 0.2s ease-out;
+  overflow: hidden;
+}
+.side-bar-button.expand {
+  width: 100%;
 }
 </style>

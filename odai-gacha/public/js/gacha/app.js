@@ -227,10 +227,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      infoDialog: false
+      infoDialog: false,
+      isSidebarExpanded: true
     };
   }
 });
@@ -333,7 +340,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.compact-form {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.side-bar {\n  position: fixed;\n  width: 240px;\n  height: 100vh;\n  margin-top: 64px;\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n}\n.side-menu-button {\n  /* padding: 0 16px !important; */\n  font-weight: normal !important;\n}\n.side-menu-button .v-btn__content {\n  justify-content: flex-start !important;\n}\n", ""]);
+exports.push([module.i, "\n.compact-form {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.side-bar {\n  position: fixed;\n  width: 80px;\n  height: 100vh;\n  margin-top: 64px;\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n  transition: width 0.2s ease-out;\n}\n.side-bar.expand {\n  width: 240px;\n}\n.side-bar-button {\n  padding: 0 12px;\n  height: 48px;\n  width: 48px;\n  line-height: 48px;\n  font-size: 0.875rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: width 0.2s ease-out;\n  overflow: hidden;\n}\n.side-bar-button.expand {\n  width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -1532,7 +1539,14 @@ var render = function() {
         "v-app-bar",
         { attrs: { color: "white", elevation: "0", fixed: "" } },
         [
-          _c("v-app-bar-nav-icon", { staticStyle: { margin: "0" } }),
+          _c("v-app-bar-nav-icon", {
+            staticStyle: { margin: "0" },
+            on: {
+              click: function($event) {
+                _vm.isSidebarExpanded = !_vm.isSidebarExpanded
+              }
+            }
+          }),
           _vm._v(" "),
           _c("v-img", {
             attrs: { src: "../img/logo_icon.png", "max-width": "30" }
@@ -1619,51 +1633,56 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "side-bar white" }, [
-        _c(
-          "div",
-          { staticClass: "my-3" },
-          [
+      _c(
+        "div",
+        {
+          staticClass: "side-bar white",
+          class: { expand: _vm.isSidebarExpanded }
+        },
+        [
+          _c("div", { staticClass: "my-3" }, [
             _c(
-              "v-btn",
+              "div",
               {
-                staticClass: "side-menu-button",
-                staticStyle: { width: "100%" },
-                attrs: { large: "", color: "accent", depressed: "" }
+                directives: [{ name: "ripple", rawName: "v-ripple" }],
+                staticClass: "side-bar-button accent white--text",
+                class: { expand: _vm.isSidebarExpanded }
               },
               [
-                _c("v-icon", { attrs: { left: "" } }, [_vm._v("mdi-plus-box")]),
-                _vm._v("ガチャ作成\n      ")
+                _c("v-icon", { attrs: { left: "", color: "white" } }, [
+                  _vm._v("mdi-plus-box")
+                ]),
+                _vm._v(" "),
+                _vm.isSidebarExpanded
+                  ? _c("span", [_vm._v("ガチャ作成")])
+                  : _vm._e()
               ],
               1
             )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "my-3" },
-          [
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "my-3" }, [
             _c(
-              "v-btn",
+              "div",
               {
-                staticClass: "side-menu-button",
-                staticStyle: { width: "100%" },
-                attrs: { large: "", color: "grey darken-3", text: "" }
+                directives: [{ name: "ripple", rawName: "v-ripple" }],
+                staticClass: "side-bar-button",
+                class: { expand: _vm.isSidebarExpanded }
               },
               [
                 _c("v-icon", { attrs: { left: "" } }, [
                   _vm._v("mdi-alert-box-outline")
                 ]),
-                _vm._v("本サイトについて\n      ")
+                _vm._v(" "),
+                _vm.isSidebarExpanded
+                  ? _c("span", [_vm._v("本サイトについて")])
+                  : _vm._e()
               ],
               1
             )
-          ],
-          1
-        )
-      ])
+          ])
+        ]
+      )
     ],
     1
   )

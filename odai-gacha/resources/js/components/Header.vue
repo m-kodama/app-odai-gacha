@@ -1,10 +1,16 @@
 <template>
   <div>
+    <!-- アプリバー -->
     <v-app-bar color="white" elevation="0" fixed>
-      <v-app-bar-nav-icon style="margin:0;" @click="isSidebarExpanded = !isSidebarExpanded"></v-app-bar-nav-icon>
-      <v-img src="../img/logo_icon.png" max-width="30"></v-img>
-      <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
-
+      <v-app-bar-nav-icon
+        style="margin:0;"
+        @click="isSidebarExpanded = !isSidebarExpanded"
+        class="d-none d-sm-block"
+      ></v-app-bar-nav-icon>
+      <div class="d-flex logo">
+        <v-img src="../img/logo_icon.png" max-width="30"></v-img>
+        <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
+      </div>
       <v-spacer></v-spacer>
       <div class="d-flex compact-form" style="max-width: 700px; width: 50%;">
         <v-text-field
@@ -30,10 +36,11 @@
         <v-card>がちゃです</v-card>
       </v-dialog>
     </v-app-bar>
-    <div class="side-bar white" :class="{expand: isSidebarExpanded}">
+    <!-- サイドバー -->
+    <div class="sidebar white d-none d-sm-block" :class="{expand: isSidebarExpanded}">
       <div class="my-3">
         <div
-          class="side-bar-button accent white--text"
+          class="sidebar-button accent white--text"
           :class="{expand: isSidebarExpanded}"
           v-ripple
         >
@@ -42,11 +49,29 @@
         </div>
       </div>
       <div class="my-3">
-        <div class="side-bar-button" :class="{expand: isSidebarExpanded}" v-ripple>
+        <div class="sidebar-button" :class="{expand: isSidebarExpanded}" v-ripple>
           <v-icon left>mdi-alert-box-outline</v-icon>
           <span v-if="isSidebarExpanded">本サイトについて</span>
         </div>
       </div>
+    </div>
+    <!-- FAB（スマホサイズのみ） -->
+    <v-btn
+      color="accent"
+      class="white--text d-xs-block d-sm-none ma-2"
+      large
+      rounded
+      fixed
+      elevation="8"
+      bottom
+      right
+    >
+      <v-icon leff>mdi-plus-box</v-icon>ガチャ作成
+    </v-btn>
+    <!-- </div> -->
+    <!-- メインコンテンツ -->
+    <div class="main-content" :class="{'with-sidebar-expand': isSidebarExpanded}">
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -62,24 +87,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .compact-form {
   transform: scale(0.9);
   transform-origin: left;
 }
-.side-bar {
+.sidebar {
   position: fixed;
   width: 80px;
   height: 100vh;
-  margin-top: 64px;
+  /* margin-top: 64px; */
   padding: 16px 16px 16px 16px;
   overflow: scroll;
-  transition: width 0.2s ease-out;
+  transition: width 0.1s ease-out;
 }
-.side-bar.expand {
+.sidebar.expand {
   width: 240px;
 }
-.side-bar-button {
+.sidebar-button {
   padding: 0 12px;
   height: 48px;
   width: 48px;
@@ -87,10 +112,28 @@ export default {
   font-size: 0.875rem;
   border-radius: 4px;
   cursor: pointer;
-  transition: width 0.2s ease-out;
+  transition: width 0.1s ease-out;
   overflow: hidden;
 }
-.side-bar-button.expand {
+.sidebar-button.expand {
   width: 100%;
+}
+.main-content {
+  margin-top: 64px;
+  margin-left: 80px;
+  width: 100%;
+  transition: margin 0.1s ease-out;
+}
+.main-content.with-sidebar-expand {
+  margin-left: 240px;
+}
+@media screen and (max-width: 600px) {
+  .main-content {
+    margin-left: 0px;
+    margin-top: 108px;
+  }
+  .main-content.with-sidebar-expand {
+    margin-left: 0px;
+  }
 }
 </style>

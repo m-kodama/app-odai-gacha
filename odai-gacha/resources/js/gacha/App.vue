@@ -1,12 +1,11 @@
 <template>
   <v-app>
     <v-content>
-      <Header />
-      <div class="main-content">
+      <Header>
         <div v-if="isVisible" style="padding-top:100px;">{{ gachas[0].gacha_name }}</div>
         <button v-on:click="isVisible　=　!isVisible" style="padding-top:100px;">ボタン</button>
         <div style="height:2000px;"></div>
-      </div>
+      </Header>
     </v-content>
   </v-app>
 </template>
@@ -35,9 +34,4 @@ export default {
 </script>
 
 <style>
-.main-content {
-  margin-top: 64px;
-  margin-left: 240px;
-  width: 100%;
-}
 </style>

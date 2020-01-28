@@ -58,7 +58,7 @@
     <!-- FAB（スマホサイズのみ） -->
     <v-btn
       color="accent"
-      class="white--text d-xs-block d-sm-none ma-2"
+      class="white--text d-xs-block d-sm-none ma-2 fab"
       large
       rounded
       fixed
@@ -116,6 +116,9 @@ export default {
 }
 .sidebar-button.expand {
   width: 100%;
+}
+.fab {
+  z-index: 9999;
 }
 .main-content {
   margin-top: 64px;

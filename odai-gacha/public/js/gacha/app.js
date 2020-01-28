@@ -438,7 +438,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.sidebar[data-v-1f42fb90] {\n  position: fixed;\n  width: 80px;\n  height: 100vh;\n  /* margin-top: 64px; */\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n  transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n  width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n  padding: 0 12px;\n  height: 48px;\n  width: 48px;\n  line-height: 48px;\n  font-size: 0.875rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: width 0.1s ease-out;\n  overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n  width: 100%;\n}\n.main-content[data-v-1f42fb90] {\n  margin-top: 64px;\n  margin-left: 80px;\n  width: 100%;\n  transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n  margin-left: 240px;\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n    margin-left: 0px;\n    margin-top: 108px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.sidebar[data-v-1f42fb90] {\n  position: fixed;\n  width: 80px;\n  height: 100vh;\n  /* margin-top: 64px; */\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n  transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n  width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n  padding: 0 12px;\n  height: 48px;\n  width: 48px;\n  line-height: 48px;\n  font-size: 0.875rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: width 0.1s ease-out;\n  overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n  width: 100%;\n}\n.fab[data-v-1f42fb90] {\n  z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n  margin-top: 64px;\n  margin-left: 80px;\n  width: 100%;\n  transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n  margin-left: 240px;\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n    margin-left: 0px;\n    margin-top: 108px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -1793,7 +1793,7 @@ var render = function() {
       _c(
         "v-btn",
         {
-          staticClass: "white--text d-xs-block d-sm-none ma-2",
+          staticClass: "white--text d-xs-block d-sm-none ma-2 fab",
           attrs: {
             color: "accent",
             large: "",
@@ -55509,7 +55509,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
+module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
 
 
 /***/ })

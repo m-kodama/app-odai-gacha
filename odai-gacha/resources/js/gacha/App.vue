@@ -2,9 +2,9 @@
   <v-app>
     <v-content>
       <Header>
-        <div v-if="isVisible" style="padding-top:100px;">{{ gachas[0].gacha_name }}</div>
-        <button v-on:click="isVisible　=　!isVisible" style="padding-top:100px;">ボタン</button>
-        <div style="height:2000px;"></div>
+        <div v-for="gacha in gachas" :key="gacha.gacha_id">
+          <MainCard :gacha="gacha"/>
+        </div>
       </Header>
     </v-content>
   </v-app>
@@ -12,10 +12,13 @@
 
 <script>
 import Header from "../components/Header";
+import MainCard from "../components/MainCard";
+
 
 export default {
   components: {
-    Header
+    Header,
+    MainCard
   },
   props: {
     _gachas: String
@@ -27,7 +30,13 @@ export default {
   },
   computed: {
     gachas: function() {
-      return JSON.parse(this._gachas);
+      const originGacha = JSON.parse(this._gachas)[0];
+      const gachas = [];
+      for (let i = 0; i < 30; i++) {
+        const copyGacha = Object.assign({}, originGacha);
+        gachas.push(copyGacha);
+      }
+      return gachas;
     }
   }
 };

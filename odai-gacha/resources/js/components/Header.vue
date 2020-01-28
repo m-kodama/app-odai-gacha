@@ -68,7 +68,6 @@
     >
       <v-icon leff>mdi-plus-box</v-icon>ガチャ作成
     </v-btn>
-    <!-- </div> -->
     <!-- メインコンテンツ -->
     <div class="main-content" :class="{'with-sidebar-expand': isSidebarExpanded}">
       <slot></slot>

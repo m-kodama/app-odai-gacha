@@ -70,7 +70,7 @@
     </v-btn>
     <!-- メインコンテンツ -->
     <div class="main-content" :class="{'with-sidebar-expand': isSidebarExpanded}">
-      <slot></slot>
+        <slot></slot>
     </div>
   </div>
 </template>
@@ -123,15 +123,17 @@ export default {
 .main-content {
   margin-top: 64px;
   margin-left: 80px;
-  width: 100%;
+  width: calc(100% - 80px);
   transition: margin 0.1s ease-out;
 }
 .main-content.with-sidebar-expand {
   margin-left: 240px;
+  width: calc(100% - 240px);
 }
 @media screen and (max-width: 600px) {
   .main-content {
     margin-left: 0px;
+    width: 100%;
     margin-top: 108px;
   }
   .main-content.with-sidebar-expand {

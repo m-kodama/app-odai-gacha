@@ -1,11 +1,7 @@
 <template>
-  <v-card 
-    class="ma-5"
-    max-width="344"
-    outlined
-  >
+  <v-card outlined>
     <v-img
-      src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+      src="https://picsum.photos/510/300?random"
       height="200px"
     ></v-img>
     <v-card-title>
@@ -57,5 +53,9 @@ export default {
 <style scoped>
 .card-buttons {
   padding:0px 16px 16px 16px;
+}
+.v-card__title {
+  font-size: 1rem !important;
+  line-height: 1.75rem !important;
 }
 </style>

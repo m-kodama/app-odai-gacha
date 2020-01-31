@@ -299,11 +299,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     gacha: {
@@ -463,7 +458,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n  padding:0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n  font-size: 1rem !important;\n  line-height: 1.75rem !important;\n}\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n  padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n  font-size: 1rem !important;\n  line-height: 1.75rem !important;\n  flex-wrap: nowrap;\n  align-items: flex-start;\n}\n", ""]);
 
 // exports
 
@@ -1944,7 +1939,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("v-card-subtitle", [
-        _vm._v("\n    最終編集日：" + _vm._s(_vm.gacha.updated_at) + " \n  ")
+        _vm._v("最終編集日：" + _vm._s(_vm.gacha.updated_at))
       ]),
       _vm._v(" "),
       _c(
@@ -55585,7 +55580,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
+module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
 
 
 /***/ })

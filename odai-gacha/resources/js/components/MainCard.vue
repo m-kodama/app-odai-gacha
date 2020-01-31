@@ -1,9 +1,6 @@
 <template>
   <v-card outlined>
-    <v-img
-      src="https://picsum.photos/510/300?random"
-      height="200px"
-    ></v-img>
+    <v-img src="https://picsum.photos/510/300?random" height="200px"></v-img>
     <v-card-title>
       <div class="flex-grow-1">{{ gacha.gacha_name }}</div>
       <v-tooltip top>
@@ -15,18 +12,15 @@
         <span>編集</span>
       </v-tooltip>
     </v-card-title>
-    <v-card-subtitle>
-      最終編集日：{{ gacha.updated_at }} 
-    </v-card-subtitle>
+    <v-card-subtitle>最終編集日：{{ gacha.updated_at }}</v-card-subtitle>
     <div class="card-buttons d-flex">
-        <v-btn depressed outlined color="accent" class="flex-grow-1 mr-1">詳細</v-btn>
-        <v-btn depressed color="primary" class="flex-grow-1 ml-1">起動</v-btn>
+      <v-btn depressed outlined color="accent" class="flex-grow-1 mr-1">詳細</v-btn>
+      <v-btn depressed color="primary" class="flex-grow-1 ml-1">起動</v-btn>
     </div>
   </v-card>
 </template>
 
 <script>
-
 export default {
   props: {
     gacha: {
@@ -34,7 +28,7 @@ export default {
       gacha_name: String,
       image_path: String,
       created_at: Date,
-      updated_at: Date,
+      updated_at: Date
     }
   },
   data: function() {
@@ -52,10 +46,12 @@ export default {
 
 <style scoped>
 .card-buttons {
-  padding:0px 16px 16px 16px;
+  padding: 0px 16px 16px 16px;
 }
 .v-card__title {
   font-size: 1rem !important;
   line-height: 1.75rem !important;
+  flex-wrap: nowrap;
+  align-items: flex-start;
 }
 </style>

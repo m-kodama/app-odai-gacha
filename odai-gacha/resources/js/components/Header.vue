@@ -55,13 +55,13 @@
           :class="{expand: isSidebarExpanded}"
           v-ripple
         >
-          <v-icon left color="white">mdi-plus-box</v-icon>
+          <v-icon left color="white">mdi-plus-circle</v-icon>
           <span v-if="isSidebarExpanded">ガチャ作成</span>
         </div>
       </div>
       <div class="my-3">
         <div class="sidebar-button" :class="{expand: isSidebarExpanded}" v-ripple>
-          <v-icon left>mdi-alert-box-outline</v-icon>
+          <v-icon left>mdi-information-outline</v-icon>
           <span v-if="isSidebarExpanded">本サイトについて</span>
         </div>
       </div>
@@ -77,7 +77,7 @@
       bottom
       right
     >
-      <v-icon leff>mdi-plus-box</v-icon>ガチャ作成
+      <v-icon leff>mdi-plus-circle</v-icon>ガチャ作成
     </v-btn>
     <!-- メインコンテンツ -->
     <div class="main-content" :class="{'with-sidebar-expand': isSidebarExpanded}">

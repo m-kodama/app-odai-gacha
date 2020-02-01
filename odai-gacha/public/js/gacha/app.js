@@ -1917,7 +1917,7 @@ var render = function() {
               },
               [
                 _c("v-icon", { attrs: { left: "", color: "white" } }, [
-                  _vm._v("mdi-plus-box")
+                  _vm._v("mdi-plus-circle")
                 ]),
                 _vm._v(" "),
                 _vm.isSidebarExpanded
@@ -1938,7 +1938,7 @@ var render = function() {
               },
               [
                 _c("v-icon", { attrs: { left: "" } }, [
-                  _vm._v("mdi-alert-box-outline")
+                  _vm._v("mdi-information-outline")
                 ]),
                 _vm._v(" "),
                 _vm.isSidebarExpanded
@@ -1966,7 +1966,7 @@ var render = function() {
           }
         },
         [
-          _c("v-icon", { attrs: { leff: "" } }, [_vm._v("mdi-plus-box")]),
+          _c("v-icon", { attrs: { leff: "" } }, [_vm._v("mdi-plus-circle")]),
           _vm._v("ガチャ作成\n  ")
         ],
         1
@@ -2009,7 +2009,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { attrs: { outlined: "" } },
+    { staticStyle: { height: "100%" }, attrs: { outlined: "" } },
     [
       _c("v-img", {
         attrs: { src: "https://picsum.photos/510/300?random", height: "200px" }

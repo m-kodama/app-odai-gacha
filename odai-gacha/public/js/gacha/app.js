@@ -253,6 +253,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     onNavIconTapped: Function
@@ -260,6 +275,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       infoDialog: false,
+      showSearchForm: false,
       isSidebarExpanded: true
     };
   },
@@ -480,7 +496,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.sidebar[data-v-1f42fb90] {\n  position: fixed;\n  width: 80px;\n  height: 100vh;\n  /* margin-top: 64px; */\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n  transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n  width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n  padding: 0 12px;\n  height: 48px;\n  width: 48px;\n  line-height: 48px;\n  font-size: 0.875rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: width 0.1s ease-out;\n  overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n  width: 100%;\n}\n.fab[data-v-1f42fb90] {\n  z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n  margin-top: 64px;\n  margin-left: 80px;\n  width: calc(100% - 80px);\n  transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n  margin-left: 240px;\n  width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n    width: 100%;\n    margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    width: 100%;\n    margin-left: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.search-bar[data-v-1f42fb90] {\n  display: flex;\n  width: 100%;\n  height: 48px;\n  padding: 0 8px;\n  background: rgba(245, 240, 227, 0.9);\n  position: fixed;\n  top: -24px;\n  left: 0;\n  z-index: -1;\n  opacity: 0;\n  transition: all 0.1s ease-out;\n}\n.search-bar.show[data-v-1f42fb90] {\n  top: 0;\n  z-index: 9998;\n  opacity: 1;\n}\n.sidebar[data-v-1f42fb90] {\n  position: fixed;\n  width: 80px;\n  height: 100vh;\n  /* margin-top: 64px; */\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n  transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n  width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n  padding: 0 12px;\n  height: 48px;\n  width: 48px;\n  line-height: 48px;\n  font-size: 0.875rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: width 0.1s ease-out;\n  overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n  width: 100%;\n}\n.fab[data-v-1f42fb90] {\n  z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n  margin-top: 64px;\n  margin-left: 80px;\n  width: calc(100% - 80px);\n  transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n  margin-left: 240px;\n  width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n    width: 100%;\n    margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    width: 100%;\n    margin-left: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -1756,7 +1772,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "d-flex compact-form",
+              staticClass: "compact-form d-none d-sm-flex",
               staticStyle: { "max-width": "700px", width: "50%" }
             },
             [
@@ -1796,6 +1812,21 @@ var render = function() {
           _c(
             "v-btn",
             {
+              staticClass: "d-xs-inline-flex d-sm-none",
+              attrs: { icon: "" },
+              on: {
+                click: function($event) {
+                  _vm.showSearchForm = true
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("mdi-magnify")])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
               attrs: { icon: "" },
               on: {
                 click: function($event) {
@@ -1820,6 +1851,49 @@ var render = function() {
               }
             },
             [_c("v-card", [_vm._v("がちゃです")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "search-bar d-xs-flex d-sm-none flex-row align-center",
+          class: { show: _vm.showSearchForm }
+        },
+        [
+          _c(
+            "v-btn",
+            {
+              attrs: { icon: "" },
+              on: {
+                click: function($event) {
+                  _vm.showSearchForm = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("mdi-close")])],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-text-field", {
+            staticClass: "flex-grow-1 mt-3",
+            attrs: { placeholder: "検索", color: "accent" }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { icon: "" },
+              on: {
+                click: function($event) {
+                  _vm.showSearchForm = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("mdi-magnify")])],
             1
           )
         ],

@@ -8,7 +8,7 @@
         <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
-      <div class="d-flex compact-form" style="max-width: 700px; width: 50%;">
+      <div class="compact-form d-none d-sm-flex" style="max-width: 700px; width: 50%;">
         <v-text-field
           color="accent"
           outlined
@@ -24,7 +24,9 @@
         </v-btn>
       </div>
       <v-spacer></v-spacer>
-
+      <v-btn icon @click="showSearchForm=true" class="d-xs-inline-flex d-sm-none">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
       <v-btn icon @click="infoDialog=true">
         <v-icon>mdi-information-outline</v-icon>
       </v-btn>
@@ -32,6 +34,19 @@
         <v-card>がちゃです</v-card>
       </v-dialog>
     </v-app-bar>
+    <!-- 検索バー（スマホサイズのみ） -->
+    <div
+      class="search-bar d-xs-flex d-sm-none flex-row align-center"
+      :class="{show: showSearchForm}"
+    >
+      <v-btn icon @click="showSearchForm=false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+      <v-text-field class="flex-grow-1 mt-3" placeholder="検索" color="accent"></v-text-field>
+      <v-btn icon @click="showSearchForm=false">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+    </div>
     <!-- サイドバー -->
     <div class="sidebar white d-none d-sm-block" :class="{expand: isSidebarExpanded}">
       <div class="my-3">
@@ -79,6 +94,7 @@ export default {
   data: function() {
     return {
       infoDialog: false,
+      showSearchForm: false,
       isSidebarExpanded: true
     };
   },
@@ -97,6 +113,24 @@ export default {
 .compact-form {
   transform: scale(0.9);
   transform-origin: left;
+}
+.search-bar {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  padding: 0 8px;
+  background: rgba(245, 240, 227, 0.9);
+  position: fixed;
+  top: -24px;
+  left: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.1s ease-out;
+}
+.search-bar.show {
+  top: 0;
+  z-index: 9998;
+  opacity: 1;
 }
 .sidebar {
   position: fixed;

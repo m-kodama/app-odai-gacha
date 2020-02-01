@@ -1,9 +1,14 @@
 <template>
   <v-app>
     <v-content>
-      <Header>
-        <div class="app-main-content" ref="mainContent">
-          <div class="main-card-wrapper pa-2" v-for="gacha in gachas" :key="gacha.gacha_id">
+      <Header :onNavIconTapped="onNavIconTapped">
+        <div class="app-main-content" ref="mainContent" v-resize="onResize">
+          <div
+            :style="mainCardStyles"
+            class="main-card-wrapper pa-2"
+            v-for="gacha in gachas"
+            :key="gacha.gacha_id"
+          >
             <MainCard :gacha="gacha" />
           </div>
         </div>
@@ -16,7 +21,6 @@
 import Header from "../components/Header";
 import MainCard from "../components/MainCard";
 
-
 export default {
   components: {
     Header,
@@ -28,6 +32,7 @@ export default {
   data: function() {
     return {
       isVisible: true,
+      cardWidth: "100%"
     };
   },
   computed: {
@@ -35,57 +40,51 @@ export default {
       const originGacha = JSON.parse(this._gachas)[0];
       const gachas = [];
       for (let i = 0; i < 30; i++) {
-        const copyGacha = Object.assign({}, {...originGacha, gacha_id: i});
+        const copyGacha = Object.assign({}, { ...originGacha, gacha_id: i });
         gachas.push(copyGacha);
       }
       return gachas;
     },
+    mainCardStyles() {
+      return {
+        "--width": this.cardWidth
+      };
+    }
   },
+  mounted() {
+    this.onResize();
+  },
+  methods: {
+    onResize() {
+      const mainContentWidth = this.$refs.mainContent.clientWidth;
+      if (mainContentWidth <= 600) {
+        this.cardWidth = "calc(100% / 1)";
+      } else if (600 < mainContentWidth && mainContentWidth <= 820) {
+        this.cardWidth = "calc(100% / 2)";
+      } else if (820 < mainContentWidth && mainContentWidth <= 1220) {
+        this.cardWidth = "calc(100% / 3)";
+      } else if (1220 < mainContentWidth && mainContentWidth <= 1704) {
+        this.cardWidth = "calc(100% / 4)";
+      } else if (1704 < mainContentWidth) {
+        this.cardWidth = "calc(100% / 5)";
+      }
+    },
+    onNavIconTapped() {
+      this.onResize();
+    }
+  }
 };
 </script>
 
 <style scoped>
 .app-main-content {
-  width:100%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   padding: 16px;
 }
-/* xs */
-@media screen and (max-width: 600px) {
-  .main-card-wrapper {
-    width: calc(100% / 1);
-  }
+.main-card-wrapper {
+  --width: 100%;
+  width: var(--width);
 }
-/* sm */
-@media screen and (min-width:600px) and (max-width:960px) {
-  .main-card-wrapper {
-    width: calc(100% / 3);
-  }
-}
-/* md */
-@media screen and (min-width:960px) and (max-width:1264px) {
-  .main-card-wrapper {
-    width: calc(100% / 3);
-  }
-}
-/* lg */
-@media screen and (min-width:1264px) and (max-width:1420px) {
-  .main-card-wrapper {
-    width: calc(100% / 3);
-  }
-}
-/* lgg */
-@media screen and (min-width:1420px) and (max-width:1904px) {
-  .main-card-wrapper {
-    width: calc(100% / 4);
-  }
-}
-/* xl */
-@media screen and (min-width:1904px) {
-  .main-card-wrapper {
-    width: calc(100% / 5);
-  }
-}
-
 </style>

@@ -2,11 +2,7 @@
   <div>
     <!-- アプリバー -->
     <v-app-bar color="white" elevation="0" fixed>
-      <v-app-bar-nav-icon
-        style="margin:0;"
-        @click="isSidebarExpanded = !isSidebarExpanded"
-        class="d-none d-sm-block"
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon style="margin:0;" @click="_onNavIconTapped" class="d-none d-sm-block"></v-app-bar-nav-icon>
       <div class="d-flex logo">
         <v-img src="../img/logo_icon.png" max-width="30"></v-img>
         <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
@@ -70,18 +66,29 @@
     </v-btn>
     <!-- メインコンテンツ -->
     <div class="main-content" :class="{'with-sidebar-expand': isSidebarExpanded}">
-        <slot></slot>
+      <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    onNavIconTapped: Function
+  },
   data: function() {
     return {
       infoDialog: false,
       isSidebarExpanded: true
     };
+  },
+  methods: {
+    _onNavIconTapped() {
+      this.isSidebarExpanded = !this.isSidebarExpanded;
+      this.$nextTick(function() {
+        this.onNavIconTapped();
+      });
+    }
   }
 };
 </script>
@@ -132,11 +139,11 @@ export default {
 }
 @media screen and (max-width: 600px) {
   .main-content {
-    margin-left: 0px;
     width: 100%;
-    margin-top: 108px;
+    margin-left: 0px;
   }
   .main-content.with-sidebar-expand {
+    width: 100%;
     margin-left: 0px;
   }
 }

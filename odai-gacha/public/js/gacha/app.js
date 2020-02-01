@@ -253,16 +253,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    onNavIconTapped: Function
+  },
   data: function data() {
     return {
       infoDialog: false,
       isSidebarExpanded: true
     };
+  },
+  methods: {
+    _onNavIconTapped: function _onNavIconTapped() {
+      this.isSidebarExpanded = !this.isSidebarExpanded;
+      this.$nextTick(function () {
+        this.onNavIconTapped();
+      });
+    }
   }
 });
 
@@ -354,6 +361,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -366,7 +378,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      isVisible: true
+      isVisible: true,
+      cardWidth: "100%"
     };
   },
   computed: {
@@ -382,6 +395,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return gachas;
+    },
+    mainCardStyles: function mainCardStyles() {
+      return {
+        "--width": this.cardWidth
+      };
+    }
+  },
+  mounted: function mounted() {
+    this.onResize();
+  },
+  methods: {
+    onResize: function onResize() {
+      var mainContentWidth = this.$refs.mainContent.clientWidth;
+
+      if (mainContentWidth <= 600) {
+        this.cardWidth = "calc(100% / 1)";
+      } else if (600 < mainContentWidth && mainContentWidth <= 820) {
+        this.cardWidth = "calc(100% / 2)";
+      } else if (820 < mainContentWidth && mainContentWidth <= 1220) {
+        this.cardWidth = "calc(100% / 3)";
+      } else if (1220 < mainContentWidth && mainContentWidth <= 1704) {
+        this.cardWidth = "calc(100% / 4)";
+      } else if (1704 < mainContentWidth) {
+        this.cardWidth = "calc(100% / 5)";
+      }
+    },
+    onNavIconTapped: function onNavIconTapped() {
+      this.onResize();
     }
   }
 });
@@ -439,7 +480,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.sidebar[data-v-1f42fb90] {\n  position: fixed;\n  width: 80px;\n  height: 100vh;\n  /* margin-top: 64px; */\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n  transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n  width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n  padding: 0 12px;\n  height: 48px;\n  width: 48px;\n  line-height: 48px;\n  font-size: 0.875rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: width 0.1s ease-out;\n  overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n  width: 100%;\n}\n.fab[data-v-1f42fb90] {\n  z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n  margin-top: 64px;\n  margin-left: 80px;\n  width: calc(100% - 80px);\n  transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n  margin-left: 240px;\n  width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n    margin-left: 0px;\n    width: 100%;\n    margin-top: 108px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n  transform: scale(0.9);\n  transform-origin: left;\n}\n.sidebar[data-v-1f42fb90] {\n  position: fixed;\n  width: 80px;\n  height: 100vh;\n  /* margin-top: 64px; */\n  padding: 16px 16px 16px 16px;\n  overflow: scroll;\n  transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n  width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n  padding: 0 12px;\n  height: 48px;\n  width: 48px;\n  line-height: 48px;\n  font-size: 0.875rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: width 0.1s ease-out;\n  overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n  width: 100%;\n}\n.fab[data-v-1f42fb90] {\n  z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n  margin-top: 64px;\n  margin-left: 80px;\n  width: calc(100% - 80px);\n  transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n  margin-left: 240px;\n  width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n    width: 100%;\n    margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    width: 100%;\n    margin-left: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -477,7 +518,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.app-main-content[data-v-cdef2d34] {\n  width:100%;\n  display: flex;\n  flex-wrap: wrap;\n  padding: 16px;\n}\n/* xs */\n@media screen and (max-width: 600px) {\n.main-card-wrapper[data-v-cdef2d34] {\n    width: calc(100% / 1);\n}\n}\n/* sm */\n@media screen and (min-width:600px) and (max-width:960px) {\n.main-card-wrapper[data-v-cdef2d34] {\n    width: calc(100% / 3);\n}\n}\n/* md */\n@media screen and (min-width:960px) and (max-width:1264px) {\n.main-card-wrapper[data-v-cdef2d34] {\n    width: calc(100% / 3);\n}\n}\n/* lg */\n@media screen and (min-width:1264px) and (max-width:1420px) {\n.main-card-wrapper[data-v-cdef2d34] {\n    width: calc(100% / 3);\n}\n}\n/* lgg */\n@media screen and (min-width:1420px) and (max-width:1904px) {\n.main-card-wrapper[data-v-cdef2d34] {\n    width: calc(100% / 4);\n}\n}\n/* xl */\n@media screen and (min-width:1904px) {\n.main-card-wrapper[data-v-cdef2d34] {\n    width: calc(100% / 5);\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.app-main-content[data-v-cdef2d34] {\n  width: 100%;\n  display: flex;\n  flex-wrap: wrap;\n  padding: 16px;\n}\n.main-card-wrapper[data-v-cdef2d34] {\n  --width: 100%;\n  width: var(--width);\n}\n", ""]);
 
 // exports
 
@@ -1690,11 +1731,7 @@ var render = function() {
           _c("v-app-bar-nav-icon", {
             staticClass: "d-none d-sm-block",
             staticStyle: { margin: "0" },
-            on: {
-              click: function($event) {
-                _vm.isSidebarExpanded = !_vm.isSidebarExpanded
-              }
-            }
+            on: { click: _vm._onNavIconTapped }
           }),
           _vm._v(" "),
           _c(
@@ -1998,16 +2035,28 @@ var render = function() {
       _c(
         "v-content",
         [
-          _c("Header", [
+          _c("Header", { attrs: { onNavIconTapped: _vm.onNavIconTapped } }, [
             _c(
               "div",
-              { ref: "mainContent", staticClass: "app-main-content" },
+              {
+                directives: [
+                  {
+                    name: "resize",
+                    rawName: "v-resize",
+                    value: _vm.onResize,
+                    expression: "onResize"
+                  }
+                ],
+                ref: "mainContent",
+                staticClass: "app-main-content"
+              },
               _vm._l(_vm.gachas, function(gacha) {
                 return _c(
                   "div",
                   {
                     key: gacha.gacha_id,
-                    staticClass: "main-card-wrapper pa-2"
+                    staticClass: "main-card-wrapper pa-2",
+                    style: _vm.mainCardStyles
                   },
                   [_c("MainCard", { attrs: { gacha: gacha } })],
                   1

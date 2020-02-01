@@ -322,6 +322,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     gacha: {
@@ -2012,7 +2022,34 @@ var render = function() {
     { staticStyle: { height: "100%" }, attrs: { outlined: "" } },
     [
       _c("v-img", {
-        attrs: { src: "https://picsum.photos/510/300?random", height: "200px" }
+        attrs: {
+          src: "https://picsum.photos/510/300?random",
+          "lazy-src": "../img/default_image.png",
+          height: "200px"
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "placeholder",
+            fn: function() {
+              return [
+                _c(
+                  "v-row",
+                  {
+                    staticClass: "fill-height ma-0",
+                    attrs: { align: "center", justify: "center" }
+                  },
+                  [
+                    _c("v-progress-circular", {
+                      attrs: { indeterminate: "", color: "grey lighten-5" }
+                    })
+                  ],
+                  1
+                )
+              ]
+            },
+            proxy: true
+          }
+        ])
       }),
       _vm._v(" "),
       _c(

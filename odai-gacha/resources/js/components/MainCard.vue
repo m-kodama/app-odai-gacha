@@ -1,6 +1,16 @@
 <template>
   <v-card outlined style="height:100%;">
-    <v-img src="https://picsum.photos/510/300?random" height="200px"></v-img>
+    <v-img
+      src="https://picsum.photos/510/300?random"
+      lazy-src="../img/default_image.png"
+      height="200px"
+    >
+      <template v-slot:placeholder>
+        <v-row class="fill-height ma-0" align="center" justify="center">
+          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+        </v-row>
+      </template>
+    </v-img>
     <v-card-title>
       <div class="flex-grow-1">{{ gacha.gacha_name }}</div>
       <v-tooltip top>

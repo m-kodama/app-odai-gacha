@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined>
+  <v-card outlined style="height:100%;">
     <v-img src="https://picsum.photos/510/300?random" height="200px"></v-img>
     <v-card-title>
       <div class="flex-grow-1">{{ gacha.gacha_name }}</div>

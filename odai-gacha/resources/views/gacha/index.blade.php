@@ -12,11 +12,5 @@
   <div id="app">
     <App _gachas="{{ $gachas }}"></App>
   </div>
-  <!-- <div>
-  @foreach($gachas as $gacha)
-  <p><a href="http://localhost:8000/gacha/{{$gacha->gacha_id}}/edit">{{$gacha->gacha_name}}</a></p>
-  @endforeach
-  </div> -->
-
 </body>
 </html>

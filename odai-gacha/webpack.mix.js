@@ -16,4 +16,5 @@ mix.browserSync({
     open: false // ブラウザを自動で開かない
 })
     .js("resources/js/gacha/app.js", "public/js/gacha")
+    .js("resources/js/gacha/edit.js", "public/js/gacha")
     .version();

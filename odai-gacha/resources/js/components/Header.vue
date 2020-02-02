@@ -15,6 +15,7 @@
             </div>
             <v-spacer></v-spacer>
             <div
+                v-if="showSearchBar"
                 class="compact-form d-none d-sm-flex"
                 style="max-width: 700px; width: 50%;"
             >
@@ -39,6 +40,7 @@
             </div>
             <v-spacer></v-spacer>
             <v-btn
+                v-if="showSearchBar"
                 icon
                 @click="showSearchForm = true"
                 class="d-xs-inline-flex d-sm-none"
@@ -54,6 +56,7 @@
         </v-app-bar>
         <!-- 検索バー（スマホサイズのみ） -->
         <div
+            v-if="showSearchBar"
             class="search-bar d-xs-flex d-sm-none flex-row align-center"
             :class="{ show: showSearchForm }"
         >
@@ -123,7 +126,14 @@
 <script>
 export default {
     props: {
-        onNavIconTapped: Function
+        onNavIconTapped: {
+            type: Function,
+            default: () => {}
+        },
+        showSearchBar: {
+            type: Boolean,
+            default: true
+        }
     },
     data: function() {
         return {

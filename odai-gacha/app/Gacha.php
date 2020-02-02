@@ -8,6 +8,7 @@ class Gacha extends Model
 {
     protected $table = 'gacha_master';
     protected $primaryKey = 'gacha_id';
+    public $incrementing = false;
 
     //hasMany設定
     public function topics()

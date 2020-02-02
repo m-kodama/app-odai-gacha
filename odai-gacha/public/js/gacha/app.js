@@ -332,10 +332,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     gacha: {
-      gacha_id: Number,
+      gacha_id: String,
       gacha_name: String,
       image_path: String,
       created_at: Date,
@@ -392,6 +403,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -415,7 +431,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       for (var i = 0; i < 30; i++) {
         var copyGacha = Object.assign({}, _objectSpread({}, originGacha, {
-          gacha_id: i
+          key: i
         }));
         gachas.push(copyGacha);
       }
@@ -525,7 +541,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n  padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n  font-size: 1rem !important;\n  line-height: 1.75rem !important;\n  flex-wrap: nowrap;\n  align-items: flex-start;\n}\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n", ""]);
 
 // exports
 
@@ -544,7 +560,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.app-main-content[data-v-cdef2d34] {\n  width: 100%;\n  display: flex;\n  flex-wrap: wrap;\n  padding: 16px;\n}\n.main-card-wrapper[data-v-cdef2d34] {\n  --width: 100%;\n  width: var(--width);\n}\n", ""]);
+exports.push([module.i, "\n.app-main-content[data-v-cdef2d34] {\n    width: 100%;\n    display: flex;\n    flex-wrap: wrap;\n    padding: 16px;\n}\n.main-card-wrapper[data-v-cdef2d34] {\n    --width: 100%;\n    width: var(--width);\n}\n", ""]);
 
 // exports
 
@@ -2107,7 +2123,11 @@ var render = function() {
             "v-btn",
             {
               staticClass: "flex-grow-1 ml-1",
-              attrs: { depressed: "", color: "primary" }
+              attrs: {
+                depressed: "",
+                color: "primary",
+                href: "./gacha/" + _vm.gacha.gacha_id + "/machine"
+              }
             },
             [_vm._v("起動")]
           )
@@ -2165,7 +2185,7 @@ var render = function() {
                 return _c(
                   "div",
                   {
-                    key: gacha.gacha_id,
+                    key: gacha.key,
                     staticClass: "main-card-wrapper pa-2",
                     style: _vm.mainCardStyles
                   },

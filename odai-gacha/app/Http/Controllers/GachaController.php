@@ -16,7 +16,6 @@ class GachaController extends Controller
     }
 
     public function getMachine($gachaId) {
-        $gachaId = 1;   // TODO 一旦ガチャIDは固定
         $topics = DB::table('gacha_master')
             ->select(DB::raw('gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability'))
             ->join('topics', 'topics.gacha_id', '=', 'gacha_master.gacha_id')

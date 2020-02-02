@@ -14,11 +14,15 @@ class CreateGachaMasterTable extends Migration
     public function up()
     {
         Schema::create('gacha_master', function (Blueprint $table) {
-            $table->bigIncrements('gacha_id');
+            $table->char('gacha_id', 26);
+            $table->primary('gacha_id');
             $table->string('gacha_name', 50);
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('password')->nullable();
+            $table->boolean('needUsePass')->default(false);
+            $table->boolean('needEditPass')->default(false);
+            $table->boolean('needDeletePass')->default(false);
             $table->string('image_path')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();

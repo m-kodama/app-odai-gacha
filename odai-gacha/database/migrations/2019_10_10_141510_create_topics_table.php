@@ -14,11 +14,12 @@ class CreateTopicsTable extends Migration
     public function up()
     {
         Schema::create('topics', function (Blueprint $table) {
-            $table->bigIncrements('topic_id');
-            $table->bigInteger('gacha_id')->unsigned();
+            $table->char('topic_id', 26);
+            $table->primary('topic_id');
+            $table->char('gacha_id');
             $table->foreign('gacha_id')->references('gacha_id')->on('gacha_master');
             $table->string('topic', 100);
-            $table->bigInteger('rarity_id')->unsigned();
+            $table->char('rarity_id');
             $table->foreign('rarity_id')->references('rarity_id')->on('rarity');
             $table->timestamps();
         });

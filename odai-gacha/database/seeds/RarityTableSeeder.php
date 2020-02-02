@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Ulid\Ulid;
 
 class RarityTableSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class RarityTableSeeder extends Seeder
     {
         DB::table('rarity')->insert([
             [
+                'rarity_id' => '01E02KJWM2PHQT336EEP065X4O',
                 'rarity' => 0,
                 'rarity_name' => 'ノーマル',
                 'probability' => 500,
@@ -20,6 +22,7 @@ class RarityTableSeeder extends Seeder
                 'updated_at' => new DateTime(),
             ],
             [
+                'rarity_id' => '01E02KJWM2PHQT336EEP065X4P',
                 'rarity' => 1,
                 'rarity_name' => 'シルバー',
                 'probability' => 350,
@@ -27,6 +30,7 @@ class RarityTableSeeder extends Seeder
                 'updated_at' => new DateTime(),
             ],
             [
+                'rarity_id' => '01E02KJWM2PHQT336EEP065X4Q',
                 'rarity' => 2,
                 'rarity_name' => 'ゴールド',
                 'probability' => 130,
@@ -34,6 +38,7 @@ class RarityTableSeeder extends Seeder
                 'updated_at' => new DateTime(),
             ],
             [
+                'rarity_id' => '01E02KJWM2PHQT336EEP065X4R',
                 'rarity' => 3,
                 'rarity_name' => 'プラチナ',
                 'probability' => 20,

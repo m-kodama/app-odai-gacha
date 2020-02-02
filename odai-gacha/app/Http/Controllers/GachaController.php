@@ -24,7 +24,6 @@ class GachaController extends Controller
             ->orderBy('gacha_master.gacha_id', 'asc')
             ->orderBy('rarity', 'desc')
             ->get();
-        info($topics);
 
         $odai = array();
         foreach($topics as $topic) {

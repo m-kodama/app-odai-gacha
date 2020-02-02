@@ -13,6 +13,6 @@ class Gacha extends Model
     //hasMany設定
     public function topics()
     {
-        return $this->hasMany('App\Topic');
+        return $this->hasMany('App\Topic', 'gacha_id');
     }
 }

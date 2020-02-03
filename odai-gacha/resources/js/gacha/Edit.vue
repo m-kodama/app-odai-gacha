@@ -60,35 +60,42 @@
                             <!-- レア度 -->
                             <div class="mb-8">
                                 <div class="form-title">レア度</div>
-                                <div class="d-flex align-center mb-4">
-                                    <TextField
-                                        class="flex-grow-1 mr-2"
-                                        dense
-                                        label="レア度の名前"
-                                        disabled
-                                        value="ノーマル"
-                                    />
-                                    <div class="mr-4" style="width:80px;">
-                                        <TextField
-                                            dense
-                                            label="確率"
-                                            suffix="%"
-                                            type="number"
-                                            disabled
-                                            :value="50"
-                                            :clearable="false"
-                                        />
-                                    </div>
-                                    <v-btn
-                                        depressed
-                                        color="#eeeeee"
-                                        class="px-4"
-                                        disabled
-                                    >
-                                        <v-icon color="grey darken-1"
-                                            >mdi-delete-forever</v-icon
-                                        >
-                                    </v-btn>
+                                <div class="mb-4">
+                                    <template v-for="rarity in rarities">
+                                        <div class="d-flex align-center mb-2">
+                                            <TextField
+                                                class="flex-grow-1 mr-2"
+                                                dense
+                                                label="レア度の名前"
+                                                disabled
+                                                :value="rarity.rarity_name"
+                                            />
+                                            <div
+                                                class="mr-4"
+                                                style="width:80px;"
+                                            >
+                                                <TextField
+                                                    dense
+                                                    label="確率"
+                                                    suffix="%"
+                                                    type="number"
+                                                    disabled
+                                                    :value="rarity.probability"
+                                                    :clearable="false"
+                                                />
+                                            </div>
+                                            <v-btn
+                                                depressed
+                                                color="#eeeeee"
+                                                class="px-4"
+                                                disabled
+                                            >
+                                                <v-icon color="grey darken-1"
+                                                    >mdi-delete-forever</v-icon
+                                                >
+                                            </v-btn>
+                                        </div>
+                                    </template>
                                 </div>
                                 <div class="d-flex justify-center">
                                     <v-btn
@@ -105,36 +112,42 @@
                             <!-- お題 -->
                             <div class="mb-8">
                                 <div class="form-title">お題</div>
-                                <v-tabs class="mb-2" height="40">
-                                    <v-tab>ノーマル</v-tab>
-                                    <v-tab>シルバー</v-tab>
-                                    <v-tab>ゴールド</v-tab>
-                                    <v-tab>プラチナ</v-tab>
+                                <v-tabs class="mb-2" height="40" v-model="tab">
+                                    <template v-for="rarity in rarities">
+                                        <v-tab>{{ rarity.rarity_name }}</v-tab>
+                                    </template>
                                 </v-tabs>
-                                <div class="d-flex align-center mb-4">
-                                    <TextField
-                                        class="flex-grow-1 mr-2"
-                                        dense
-                                        label="ガチャを回した時に出る「お題」を入力してください"
-                                    />
-                                    <div
-                                        class="square-button mr-4 d-flex align-center justify-center"
-                                        v-ripple
+                                <v-tabs-items v-model="tab" class="mb-4">
+                                    <v-tab-item
+                                        v-for="rarity in rarities"
+                                        :key="rarity.rarity"
                                     >
-                                        <v-icon color="grey darken-1"
-                                            >mdi-arrow-right</v-icon
-                                        >
-                                    </div>
-                                    <v-btn
-                                        depressed
-                                        color="#eeeeee"
-                                        class="px-4"
-                                    >
-                                        <v-icon color="grey darken-1"
-                                            >mdi-delete-forever</v-icon
-                                        >
-                                    </v-btn>
-                                </div>
+                                        <div class="d-flex align-center mb-2">
+                                            <TextField
+                                                class="flex-grow-1 mr-2"
+                                                dense
+                                                label="ガチャを回した時に出る「お題」を入力してください"
+                                            />
+                                            <div
+                                                class="square-button mr-4 d-flex align-center justify-center"
+                                                v-ripple
+                                            >
+                                                <v-icon color="grey darken-1"
+                                                    >mdi-arrow-right</v-icon
+                                                >
+                                            </div>
+                                            <v-btn
+                                                depressed
+                                                color="#eeeeee"
+                                                class="px-4"
+                                            >
+                                                <v-icon color="grey darken-1"
+                                                    >mdi-delete-forever</v-icon
+                                                >
+                                            </v-btn>
+                                        </div>
+                                    </v-tab-item>
+                                </v-tabs-items>
                                 <div class="d-flex justify-center">
                                     <v-btn
                                         style="width: 50% !important; min-width: 120px; color: #333;"
@@ -239,11 +252,19 @@ export default {
     data: function() {
         return {
             showPassword: false,
+            tab: null,
             gacha: {
                 needUsePass: false,
                 needEditPass: true,
-                needDeletePass: true
-            }
+                needDeletePass: true,
+                topics: []
+            },
+            rarities: [
+                { rarity: 0, rarity_name: "ノーマル", probability: 50 },
+                { rarity: 1, rarity_name: "シルバー", probability: 35 },
+                { rarity: 2, rarity_name: "ゴールド", probability: 13 },
+                { rarity: 3, rarity_name: "プラチナ", probability: 2 }
+            ]
         };
     },
     computed: {

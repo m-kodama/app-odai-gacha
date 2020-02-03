@@ -687,6 +687,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -700,11 +713,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       showPassword: false,
+      tab: null,
       gacha: {
         needUsePass: false,
         needEditPass: true,
-        needDeletePass: true
-      }
+        needDeletePass: true,
+        topics: []
+      },
+      rarities: [{
+        rarity: 0,
+        rarity_name: "ノーマル",
+        probability: 50
+      }, {
+        rarity: 1,
+        rarity_name: "シルバー",
+        probability: 35
+      }, {
+        rarity: 2,
+        rarity_name: "ゴールド",
+        probability: 13
+      }, {
+        rarity: 3,
+        rarity_name: "プラチナ",
+        probability: 2
+      }]
     };
   },
   computed: {
@@ -2451,61 +2483,72 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "d-flex align-center mb-4" },
+                        { staticClass: "mb-4" },
                         [
-                          _c("TextField", {
-                            staticClass: "flex-grow-1 mr-2",
-                            attrs: {
-                              dense: "",
-                              label: "レア度の名前",
-                              disabled: "",
-                              value: "ノーマル"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "mr-4",
-                              staticStyle: { width: "80px" }
-                            },
-                            [
-                              _c("TextField", {
-                                attrs: {
-                                  dense: "",
-                                  label: "確率",
-                                  suffix: "%",
-                                  type: "number",
-                                  disabled: "",
-                                  value: 50,
-                                  clearable: false
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "px-4",
-                              attrs: {
-                                depressed: "",
-                                color: "#eeeeee",
-                                disabled: ""
-                              }
-                            },
-                            [
+                          _vm._l(_vm.rarities, function(rarity) {
+                            return [
                               _c(
-                                "v-icon",
-                                { attrs: { color: "grey darken-1" } },
-                                [_vm._v("mdi-delete-forever")]
+                                "div",
+                                { staticClass: "d-flex align-center mb-2" },
+                                [
+                                  _c("TextField", {
+                                    staticClass: "flex-grow-1 mr-2",
+                                    attrs: {
+                                      dense: "",
+                                      label: "レア度の名前",
+                                      disabled: "",
+                                      value: rarity.rarity_name
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "mr-4",
+                                      staticStyle: { width: "80px" }
+                                    },
+                                    [
+                                      _c("TextField", {
+                                        attrs: {
+                                          dense: "",
+                                          label: "確率",
+                                          suffix: "%",
+                                          type: "number",
+                                          disabled: "",
+                                          value: rarity.probability,
+                                          clearable: false
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "px-4",
+                                      attrs: {
+                                        depressed: "",
+                                        color: "#eeeeee",
+                                        disabled: ""
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { attrs: { color: "grey darken-1" } },
+                                        [_vm._v("mdi-delete-forever")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
                               )
-                            ],
-                            1
-                          )
+                            ]
+                          })
                         ],
-                        1
+                        2
                       ),
                       _vm._v(" "),
                       _c(
@@ -2552,67 +2595,95 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "v-tabs",
-                          { staticClass: "mb-2", attrs: { height: "40" } },
+                          {
+                            staticClass: "mb-2",
+                            attrs: { height: "40" },
+                            model: {
+                              value: _vm.tab,
+                              callback: function($$v) {
+                                _vm.tab = $$v
+                              },
+                              expression: "tab"
+                            }
+                          },
                           [
-                            _c("v-tab", [_vm._v("ノーマル")]),
-                            _vm._v(" "),
-                            _c("v-tab", [_vm._v("シルバー")]),
-                            _vm._v(" "),
-                            _c("v-tab", [_vm._v("ゴールド")]),
-                            _vm._v(" "),
-                            _c("v-tab", [_vm._v("プラチナ")])
+                            _vm._l(_vm.rarities, function(rarity) {
+                              return [
+                                _c("v-tab", [
+                                  _vm._v(_vm._s(rarity.rarity_name))
+                                ])
+                              ]
+                            })
                           ],
-                          1
+                          2
                         ),
                         _vm._v(" "),
                         _c(
-                          "div",
-                          { staticClass: "d-flex align-center mb-4" },
-                          [
-                            _c("TextField", {
-                              staticClass: "flex-grow-1 mr-2",
-                              attrs: {
-                                dense: "",
-                                label:
-                                  "ガチャを回した時に出る「お題」を入力してください"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  { name: "ripple", rawName: "v-ripple" }
+                          "v-tabs-items",
+                          {
+                            staticClass: "mb-4",
+                            model: {
+                              value: _vm.tab,
+                              callback: function($$v) {
+                                _vm.tab = $$v
+                              },
+                              expression: "tab"
+                            }
+                          },
+                          _vm._l(_vm.rarities, function(rarity) {
+                            return _c("v-tab-item", { key: rarity.rarity }, [
+                              _c(
+                                "div",
+                                { staticClass: "d-flex align-center mb-2" },
+                                [
+                                  _c("TextField", {
+                                    staticClass: "flex-grow-1 mr-2",
+                                    attrs: {
+                                      dense: "",
+                                      label:
+                                        "ガチャを回した時に出る「お題」を入力してください"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      directives: [
+                                        { name: "ripple", rawName: "v-ripple" }
+                                      ],
+                                      staticClass:
+                                        "square-button mr-4 d-flex align-center justify-center"
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { attrs: { color: "grey darken-1" } },
+                                        [_vm._v("mdi-arrow-right")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "px-4",
+                                      attrs: { depressed: "", color: "#eeeeee" }
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { attrs: { color: "grey darken-1" } },
+                                        [_vm._v("mdi-delete-forever")]
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
-                                staticClass:
-                                  "square-button mr-4 d-flex align-center justify-center"
-                              },
-                              [
-                                _c(
-                                  "v-icon",
-                                  { attrs: { color: "grey darken-1" } },
-                                  [_vm._v("mdi-arrow-right")]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-btn",
-                              {
-                                staticClass: "px-4",
-                                attrs: { depressed: "", color: "#eeeeee" }
-                              },
-                              [
-                                _c(
-                                  "v-icon",
-                                  { attrs: { color: "grey darken-1" } },
-                                  [_vm._v("mdi-delete-forever")]
-                                )
-                              ],
-                              1
-                            )
-                          ],
+                                1
+                              )
+                            ])
+                          }),
                           1
                         ),
                         _vm._v(" "),

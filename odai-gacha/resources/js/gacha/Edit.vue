@@ -15,17 +15,7 @@
                             <div class="d-flex mb-8">
                                 <div class="flex-grow-1">
                                     <div class="form-title">タイトル</div>
-                                    <v-text-field
-                                        class="mb-8"
-                                        color="accent"
-                                        outlined
-                                        solo
-                                        dense
-                                        flat
-                                        placeholder="タイトル"
-                                        clearable
-                                        hide-details
-                                    ></v-text-field>
+                                    <TextField class="mb-8" label="タイトル" />
                                     <div class="form-title">
                                         このガチャの説明
                                     </div>
@@ -34,7 +24,7 @@
                                         outlined
                                         solo
                                         flat
-                                        placeholder="このガチャの説明や使い方などを入力してください"
+                                        label="このガチャの説明や使い方などを入力してください"
                                         clearable
                                         hide-details
                                     ></v-textarea>
@@ -44,23 +34,23 @@
                                     class="ml-4"
                                 >
                                     <div
-                                        style="border-radius: 4px; background:#F5F0E3; height: 100%; width:100%;"
+                                        style="border-radius: 4px; background:rgba(0,0,0,.12); height: 100%; width:100%; user-select:none;"
                                         class="d-flex flex-column justify-center align-center"
                                     >
                                         <v-icon
-                                            color="grey darken-1"
+                                            color="rgba(0,0,0,.26)"
                                             large
                                             class="mb-3"
                                             >mdi-cloud-upload</v-icon
                                         >
                                         <div
-                                            style="color: #333333; font-size:0.9rem; font-weight: bold;"
+                                            style="color: rgba(0,0,0,.26); font-size:0.9rem; font-weight: bold;"
                                             class="mb-1"
                                         >
                                             サムネイル画像
                                         </div>
                                         <div
-                                            style="color: #757575; font-size:0.7rem;"
+                                            style="color: rgba(0,0,0,.26); font-size:0.7rem;"
                                         >
                                             (960 x 600)
                                         </div>
@@ -70,36 +60,25 @@
                             <!-- レア度 -->
                             <div class="mb-8">
                                 <div class="form-title">レア度</div>
-                                <div class="d-flex align-center">
-                                    <v-text-field
+                                <div class="d-flex align-center mb-4">
+                                    <TextField
                                         class="flex-grow-1 mr-2"
-                                        color="accent"
-                                        outlined
-                                        solo
                                         dense
-                                        flat
-                                        placeholder="レア度の名前"
-                                        clearable
-                                        hide-details
+                                        label="レア度の名前"
                                         disabled
                                         value="ノーマル"
-                                    ></v-text-field>
-                                    <v-text-field
-                                        style="width: 1px !important"
-                                        suffix="%"
-                                        class="mr-4"
-                                        color="accent"
-                                        outlined
-                                        solo
-                                        dense
-                                        flat
-                                        placeholder="確率"
-                                        clearable
-                                        hide-details
-                                        type="number"
-                                        disabled
-                                        value="50"
-                                    ></v-text-field>
+                                    />
+                                    <div class="mr-4" style="width:80px;">
+                                        <TextField
+                                            dense
+                                            label="確率"
+                                            suffix="%"
+                                            type="number"
+                                            disabled
+                                            :value="50"
+                                            :clearable="false"
+                                        />
+                                    </div>
                                     <v-btn
                                         depressed
                                         color="#eeeeee"
@@ -109,6 +88,17 @@
                                         <v-icon color="grey darken-1"
                                             >mdi-delete-forever</v-icon
                                         >
+                                    </v-btn>
+                                </div>
+                                <div class="d-flex justify-center">
+                                    <v-btn
+                                        style="width: 50% !important; min-width: 120px; color: #333;"
+                                        color="secondary"
+                                        rounded
+                                        depressed
+                                        disabled
+                                    >
+                                        <v-icon leff>mdi-plus</v-icon>レア度追加
                                     </v-btn>
                                 </div>
                             </div>
@@ -122,17 +112,11 @@
                                     <v-tab>プラチナ</v-tab>
                                 </v-tabs>
                                 <div class="d-flex align-center mb-4">
-                                    <v-text-field
-                                        class="flex-grow-2 mr-2"
-                                        color="accent"
-                                        outlined
-                                        solo
+                                    <TextField
+                                        class="flex-grow-1 mr-2"
                                         dense
-                                        flat
-                                        placeholder="ガチャを回した時に出る「お題」を入力してください。"
-                                        clearable
-                                        hide-details
-                                    ></v-text-field>
+                                        label="ガチャを回した時に出る「お題」を入力してください"
+                                    />
                                     <div
                                         class="square-button mr-4 d-flex align-center justify-center"
                                         v-ripple
@@ -156,7 +140,6 @@
                                         style="width: 50% !important; min-width: 120px; color: #333;"
                                         color="secondary"
                                         rounded
-                                        flat
                                         depressed
                                     >
                                         <v-icon leff>mdi-plus</v-icon>お題追加
@@ -173,37 +156,37 @@
                                     <div style="width:8px;"></div>
                                     <v-switch
                                         color="primary"
-                                        v-model="needUsePass"
+                                        v-model="gacha.needUsePass"
                                         inset
                                         label="使用"
                                     ></v-switch>
                                     <div style="width:32px;"></div>
                                     <v-switch
                                         color="primary"
-                                        v-model="needEditPass"
+                                        v-model="gacha.needEditPass"
                                         inset
                                         label="編集"
                                     ></v-switch>
                                     <div style="width:32px;"></div>
                                     <v-switch
                                         color="primary"
-                                        v-model="needDeletePass"
+                                        v-model="gacha.needDeletePass"
                                         inset
                                         label="削除"
                                     ></v-switch>
                                 </div>
-                                <v-text-field
-                                    class="flex-grow-1 mb-2"
-                                    color="accent"
-                                    outlined
-                                    solo
-                                    dense
-                                    flat
-                                    placeholder="パスワード"
-                                    clearable
-                                    hide-details
-                                    type="password"
-                                ></v-text-field>
+                                <TextField
+                                    class="mb-2"
+                                    label="パスワード"
+                                    :clearable="false"
+                                    :append-icon="
+                                        showPassword ? 'mdi-eye' : 'mdi-eye-off'
+                                    "
+                                    :type="showPassword ? 'text' : 'password'"
+                                    :clickAppend="
+                                        () => (showPassword = !showPassword)
+                                    "
+                                />
                                 <div
                                     class="pa-2 warning white--text"
                                     style="border-radius: 4px; font-size:0.9rem;"
@@ -243,19 +226,24 @@
 
 <script>
 import Header from "../components/Header";
+import TextField from "../components/TextField";
 
 export default {
     components: {
-        Header
+        Header,
+        TextField
     },
     props: {
         _gachas: String
     },
     data: function() {
         return {
-            needUsePass: false,
-            needEditPass: true,
-            needDeletePass: true
+            showPassword: false,
+            gacha: {
+                needUsePass: false,
+                needEditPass: true,
+                needDeletePass: true
+            }
         };
     },
     computed: {

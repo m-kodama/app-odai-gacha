@@ -192,6 +192,7 @@ export default {
     width: 240px;
 }
 .sidebar-button {
+    user-select: none;
     padding: 0 12px;
     height: 48px;
     width: 48px;

@@ -26,7 +26,7 @@
                     outlined
                     solo
                     flat
-                    placeholder="検索"
+                    label="検索"
                     dense
                     clearable
                     hide-details

@@ -7,9 +7,9 @@
                     ref="mainContent"
                     v-resize="onResize"
                 >
-                <div class="px-2 pb-4" v-if="showInfoCard">
-                  <InfomationCard :onClose="()=>{ showInfoCard=false }"/>
-                </div>
+                    <div class="px-2 pb-4" v-if="showInfoCard">
+                        <InfomationCard :onClose="()=>{ showInfoCard=false }"/>
+                    </div>
                     <div
                         :style="mainCardStyles"
                         class="main-card-wrapper pa-2"
@@ -17,10 +17,13 @@
                         :key="gacha.key"
                     >
                         <!-- // TODO gacah_idに戻す -->
-                        <MainCard :gacha="gacha" />
+                        <MainCard :gacha="gacha" :onGachaUseButtonTap="onGachaUseButtonTap" :onGachaEditButtonTap="onGachaEditButtonTap"/>
                     </div>
                 </div>
             </Header>
+            <v-dialog v-model="showPasswordDialog" max-width="400">
+                <PasswordConfirmCard :onSubmit="onSubmit" />
+            </v-dialog>
         </v-content>
     </v-app>
 </template>
@@ -29,22 +32,24 @@
 import Header from "../components/Header";
 import MainCard from "../components/MainCard";
 import InfomationCard from "../components/InfomationCard";
+import PasswordConfirmCard from "../components/PasswordConfirmCard";
 
 export default {
     components: {
         Header,
         MainCard,
-        InfomationCard
+        InfomationCard,
+        PasswordConfirmCard
     },
     props: {
         _gachas: String
-        
     },
     data: function() {
         return {
             isVisible: true,
             cardWidth: "100%",
             showInfoCard: true,
+            showPasswordDialog: false,
         };
     },
     computed: {
@@ -83,7 +88,16 @@ export default {
         },
         onNavIconTapped() {
             this.onResize();
-        }
+        },
+        onGachaUseButtonTap(gachaId) {
+            this.showPasswordDialog = true;
+        },
+        onGachaEditButtonTap(gachaId) {
+            this.showPasswordDialog = true;
+        },
+        onSubmit(password) {
+            this.showPasswordDialog = false
+        },
     }
 };
 </script>

@@ -505,6 +505,14 @@ __webpack_require__.r(__webpack_exports__);
       image_path: String,
       created_at: Date,
       updated_at: Date
+    },
+    onGachaUseButtonTap: {
+      type: Function,
+      "default": function _default() {}
+    },
+    onGachaEditButtonTap: {
+      type: Function,
+      "default": function _default() {}
     }
   },
   data: function data() {
@@ -515,6 +523,14 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     gachas: function gachas() {
       return JSON.parse(this._gachas);
+    }
+  },
+  methods: {
+    onUseButtonTap: function onUseButtonTap() {
+      this.onGachaUseButtonTap(this.gacha.gacha_id);
+    },
+    onEditButtonTap: function onEditButtonTap() {
+      this.onGachaEditButtonTap(this.gacha.gacha_id);
     }
   }
 });
@@ -2475,7 +2491,7 @@ var render = function() {
                       outlined: "",
                       solo: "",
                       flat: "",
-                      placeholder: "検索",
+                      label: "検索",
                       dense: "",
                       clearable: "",
                       "hide-details": ""
@@ -2898,7 +2914,13 @@ var render = function() {
                     return [
                       _c(
                         "v-btn",
-                        _vm._g({ attrs: { icon: "" } }, on),
+                        _vm._g(
+                          {
+                            attrs: { icon: "" },
+                            on: { click: _vm.onEditButtonTap }
+                          },
+                          on
+                        ),
                         [_c("v-icon", [_vm._v("mdi-circle-edit-outline")])],
                         1
                       )
@@ -2934,11 +2956,8 @@ var render = function() {
             "v-btn",
             {
               staticClass: "flex-grow-1 ml-1",
-              attrs: {
-                depressed: "",
-                color: "primary",
-                href: "./gacha/" + _vm.gacha.gacha_id + "/machine"
-              }
+              attrs: { depressed: "", color: "primary" },
+              on: { click: _vm.onUseButtonTap }
             },
             [_vm._v("起動")]
           )

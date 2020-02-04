@@ -18,7 +18,7 @@
             <div class="flex-grow-1">{{ gacha.gacha_name }}</div>
             <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
+                    <v-btn icon v-on="on" @click="onEditButtonTap">
                         <v-icon>mdi-circle-edit-outline</v-icon>
                     </v-btn>
                 </template>
@@ -34,7 +34,7 @@
                 depressed
                 color="primary"
                 class="flex-grow-1 ml-1"
-                :href="`./gacha/${gacha.gacha_id}/machine`"
+                @click="onUseButtonTap"
                 >起動</v-btn
             >
         </div>
@@ -50,6 +50,14 @@ export default {
             image_path: String,
             created_at: Date,
             updated_at: Date
+        },
+        onGachaUseButtonTap: {
+          type: Function,
+          default: () => {}
+        },
+        onGachaEditButtonTap: {
+          type: Function,
+          default: () => {}
         }
     },
     data: function() {
@@ -60,6 +68,14 @@ export default {
     computed: {
         gachas: function() {
             return JSON.parse(this._gachas);
+        }
+    },
+    methods: {
+        onUseButtonTap() {
+          this.onGachaUseButtonTap(this.gacha.gacha_id);
+        },
+        onEditButtonTap() {
+          this.onGachaEditButtonTap(this.gacha.gacha_id);
         }
     }
 };

@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex flex-column align-center">
     <v-icon color="primary" size="48">{{ icon }}</v-icon>
-    <div class="title my-2">
+    <div class="title-text my-2">
         {{ title }}
     </div>
     <div class='text'>
@@ -22,17 +22,16 @@ export default {
     props: {
         icon: String,
         title: String,
-        text: String    
+        text: String
     },
 }
- 
 </script>
 
 <style scoped>
-.title {
+.title-text {
     font-size: 1.3rem;
     color: #333;
-    font-weight: bold;
+    font-weight: 700;
 }
 .text {
     color: #757575;

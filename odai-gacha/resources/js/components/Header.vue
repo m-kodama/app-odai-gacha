@@ -52,7 +52,7 @@
             <v-btn icon @click="infoDialog = true">
                 <v-icon>mdi-information-outline</v-icon>
             </v-btn>
-            <v-dialog v-model="infoDialog" max-width="700">
+            <v-dialog v-model="infoDialog" max-width="900">
                 <InfomationCard :onClose="()=>{ infoDialog=false }"/>
             </v-dialog>
         </v-app-bar>

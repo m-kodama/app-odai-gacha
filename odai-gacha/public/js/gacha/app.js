@@ -424,6 +424,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -677,7 +683,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.title[data-v-7df58d4a] {\n    font-size: 1.3rem;\n    color: #333;\n    font-weight: bold;\n}\n.text[data-v-7df58d4a] {\n    color: #757575;\n    font-size: 0.8rem;\n    text-align: center;\n    width: 80%;\n}\n", ""]);
+exports.push([module.i, "\n.title-text[data-v-7df58d4a] {\n    font-size: 1.3rem;\n    color: #333;\n    font-weight: 700;\n}\n.text[data-v-7df58d4a] {\n    color: #757575;\n    font-size: 0.8rem;\n    text-align: center;\n    width: 80%;\n}\n", ""]);
 
 // exports
 
@@ -2024,7 +2030,7 @@ var render = function() {
         _vm._v(_vm._s(_vm.icon))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "title my-2" }, [
+      _c("div", { staticClass: "title-text my-2" }, [
         _vm._v("\n        " + _vm._s(_vm.title) + "\n    ")
       ]),
       _vm._v(" "),
@@ -2167,7 +2173,7 @@ var render = function() {
           _c(
             "v-dialog",
             {
-              attrs: { "max-width": "700" },
+              attrs: { "max-width": "900" },
               model: {
                 value: _vm.infoDialog,
                 callback: function($$v) {
@@ -2370,7 +2376,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "d-flex flex-column align-center mb-3" }, [
+      _c("div", { staticClass: "d-flex flex-column align-center mb-4" }, [
         _c(
           "div",
           {
@@ -2386,35 +2392,65 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "d-flex" },
+        "v-row",
+        { attrs: { align: "start" } },
         [
-          _c("Feature", {
-            attrs: {
-              icon: "mdi-currency-usd-off",
-              title: "完全無料！！",
-              text:
-                "このサイトのコンテンツは全て無料で誰でも使用することが可能です。"
-            }
-          }),
+          _c(
+            "v-col",
+            {
+              staticClass: "px-2 py-4",
+              attrs: { cols: "12", xs: "12", sm: "4" }
+            },
+            [
+              _c("Feature", {
+                attrs: {
+                  icon: "mdi-currency-usd-off",
+                  title: "完全無料！！",
+                  text:
+                    "このサイトのコンテンツは全て無料で誰でも使用することが可能です。"
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("Feature", {
-            attrs: {
-              icon: "mdi-battlenet",
-              title: "ガチャ作成・使用",
-              text:
-                "独自のガチャを作成し、遊ぶことができます。公開し世界中に独自のガチャを共有しよう！"
-            }
-          }),
+          _c(
+            "v-col",
+            {
+              staticClass: "px-2 py-4",
+              attrs: { cols: "12", xs: "12", sm: "4" }
+            },
+            [
+              _c("Feature", {
+                attrs: {
+                  icon: "mdi-battlenet",
+                  title: "ガチャ作成・使用",
+                  text:
+                    "独自のガチャを作成し、遊ぶことができます。公開し世界中に独自のガチャを共有しよう！"
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("Feature", {
-            attrs: {
-              icon: "mdi-lock-outline",
-              title: "安心安全",
-              text:
-                "自分が作ったガチャは勝手に変更されたり、削除されることはありません！使用も制限可能"
-            }
-          })
+          _c(
+            "v-col",
+            {
+              staticClass: "px-2 py-4",
+              attrs: { cols: "12", xs: "12", sm: "4" }
+            },
+            [
+              _c("Feature", {
+                attrs: {
+                  icon: "mdi-lock-outline",
+                  title: "安心安全",
+                  text:
+                    "自分が作ったガチャは勝手に変更されたり、削除されることはありません！使用も制限可能"
+                }
+              })
+            ],
+            1
+          )
         ],
         1
       )

@@ -113,7 +113,7 @@
                             <!-- お題 -->
                             <div class="mb-8">
                                 <div class="form-title">お題</div>
-                                <v-tabs class="mb-2" height="40" v-model="tab">
+                                <v-tabs class="mb-4" height="40" v-model="tab">
                                     <template v-for="rarity in rarities">
                                         <v-tab>{{ rarity.rarity_name }}</v-tab>
                                     </template>

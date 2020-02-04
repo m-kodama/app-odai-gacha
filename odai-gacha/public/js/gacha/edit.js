@@ -3219,7 +3219,7 @@ var render = function() {
                               _c(
                                 "v-tabs",
                                 {
-                                  staticClass: "mb-2",
+                                  staticClass: "mb-4",
                                   attrs: { height: "40" },
                                   model: {
                                     value: _vm.tab,

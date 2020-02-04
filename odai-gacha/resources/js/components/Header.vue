@@ -8,10 +8,12 @@
                 class="d-none d-sm-block"
             ></v-app-bar-nav-icon>
             <div class="d-flex logo">
+              <a class="d-flex" href="/gacha">
                 <v-img src="../img/logo_icon.png" max-width="30"></v-img>
                 <v-toolbar-title class="primary--text font-weight-bold"
                     >お題ガチャ</v-toolbar-title
                 >
+              </a>
             </div>
             <v-spacer></v-spacer>
             <div
@@ -165,6 +167,13 @@ export default {
 .compact-form {
     transform: scale(0.9);
     transform-origin: left;
+}
+.logo {
+  user-select: none;
+  cursor: pointer;
+}
+.logo > a {
+  text-decoration: none;
 }
 .search-bar {
     display: flex;

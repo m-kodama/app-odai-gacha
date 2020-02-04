@@ -2724,7 +2724,7 @@ var render = function() {
           _vm._v(" "),
           _c("Feature", {
             attrs: {
-              icon: "mdi-lock",
+              icon: "mdi-lock-outline",
               title: "安心安全",
               text:
                 "自分が作ったガチャは勝手に変更されたり、削除されることはありません！使用も制限可能"

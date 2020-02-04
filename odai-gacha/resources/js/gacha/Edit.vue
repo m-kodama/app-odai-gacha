@@ -10,6 +10,7 @@
                                 削除
                             </v-btn>
                         </div>
+                        <v-form v-model="valid" autocomplete="off">
                         <div class="card-content">
                             <!-- タイトル・説明・サムネイル画像s -->
                             <div class="d-flex mb-8">
@@ -230,6 +231,7 @@
                                 作成
                             </v-btn>
                         </div>
+                        </v-form>
                     </v-card>
                 </div>
             </Header>
@@ -251,6 +253,7 @@ export default {
     },
     data: function() {
         return {
+            valid: false,
             showPassword: false,
             tab: null,
             gacha: {

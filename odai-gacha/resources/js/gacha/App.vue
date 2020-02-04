@@ -7,6 +7,9 @@
                     ref="mainContent"
                     v-resize="onResize"
                 >
+                <div class="px-2 pb-4" v-if="showInfoCard">
+                  <InfomationCard :onClose="()=>{ showInfoCard=false }"/>
+                </div>
                     <div
                         :style="mainCardStyles"
                         class="main-card-wrapper pa-2"
@@ -25,19 +28,23 @@
 <script>
 import Header from "../components/Header";
 import MainCard from "../components/MainCard";
+import InfomationCard from "../components/InfomationCard";
 
 export default {
     components: {
         Header,
-        MainCard
+        MainCard,
+        InfomationCard
     },
     props: {
         _gachas: String
+        
     },
     data: function() {
         return {
             isVisible: true,
-            cardWidth: "100%"
+            cardWidth: "100%",
+            showInfoCard: true,
         };
     },
     computed: {

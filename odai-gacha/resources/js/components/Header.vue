@@ -51,7 +51,7 @@
                 <v-icon>mdi-information-outline</v-icon>
             </v-btn>
             <v-dialog v-model="infoDialog" max-width="700">
-                <v-card>がちゃです</v-card>
+                <InfomationCard :onClose="()=>{ infoDialog=false }"/>
             </v-dialog>
         </v-app-bar>
         <!-- 検索バー（スマホサイズのみ） -->
@@ -93,6 +93,7 @@
                     class="sidebar-button"
                     :class="{ expand: isSidebarExpanded }"
                     v-ripple
+                    @click="infoDialog = true"
                 >
                     <v-icon left>mdi-information-outline</v-icon>
                     <span v-if="isSidebarExpanded">本サイトについて</span>
@@ -124,7 +125,11 @@
 </template>
 
 <script>
+import InfomationCard from "./InfomationCard";
 export default {
+      components: {
+        InfomationCard
+    },
     props: {
         onNavIconTapped: {
             type: Function,

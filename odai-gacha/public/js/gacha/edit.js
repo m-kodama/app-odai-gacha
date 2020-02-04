@@ -879,6 +879,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -898,7 +919,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         needUsePass: false,
         needEditPass: true,
         needDeletePass: true,
-        topics: []
+        topics: {}
       },
       rarities: [{
         rarity: 0,
@@ -934,8 +955,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return gachas;
     }
   },
+  mounted: function mounted() {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = this.rarities[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var rarity = _step.value;
+        this.gacha.topics[rarity.rarity] = [""];
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  },
   methods: {
-    onSubmit: function onSubmit() {}
+    onSubmit: function onSubmit() {},
+    addOdai: function addOdai() {
+      this.gacha.topics[this.tab].push("");
+    }
   }
 });
 
@@ -1068,7 +1117,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n", ""]);
+exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n.v-list-item__title[data-v-b6f307d6] {\n    font-size: 0.9rem !important;\n}\n", ""]);
 
 // exports
 
@@ -3249,6 +3298,10 @@ var render = function() {
                                 "v-tabs-items",
                                 {
                                   staticClass: "mb-4",
+                                  staticStyle: {
+                                    "max-height": "500px",
+                                    overflow: "scroll"
+                                  },
                                   model: {
                                     value: _vm.tab,
                                     callback: function($$v) {
@@ -3262,74 +3315,163 @@ var render = function() {
                                     "v-tab-item",
                                     { key: rarity.rarity },
                                     [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "d-flex align-center mb-2"
-                                        },
-                                        [
-                                          _c("TextField", {
-                                            staticClass: "flex-grow-1 mr-2",
-                                            attrs: {
-                                              dense: "",
-                                              label:
-                                                "ガチャを回した時に出る「お題」を入力してください"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "ripple",
-                                                  rawName: "v-ripple"
-                                                }
+                                      _vm._l(
+                                        _vm.gacha.topics[rarity.rarity],
+                                        function(topic) {
+                                          return [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "d-flex align-center mb-2"
+                                              },
+                                              [
+                                                _c("TextField", {
+                                                  staticClass:
+                                                    "flex-grow-1 mr-2",
+                                                  attrs: {
+                                                    dense: "",
+                                                    label:
+                                                      "ガチャを回した時に出る「お題」を入力してください"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-menu",
+                                                  {
+                                                    attrs: {
+                                                      transition:
+                                                        "slide-x-transition",
+                                                      bottom: "",
+                                                      left: ""
+                                                    },
+                                                    scopedSlots: _vm._u(
+                                                      [
+                                                        {
+                                                          key: "activator",
+                                                          fn: function(ref) {
+                                                            var on = ref.on
+                                                            return [
+                                                              _c(
+                                                                "div",
+                                                                _vm._g(
+                                                                  {
+                                                                    directives: [
+                                                                      {
+                                                                        name:
+                                                                          "ripple",
+                                                                        rawName:
+                                                                          "v-ripple"
+                                                                      }
+                                                                    ],
+                                                                    staticClass:
+                                                                      "square-button mr-4 d-flex align-center justify-center"
+                                                                  },
+                                                                  on
+                                                                ),
+                                                                [
+                                                                  _c(
+                                                                    "v-icon",
+                                                                    {
+                                                                      attrs: {
+                                                                        color:
+                                                                          "grey darken-1"
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        "mdi-arrow-right"
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                ],
+                                                                1
+                                                              )
+                                                            ]
+                                                          }
+                                                        }
+                                                      ],
+                                                      null,
+                                                      true
+                                                    )
+                                                  },
+                                                  [
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-list",
+                                                      _vm._l(
+                                                        _vm.rarities,
+                                                        function(rarity, i) {
+                                                          return _c(
+                                                            "v-list-item",
+                                                            {
+                                                              key: i,
+                                                              staticStyle: {
+                                                                "font-size":
+                                                                  "0.5rerm"
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {}
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-list-item-title",
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      rarity.rarity_name
+                                                                    )
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          )
+                                                        }
+                                                      ),
+                                                      1
+                                                    )
+                                                  ],
+                                                  1
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    staticClass: "px-4",
+                                                    attrs: {
+                                                      depressed: "",
+                                                      color: "#eeeeee"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      {
+                                                        attrs: {
+                                                          color: "grey darken-1"
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "mdi-delete-forever"
+                                                        )
+                                                      ]
+                                                    )
+                                                  ],
+                                                  1
+                                                )
                                               ],
-                                              staticClass:
-                                                "square-button mr-4 d-flex align-center justify-center"
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  attrs: {
-                                                    color: "grey darken-1"
-                                                  }
-                                                },
-                                                [_vm._v("mdi-arrow-right")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              staticClass: "px-4",
-                                              attrs: {
-                                                depressed: "",
-                                                color: "#eeeeee"
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  attrs: {
-                                                    color: "grey darken-1"
-                                                  }
-                                                },
-                                                [_vm._v("mdi-delete-forever")]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
+                                              1
+                                            )
+                                          ]
+                                        }
                                       )
-                                    ]
+                                    ],
+                                    2
                                   )
                                 }),
                                 1
@@ -3351,7 +3493,8 @@ var render = function() {
                                         color: "secondary",
                                         rounded: "",
                                         depressed: ""
-                                      }
+                                      },
+                                      on: { click: _vm.addOdai }
                                     },
                                     [
                                       _c("v-icon", { attrs: { leff: "" } }, [

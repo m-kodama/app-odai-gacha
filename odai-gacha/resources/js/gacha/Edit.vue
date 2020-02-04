@@ -118,25 +118,44 @@
                                         <v-tab>{{ rarity.rarity_name }}</v-tab>
                                     </template>
                                 </v-tabs>
-                                <v-tabs-items v-model="tab" class="mb-4">
+                                <v-tabs-items v-model="tab" class="mb-4" style="max-height:500px; overflow:scroll;">
                                     <v-tab-item
                                         v-for="rarity in rarities"
                                         :key="rarity.rarity"
                                     >
+                                        <template v-for="topic in gacha.topics[rarity.rarity]">
                                         <div class="d-flex align-center mb-2">
                                             <TextField
                                                 class="flex-grow-1 mr-2"
                                                 dense
                                                 label="ガチャを回した時に出る「お題」を入力してください"
                                             />
-                                            <div
-                                                class="square-button mr-4 d-flex align-center justify-center"
-                                                v-ripple
+                                            <v-menu
+                                                transition="slide-x-transition"
+                                                bottom
+                                                left
                                             >
-                                                <v-icon color="grey darken-1"
-                                                    >mdi-arrow-right</v-icon
-                                                >
-                                            </div>
+                                                <template v-slot:activator="{ on }">
+                                                    <div
+                                                        class="square-button mr-4 d-flex align-center justify-center"
+                                                        v-ripple
+                                                        v-on="on"
+                                                    >
+                                                        <v-icon color="grey darken-1">mdi-arrow-right</v-icon
+                                                        >
+                                                    </div>
+                                                </template>
+                                                <v-list>
+                                                    <v-list-item
+                                                    style="font-size:0.5rerm;"
+                                                    v-for="(rarity, i) in rarities"
+                                                    :key="i"
+                                                    @click=""
+                                                    >
+                                                    <v-list-item-title>{{ rarity.rarity_name }}</v-list-item-title>
+                                                    </v-list-item>
+                                                </v-list>
+                                            </v-menu>
                                             <v-btn
                                                 depressed
                                                 color="#eeeeee"
@@ -147,6 +166,7 @@
                                                 >
                                             </v-btn>
                                         </div>
+                                        </template>
                                     </v-tab-item>
                                 </v-tabs-items>
                                 <div class="d-flex justify-center">
@@ -155,6 +175,7 @@
                                         color="secondary"
                                         rounded
                                         depressed
+                                        @click="addOdai"
                                     >
                                         <v-icon leff>mdi-plus</v-icon>お題追加
                                     </v-btn>
@@ -260,7 +281,7 @@ export default {
                 needUsePass: false,
                 needEditPass: true,
                 needDeletePass: true,
-                topics: []
+                topics: {},
             },
             rarities: [
                 { rarity: 0, rarity_name: "ノーマル", probability: 50 },
@@ -281,8 +302,16 @@ export default {
             return gachas;
         }
     },
+    mounted() {
+        for (const rarity of this.rarities) {
+            this.gacha.topics[rarity.rarity] = [""];
+        }
+    },
     methods: {
-        onSubmit() {}
+        onSubmit() {},
+        addOdai() {
+            this.gacha.topics[this.tab].push("");
+        }
     }
 };
 </script>
@@ -319,5 +348,8 @@ export default {
     border-radius: 4px;
     cursor: pointer;
     border: solid 1px #aeaeae;
+}
+.v-list-item__title {
+    font-size: 0.9rem !important;
 }
 </style>

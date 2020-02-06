@@ -50,6 +50,7 @@ export default {
             cardWidth: "100%",
             showInfoCard: true,
             showPasswordDialog: false,
+            selectedGachaId: null,
         };
     },
     computed: {
@@ -90,13 +91,23 @@ export default {
             this.onResize();
         },
         onGachaUseButtonTap(gachaId) {
+            this.selectedGachaId = gachaId;
             this.showPasswordDialog = true;
         },
         onGachaEditButtonTap(gachaId) {
             this.showPasswordDialog = true;
         },
-        onSubmit(password) {
-            this.showPasswordDialog = false
+        onSubmit: async function(password) {
+            const request = { password };
+            await axios.post(`/gacha/${this.selectedGachaId}/auth`, request)
+                .then((res) => {
+                    console.log(res);
+                    this.showPasswordDialog = false;
+                    // window.location.href = `/gacha/${res.gacha_id}/machine`;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
     }
 };

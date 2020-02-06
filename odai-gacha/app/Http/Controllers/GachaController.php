@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Hash;
 
 use App\Gacha;
 
@@ -74,6 +76,14 @@ class GachaController extends Controller
     public function edit($gachaId) {
         $gacha = Gacha::findOrFail($gachaId);
         return view('gacha/edit', compact('gacha'));
+    }
+
+    public function auth(Request $request, $gachaId) {
+        $gacha = Gacha::findOrFail($gachaId);
+         if(Hash::check($request->password, $gacha->password)){
+            return $gacha->gacha_id;
+        }
+        return false;
     }
 }
 

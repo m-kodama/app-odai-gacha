@@ -3,6 +3,7 @@ import App from "./App.vue";
 import "@mdi/font/css/materialdesignicons.css";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
+import "../bootstrap";
 
 Vue.use(Vuetify);
 

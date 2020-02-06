@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,3 +22,5 @@ Route::post('/gacha', 'GachaController@createGachaDetail');
 Route::put('/gacha/{gachaId}', 'GachaController@updateGacha');
 Route::delete('/gacha/{gachaId}', 'GachaController@deleteGacha');
 Route::get('/gacha/{gachaId}/machine', 'GachaController@getMachine');
+// api TODO 別ファイルに分ける
+Route::post('/gacha/{gachaId}/auth', 'GachaController@auth');

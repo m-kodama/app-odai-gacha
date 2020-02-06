@@ -36,7 +36,7 @@ export default {
   props: {
       onSubmit: {
         type: Function,
-        default: () => {}
+        default: async () => {}
       }
     },
     data: function() {
@@ -48,9 +48,8 @@ export default {
     methods: {
         async onTap() {
           this.loading = true;
-          await new Promise(r => setTimeout(r, 1000));
+          await this.onSubmit(this.password);
           this.loading = false;
-          this.onSubmit();
         }
     }
 };

@@ -99,16 +99,13 @@ export default {
             this.showPasswordDialog = true;
         },
         onSubmit: async function(password) {
-            const request = { password };
-            await axios.post(`/gacha/${this.selectedGachaId}/auth`, request)
+            const request = { password, type: 0 };
+            return await axios.post(`/gacha/${this.selectedGachaId}/auth`, request)
             .then((res) => {
-                console.log(res.data);
-                this.showPasswordDialog = false;
                 window.location.href = `/gacha/${res.data}/machine`;
                 return true;
             })
             .catch((error) => {
-                console.log(error);
                 return false;
             })
         },

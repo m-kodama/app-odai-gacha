@@ -54,6 +54,7 @@ export default {
         async onTap() {
           this.loading = true;
           this.isSuccess = await this.onSubmit(this.password);
+          console.log("aaa: " + this.isSuccess);
           this.loading = false;
         },
         reset() {

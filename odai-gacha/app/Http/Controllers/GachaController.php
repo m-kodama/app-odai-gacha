@@ -13,8 +13,6 @@ use App\Gacha;
 class GachaController extends Controller
 {
     public function index(Request $request) {//一覧
-        // TODO 一時的にセッションリセットをいれる
-        // $request->session()->flush();
         $gachas = Gacha::all();
         return view('gacha/index', compact('gachas'));
     }
@@ -34,7 +32,7 @@ class GachaController extends Controller
             ->select(DB::raw('gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability'))
             ->join('topics', 'topics.gacha_id', '=', 'gacha_master.gacha_id')
             ->join('rarity', 'rarity.rarity_id', '=', 'topics.rarity_id')
-            ->where('gacha_master.gacha_id', $gachaId)// TODO 大丈夫？SQLインジェクション？
+            ->where('gacha_master.gacha_id', $gachaId)
             ->orderBy('gacha_master.gacha_id', 'asc')
             ->orderBy('rarity', 'desc')
             ->get();
@@ -102,27 +100,33 @@ class GachaController extends Controller
         });
 
         if(Hash::check($request->password, $gacha->password)){
-            array_push($authedGacha['use'], $gachaId);
+            $type = null;
+            switch ($request->type) {
+                case 0:
+                    $type = 'use';
+                    break;
+                case 1:
+                    $type = 'edit';
+                    break;
+                case 2:
+                    $type = 'delete';
+                    break;
+                default:
+                    break;
+            }
+            if (is_null($type)) {
+                abort(400);
+            }
+            array_push($authedGacha[$type], $gachaId);
             $request->session()->put('authedGacha', $authedGacha);
             return $gacha->gacha_id;
         }
-        return false;
+        abort(400);
     }
 
 }
 
 /*
-http://localhost:3000/gacha/01E02KJWM2PHQT336EEP065X4N/machine
-
-Undefined variable: gacha_id {"exception":"[object] (ErrorException(code: 0): Undefined variable: gacha_id at /var/www/html/odai-gacha/app/Http/Controllers/GachaController.php:107)
-[stacktrace]
-
-Trying to get property 'use' of non-object {"exception":"[object] (ErrorException(code: 0): Trying to get property 'use' of non-object at /var/www/html/odai-gacha/app/Http/Controllers/GachaController.php:26)
-[stacktrace]
-
-[{"gacha_id":1,"gacha_name":"シンクロナイズドシンキング","topic":"最近イラついたこと","rarity":0,"probability":500},.....] 
-
-
 $odai = array(
     array(
         'rarity' => 3,

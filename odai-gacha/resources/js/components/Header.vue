@@ -98,7 +98,7 @@
                     @click="infoDialog = true"
                 >
                     <v-icon left>mdi-information-outline</v-icon>
-                    <span v-if="isSidebarExpanded">本サイトについて</span>
+                    <span v-if="isSidebarExpanded">このサイトについて</span>
                 </div>
             </div>
         </div>

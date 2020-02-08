@@ -4488,7 +4488,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm.isSidebarExpanded
-                  ? _c("span", [_vm._v("本サイトについて")])
+                  ? _c("span", [_vm._v("このサイトについて")])
                   : _vm._e()
               ],
               1

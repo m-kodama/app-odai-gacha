@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect('/gacha');
 });
 Route::get('/gacha', 'GachaController@index');
 Route::get('/gacha/{gachaId}/edit', 'GachaController@edit');

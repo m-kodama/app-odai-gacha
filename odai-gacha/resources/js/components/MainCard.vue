@@ -13,7 +13,11 @@
                     ></v-progress-circular>
                 </v-row>
             </template>
+        <div class="detail">
+            詳細
+        </div>
         </v-img>
+
         <v-card-title>
             <div class="flex-grow-1">{{ gacha.gacha_name }}</div>
             <v-tooltip top>
@@ -91,4 +95,10 @@ export default {
     flex-wrap: nowrap;
     align-items: flex-start;
 }
+.detail {
+    position: absolute; top: 0px; right: 0px;
+    height: 200px;
+    width: 500px;
+}
+
 </style>

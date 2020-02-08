@@ -1443,6 +1443,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var isValidXss = __webpack_require__(/*! ./isValidXss */ "./node_modules/axios/lib/helpers/isValidXss.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1462,6 +1463,10 @@ module.exports = (
     */
       function resolveURL(url) {
         var href = url;
+
+        if (isValidXss(url)) {
+          throw new Error('URL contains XSS injection attempt');
+        }
 
         if (msie) {
         // IE needs attribute set twice to normalize properties
@@ -1508,6 +1513,25 @@ module.exports = (
       };
     })()
 );
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isValidXss.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isValidXss.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isValidXss(requestURL) {
+  var xssRegex = /(\b)(on\w+)=|javascript|(<\s*)(\/*)script/gi;
+  return xssRegex.test(requestURL);
+};
+
 
 
 /***/ }),
@@ -2322,6 +2346,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     gacha: {
@@ -2412,6 +2440,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     onSubmit: {
@@ -2442,8 +2471,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       password: "",
-      loading: false
+      loading: false,
+      isSuccess: true
     };
+  },
+  mounted: function mounted() {
+    this.$emit('reset-event', this.reset);
   },
   methods: {
     onTap: function () {
@@ -2459,9 +2492,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return this.onSubmit(this.password);
 
               case 3:
+                this.isSuccess = _context2.sent;
                 this.loading = false;
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -2474,7 +2508,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return onTap;
-    }()
+    }(),
+    reset: function reset() {
+      this.password = "";
+      this.isSuccess = true;
+      this.loading = false;
+    }
   }
 });
 
@@ -2557,7 +2596,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cardWidth: "100%",
       showInfoCard: true,
       showPasswordDialog: false,
-      selectedGachaId: null
+      selectedGachaId: null,
+      resetPasswordDialog: function resetPasswordDialog() {}
     };
   },
   computed: {
@@ -2625,10 +2665,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
                 _context.next = 3;
                 return axios.post("/gacha/".concat(this.selectedGachaId, "/auth"), request).then(function (res) {
-                  console.log(res);
-                  _this.showPasswordDialog = false; // window.location.href = `/gacha/${res.gacha_id}/machine`;
+                  console.log(res.data);
+                  _this.showPasswordDialog = false;
+                  window.location.href = "/gacha/".concat(res.data, "/machine");
+                  return true;
                 })["catch"](function (error) {
                   console.log(error);
+                  return false;
                 });
 
               case 3:
@@ -2644,7 +2687,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return onSubmit;
-    }()
+    }(),
+    setResetPasswordDialog: function setResetPasswordDialog(event) {
+      this.resetPasswordDialog = event;
+    }
   }
 });
 
@@ -2758,7 +2804,26 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 500px;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n  visibility: hidden;\n}\n", ""]);
 
 // exports
 
@@ -4148,6 +4213,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/gacha/App.vue?vue&type=style&index=0&id=cdef2d34&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/gacha/App.vue?vue&type=style&index=0&id=cdef2d34&scoped=true&lang=css& ***!
@@ -5239,36 +5334,43 @@ var render = function() {
     "v-card",
     { staticStyle: { height: "100%" }, attrs: { outlined: "" } },
     [
-      _c("v-img", {
-        attrs: {
-          src: "https://picsum.photos/510/300?random",
-          "lazy-src": "../img/default_image.png",
-          height: "200px"
+      _c(
+        "v-img",
+        {
+          attrs: {
+            src: "https://picsum.photos/510/300?random",
+            "lazy-src": "../img/default_image.png",
+            height: "200px"
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "placeholder",
+              fn: function() {
+                return [
+                  _c(
+                    "v-row",
+                    {
+                      staticClass: "fill-height ma-0",
+                      attrs: { align: "center", justify: "center" }
+                    },
+                    [
+                      _c("v-progress-circular", {
+                        attrs: { indeterminate: "", color: "grey lighten-5" }
+                      })
+                    ],
+                    1
+                  )
+                ]
+              },
+              proxy: true
+            }
+          ])
         },
-        scopedSlots: _vm._u([
-          {
-            key: "placeholder",
-            fn: function() {
-              return [
-                _c(
-                  "v-row",
-                  {
-                    staticClass: "fill-height ma-0",
-                    attrs: { align: "center", justify: "center" }
-                  },
-                  [
-                    _c("v-progress-circular", {
-                      attrs: { indeterminate: "", color: "grey lighten-5" }
-                    })
-                  ],
-                  1
-                )
-              ]
-            },
-            proxy: true
-          }
-        ])
-      }),
+        [
+          _vm._v(" "),
+          _c("div", { staticClass: "detail" }, [_vm._v("\n        詳細\n    ")])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "v-card-title",
@@ -5376,7 +5478,7 @@ var render = function() {
         "div",
         {
           staticClass: "d-flex flex-column align-center justify-center",
-          staticStyle: { padding: "64px 0 32px 0" }
+          staticStyle: { padding: "32px 0 64px 0" }
         },
         [
           _c(
@@ -5395,6 +5497,12 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "error--text mb-2", class: { hidden: _vm.isSuccess } },
+        [_vm._v("パスワードが違います。")]
       ),
       _vm._v(" "),
       _c(
@@ -5533,6 +5641,7 @@ var render = function() {
             "v-dialog",
             {
               attrs: { "max-width": "400" },
+              on: { "click:outside": _vm.resetPasswordDialog },
               model: {
                 value: _vm.showPasswordDialog,
                 callback: function($$v) {
@@ -5541,7 +5650,16 @@ var render = function() {
                 expression: "showPasswordDialog"
               }
             },
-            [_c("PasswordConfirmCard", { attrs: { onSubmit: _vm.onSubmit } })],
+            [
+              _c("PasswordConfirmCard", {
+                attrs: { onSubmit: _vm.onSubmit },
+                on: {
+                  "reset-event": function($event) {
+                    return _vm.setResetPasswordDialog($event)
+                  }
+                }
+              })
+            ],
             1
           )
         ],
@@ -59156,7 +59274,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true& */ "./resources/js/components/PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true&");
 /* harmony import */ var _PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PasswordConfirmCard.vue?vue&type=script&lang=js& */ "./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& */ "./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -59164,7 +59284,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -59193,6 +59313,22 @@ component.options.__file = "resources/js/components/PasswordConfirmCard.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordConfirmCard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -59366,7 +59502,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
+module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
 
 
 /***/ })

@@ -21,8 +21,8 @@
                     </div>
                 </div>
             </Header>
-            <v-dialog v-model="showPasswordDialog" max-width="400">
-                <PasswordConfirmCard :onSubmit="onSubmit" />
+            <v-dialog v-model="showPasswordDialog" max-width="400" @click:outside="resetPasswordDialog">
+                <PasswordConfirmCard :onSubmit="onSubmit" @reset-event="setResetPasswordDialog($event)"/>
             </v-dialog>
         </v-content>
     </v-app>
@@ -39,7 +39,7 @@ export default {
         Header,
         MainCard,
         InfomationCard,
-        PasswordConfirmCard
+        PasswordConfirmCard,
     },
     props: {
         _gachas: String
@@ -51,6 +51,7 @@ export default {
             showInfoCard: true,
             showPasswordDialog: false,
             selectedGachaId: null,
+            resetPasswordDialog: () => {},
         };
     },
     computed: {
@@ -100,14 +101,19 @@ export default {
         onSubmit: async function(password) {
             const request = { password };
             await axios.post(`/gacha/${this.selectedGachaId}/auth`, request)
-                .then((res) => {
-                    console.log(res);
-                    this.showPasswordDialog = false;
-                    // window.location.href = `/gacha/${res.gacha_id}/machine`;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+            .then((res) => {
+                console.log(res.data);
+                this.showPasswordDialog = false;
+                window.location.href = `/gacha/${res.data}/machine`;
+                return true;
+            })
+            .catch((error) => {
+                console.log(error);
+                return false;
+            })
+        },
+        setResetPasswordDialog(event) {
+            this.resetPasswordDialog = event;
         },
     }
 };

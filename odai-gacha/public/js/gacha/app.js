@@ -2417,6 +2417,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     onSubmit: {
@@ -2448,8 +2461,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       password: "",
       loading: false,
-      isSuccess: true
+      isSuccess: null,
+      isVibration: false
     };
+  },
+  computed: {
+    isHiddenErrorMesssage: function isHiddenErrorMesssage() {
+      return this.isSuccess || this.isSuccess === null;
+    }
   },
   mounted: function mounted() {
     this.$emit('reset-event', this.reset);
@@ -2469,10 +2488,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 this.isSuccess = _context2.sent;
-                console.log("aaa: " + this.isSuccess);
                 this.loading = false;
 
-              case 6:
+                if (this.isSuccess) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                this.isVibration = true;
+                _context2.next = 9;
+                return new Promise(function (r) {
+                  return setTimeout(r, 200);
+                });
+
+              case 9:
+                this.isVibration = false;
+
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -2488,7 +2520,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     reset: function reset() {
       this.password = "";
-      this.isSuccess = true;
+      this.isSuccess = null;
       this.loading = false;
     }
   }
@@ -2553,6 +2585,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2574,6 +2609,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showInfoCard: true,
       showPasswordDialog: false,
       selectedGachaId: null,
+      authType: null,
       resetPasswordDialog: function resetPasswordDialog() {}
     };
   },
@@ -2621,9 +2657,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     onGachaUseButtonTap: function onGachaUseButtonTap(gachaId) {
       this.selectedGachaId = gachaId;
+      this.authType = 0;
       this.showPasswordDialog = true;
     },
     onGachaEditButtonTap: function onGachaEditButtonTap(gachaId) {
+      this.selectedGachaId = gachaId;
+      this.authType = 1;
       this.showPasswordDialog = true;
     },
     onSubmit: function () {
@@ -2637,7 +2676,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 0:
                 request = {
                   password: password,
-                  type: 0
+                  type: this.authType
                 };
                 _context.next = 3;
                 return axios.post("/gacha/".concat(this.selectedGachaId, "/auth"), request).then(function (res) {
@@ -2799,7 +2838,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n  visibility: hidden;\n}\n", ""]);
+exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n  visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n  animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n    transform: translateX(0px);\n}\n33% {\n    transform: translateX(10px);\n}\n66% {\n    transform: translateX(-8px);\n}\n100% {\n    transform: translateX(4px);\n}\n}\n", ""]);
 
 // exports
 
@@ -5450,81 +5489,140 @@ var render = function() {
       attrs: { outlined: "" }
     },
     [
-      _c(
-        "div",
-        {
-          staticClass: "d-flex flex-column align-center justify-center",
-          staticStyle: { padding: "32px 0 64px 0" }
-        },
-        [
-          _c(
-            "v-icon",
-            { staticClass: "mb-2", attrs: { color: "primary", size: "48" } },
-            [_vm._v("mdi-lock-outline")]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
+      _vm.isSuccess
+        ? _c(
+            "div",
             {
-              staticClass: "primary--text",
-              staticStyle: { "font-weight": "700", "font-size": "1.2rem" }
+              staticClass: "d-flex flex-column align-center justify-center",
+              staticStyle: { padding: "32px 0 64px 0" }
             },
-            [_vm._v("ロックされています")]
+            [
+              _c(
+                "v-icon",
+                {
+                  staticClass: "mb-2 lock-icon",
+                  attrs: { color: "accent", size: "48" }
+                },
+                [_vm._v("mdi-lock-open-variant-outline")]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "accent--text",
+                  staticStyle: { "font-weight": "700", "font-size": "1.2rem" }
+                },
+                [_vm._v("ロックを解除しました")]
+              )
+            ],
+            1
           )
-        ],
-        1
-      ),
+        : _c(
+            "div",
+            {
+              staticClass: "d-flex flex-column align-center justify-center",
+              staticStyle: { padding: "32px 0 64px 0" }
+            },
+            [
+              _c(
+                "v-icon",
+                {
+                  staticClass: "mb-2 lock-icon",
+                  class: { vibration: _vm.isVibration },
+                  attrs: { color: "primary", size: "48" }
+                },
+                [_vm._v("mdi-lock-outline")]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "primary--text",
+                  staticStyle: { "font-weight": "700", "font-size": "1.2rem" }
+                },
+                [_vm._v("ロックされています")]
+              )
+            ],
+            1
+          ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "error--text mb-2", class: { hidden: _vm.isSuccess } },
+        {
+          staticClass: "error--text mb-2",
+          class: { hidden: _vm.isHiddenErrorMesssage }
+        },
         [_vm._v("パスワードが違います。")]
       ),
       _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "d-flex", staticStyle: { width: "100%" } },
+        "form",
+        {
+          staticClass: "d-flex flex-column align-center",
+          staticStyle: { width: "100%" },
+          attrs: { action: "#" }
+        },
         [
-          _c("v-text-field", {
-            staticClass: "mb-4 flex-grow-1",
-            attrs: {
-              color: "accent",
-              outlined: "",
-              solo: "",
-              flat: "",
-              label: "パスワード",
-              clearable: "",
-              "hide-details": "",
-              type: "password"
-            },
-            model: {
-              value: _vm.password,
-              callback: function($$v) {
-                _vm.password = $$v
+          _c(
+            "div",
+            { staticClass: "d-flex", staticStyle: { width: "100%" } },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-4 flex-grow-1",
+                attrs: {
+                  color: "accent",
+                  outlined: "",
+                  solo: "",
+                  flat: "",
+                  label: "パスワード",
+                  clearable: "",
+                  "hide-details": "",
+                  type: "password",
+                  disabled: _vm.loading
+                },
+                model: {
+                  value: _vm.password,
+                  callback: function($$v) {
+                    _vm.password = $$v
+                  },
+                  expression: "password"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              staticStyle: {
+                width: "200px !important",
+                transition: "all 0.2s ease-in-out"
               },
-              expression: "password"
-            }
-          })
+              attrs: {
+                depressed: "",
+                color: "accent",
+                large: "",
+                loading: _vm.loading,
+                disabled: !_vm.password
+              },
+              on: { click: _vm.onTap }
+            },
+            [
+              _vm.isSuccess
+                ? [
+                    _c("v-icon", { attrs: { color: "white", size: "24" } }, [
+                      _vm._v("mdi-check")
+                    ])
+                  ]
+                : [_c("span", [_vm._v("解除")])]
+            ],
+            2
+          )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          staticStyle: { width: "200px !important" },
-          attrs: {
-            depressed: "",
-            color: "accent",
-            large: "",
-            loading: _vm.loading
-          },
-          on: { click: _vm.onTap }
-        },
-        [_vm._v("\n    解除\n  ")]
       )
-    ],
-    1
+    ]
   )
 }
 var staticRenderFns = []

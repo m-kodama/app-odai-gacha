@@ -22,7 +22,10 @@
                 </div>
             </Header>
             <v-dialog v-model="showPasswordDialog" max-width="400" @click:outside="resetPasswordDialog">
-                <PasswordConfirmCard :onSubmit="onSubmit" @reset-event="setResetPasswordDialog($event)"/>
+                <PasswordConfirmCard
+                    :onSubmit="onSubmit"
+                    @reset-event="setResetPasswordDialog($event)"
+                />
             </v-dialog>
         </v-content>
     </v-app>
@@ -51,6 +54,7 @@ export default {
             showInfoCard: true,
             showPasswordDialog: false,
             selectedGachaId: null,
+            authType: null,
             resetPasswordDialog: () => {},
         };
     },
@@ -93,13 +97,16 @@ export default {
         },
         onGachaUseButtonTap(gachaId) {
             this.selectedGachaId = gachaId;
+            this.authType = 0;
             this.showPasswordDialog = true;
         },
         onGachaEditButtonTap(gachaId) {
+            this.selectedGachaId = gachaId;
+            this.authType = 1;
             this.showPasswordDialog = true;
         },
         onSubmit: async function(password) {
-            const request = { password, type: 0 };
+            const request = { password, type: this.authType };
             return await axios.post(`/gacha/${this.selectedGachaId}/auth`, request)
             .then((res) => {
                 window.location.href = `/gacha/${res.data}/machine`;

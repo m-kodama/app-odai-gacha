@@ -19,6 +19,7 @@
                         <!-- // TODO gacah_idに戻す -->
                         <MainCard :gacha="gacha" :onGachaUseButtonTap="onGachaUseButtonTap" :onGachaEditButtonTap="onGachaEditButtonTap"/>
                     </div>
+                    <div class="mx-auto mt-2 mb-4" style="font-size: 0.8rem;color: #757575;">{{ messsasge }}</div>
                 </div>
             </Header>
             <v-dialog v-model="showPasswordDialog" max-width="400" @click:outside="resetPasswordDialog">
@@ -56,11 +57,16 @@ export default {
             selectedGachaId: null,
             authType: null,
             resetPasswordDialog: () => {},
+            messsasge: "",
         };
     },
     computed: {
         gachas: function() {
             const originGacha = JSON.parse(this._gachas)[0];
+            if (!originGacha) {
+                this.messsasge = "すみません、該当するガチャは見つかりませんでした。"
+                return [];
+            }
             const gachas = [];
             for (let i = 0; i < 30; i++) {
                 const copyGacha = Object.assign({}, { ...originGacha, key: i });

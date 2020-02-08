@@ -2161,6 +2161,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2180,7 +2185,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       infoDialog: false,
       showSearchForm: false,
-      isSidebarExpanded: true
+      isSidebarExpanded: true,
+      searchWord: ""
     };
   },
   methods: {
@@ -2192,6 +2198,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     toCreatePage: function toCreatePage() {
       window.location.href = "/gacha/create";
+    },
+    search: function search() {
+      if (!this.searchWord) {
+        return;
+      }
+
+      window.location.href = "/gacha?q=".concat(this.searchWord);
     }
   }
 });
@@ -4312,6 +4325,14 @@ var render = function() {
                       dense: "",
                       clearable: "",
                       "hide-details": ""
+                    },
+                    on: { submit: _vm.search },
+                    model: {
+                      value: _vm.searchWord,
+                      callback: function($$v) {
+                        _vm.searchWord = $$v
+                      },
+                      expression: "searchWord"
                     }
                   }),
                   _vm._v(" "),
@@ -4320,7 +4341,8 @@ var render = function() {
                     {
                       staticClass: "ml-1",
                       staticStyle: { height: "40px" },
-                      attrs: { depressed: "", color: "#F5F0E3" }
+                      attrs: { depressed: "", color: "#F5F0E3" },
+                      on: { click: _vm.search }
                     },
                     [
                       _c("v-icon", { attrs: { color: "grey darken-1" } }, [
@@ -4419,19 +4441,20 @@ var render = function() {
               _vm._v(" "),
               _c("v-text-field", {
                 staticClass: "flex-grow-1 mt-3",
-                attrs: { placeholder: "検索", color: "accent" }
+                attrs: { placeholder: "検索", color: "accent" },
+                on: { submit: _vm.search },
+                model: {
+                  value: _vm.searchWord,
+                  callback: function($$v) {
+                    _vm.searchWord = $$v
+                  },
+                  expression: "searchWord"
+                }
               }),
               _vm._v(" "),
               _c(
                 "v-btn",
-                {
-                  attrs: { icon: "" },
-                  on: {
-                    click: function($event) {
-                      _vm.showSearchForm = false
-                    }
-                  }
-                },
+                { attrs: { icon: "" }, on: { click: _vm.search } },
                 [_c("v-icon", [_vm._v("mdi-magnify")])],
                 1
               )

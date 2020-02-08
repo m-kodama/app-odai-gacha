@@ -2173,6 +2173,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2192,7 +2197,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       infoDialog: false,
       showSearchForm: false,
-      isSidebarExpanded: true
+      isSidebarExpanded: true,
+      searchWord: ""
     };
   },
   methods: {
@@ -2204,6 +2210,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     toCreatePage: function toCreatePage() {
       window.location.href = "/gacha/create";
+    },
+    search: function search() {
+      if (!this.searchWord) {
+        return;
+      }
+
+      window.location.href = "/gacha?q=".concat(this.searchWord);
     }
   }
 });
@@ -2428,8 +2441,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     onSubmit: {
@@ -2588,6 +2599,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2610,12 +2622,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showPasswordDialog: false,
       selectedGachaId: null,
       authType: null,
-      resetPasswordDialog: function resetPasswordDialog() {}
+      resetPasswordDialog: function resetPasswordDialog() {},
+      messsasge: ""
     };
   },
   computed: {
     gachas: function gachas() {
       var originGacha = JSON.parse(this._gachas)[0];
+
+      if (!originGacha) {
+        this.messsasge = "すみません、該当するガチャは見つかりませんでした。";
+        return [];
+      }
+
       var gachas = [];
 
       for (var i = 0; i < 30; i++) {
@@ -4980,6 +4999,14 @@ var render = function() {
                       dense: "",
                       clearable: "",
                       "hide-details": ""
+                    },
+                    on: { submit: _vm.search },
+                    model: {
+                      value: _vm.searchWord,
+                      callback: function($$v) {
+                        _vm.searchWord = $$v
+                      },
+                      expression: "searchWord"
                     }
                   }),
                   _vm._v(" "),
@@ -4988,7 +5015,8 @@ var render = function() {
                     {
                       staticClass: "ml-1",
                       staticStyle: { height: "40px" },
-                      attrs: { depressed: "", color: "#F5F0E3" }
+                      attrs: { depressed: "", color: "#F5F0E3" },
+                      on: { click: _vm.search }
                     },
                     [
                       _c("v-icon", { attrs: { color: "grey darken-1" } }, [
@@ -5087,19 +5115,20 @@ var render = function() {
               _vm._v(" "),
               _c("v-text-field", {
                 staticClass: "flex-grow-1 mt-3",
-                attrs: { placeholder: "検索", color: "accent" }
+                attrs: { placeholder: "検索", color: "accent" },
+                on: { submit: _vm.search },
+                model: {
+                  value: _vm.searchWord,
+                  callback: function($$v) {
+                    _vm.searchWord = $$v
+                  },
+                  expression: "searchWord"
+                }
               }),
               _vm._v(" "),
               _c(
                 "v-btn",
-                {
-                  attrs: { icon: "" },
-                  on: {
-                    click: function($event) {
-                      _vm.showSearchForm = false
-                    }
-                  }
-                },
+                { attrs: { icon: "" }, on: { click: _vm.search } },
                 [_c("v-icon", [_vm._v("mdi-magnify")])],
                 1
               )
@@ -5494,7 +5523,7 @@ var render = function() {
             "div",
             {
               staticClass: "d-flex flex-column align-center justify-center",
-              staticStyle: { padding: "32px 0 64px 0" }
+              staticStyle: { padding: "32px 0 48px 0" }
             },
             [
               _c(
@@ -5521,7 +5550,7 @@ var render = function() {
             "div",
             {
               staticClass: "d-flex flex-column align-center justify-center",
-              staticStyle: { padding: "32px 0 64px 0" }
+              staticStyle: { padding: "32px 0 48px 0" }
             },
             [
               _c(
@@ -5556,73 +5585,63 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "form",
-        {
-          staticClass: "d-flex flex-column align-center",
-          staticStyle: { width: "100%" },
-          attrs: { action: "#" }
-        },
+        "div",
+        { staticClass: "d-flex", staticStyle: { width: "100%" } },
         [
-          _c(
-            "div",
-            { staticClass: "d-flex", staticStyle: { width: "100%" } },
-            [
-              _c("v-text-field", {
-                staticClass: "mb-4 flex-grow-1",
-                attrs: {
-                  color: "accent",
-                  outlined: "",
-                  solo: "",
-                  flat: "",
-                  label: "パスワード",
-                  clearable: "",
-                  "hide-details": "",
-                  type: "password",
-                  disabled: _vm.loading
-                },
-                model: {
-                  value: _vm.password,
-                  callback: function($$v) {
-                    _vm.password = $$v
-                  },
-                  expression: "password"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            {
-              staticStyle: {
-                width: "200px !important",
-                transition: "all 0.2s ease-in-out"
-              },
-              attrs: {
-                depressed: "",
-                color: "accent",
-                large: "",
-                loading: _vm.loading,
-                disabled: !_vm.password
-              },
-              on: { click: _vm.onTap }
+          _c("v-text-field", {
+            staticClass: "mb-4 flex-grow-1",
+            attrs: {
+              color: "accent",
+              outlined: "",
+              solo: "",
+              flat: "",
+              label: "パスワード",
+              clearable: "",
+              "hide-details": "",
+              type: "password",
+              disabled: _vm.loading
             },
-            [
-              _vm.isSuccess
-                ? [
-                    _c("v-icon", { attrs: { color: "white", size: "24" } }, [
-                      _vm._v("mdi-check")
-                    ])
-                  ]
-                : [_c("span", [_vm._v("解除")])]
-            ],
-            2
-          )
+            model: {
+              value: _vm.password,
+              callback: function($$v) {
+                _vm.password = $$v
+              },
+              expression: "password"
+            }
+          })
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          staticStyle: {
+            width: "200px !important",
+            transition: "all 0.2s ease-in-out"
+          },
+          attrs: {
+            depressed: "",
+            color: "accent",
+            large: "",
+            loading: _vm.loading,
+            disabled: !_vm.password
+          },
+          on: { click: _vm.onTap }
+        },
+        [
+          _vm.isSuccess
+            ? [
+                _c("v-icon", { attrs: { color: "white", size: "24" } }, [
+                  _vm._v("mdi-check")
+                ])
+              ]
+            : [_c("span", [_vm._v("解除")])]
+        ],
+        2
       )
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -5705,7 +5724,16 @@ var render = function() {
                     ],
                     1
                   )
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "mx-auto mt-2 mb-4",
+                    staticStyle: { "font-size": "0.8rem", color: "#757575" }
+                  },
+                  [_vm._v(_vm._s(_vm.messsasge))]
+                )
               ],
               2
             )

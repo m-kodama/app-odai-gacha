@@ -30,12 +30,15 @@
                     dense
                     clearable
                     hide-details
+                    v-model="searchWord"
+                    @submit="search"
                 ></v-text-field>
                 <v-btn
                     depressed
                     color="#F5F0E3"
                     class="ml-1"
                     style="height: 40px;"
+                    @click="search"
                 >
                     <v-icon color="grey darken-1">mdi-magnify</v-icon>
                 </v-btn>
@@ -69,8 +72,10 @@
                 class="flex-grow-1 mt-3"
                 placeholder="検索"
                 color="accent"
+                v-model="searchWord"
+                @submit="search"
             ></v-text-field>
-            <v-btn icon @click="showSearchForm = false">
+            <v-btn icon @click="search">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
         </div>
@@ -146,7 +151,8 @@ export default {
         return {
             infoDialog: false,
             showSearchForm: false,
-            isSidebarExpanded: true
+            isSidebarExpanded: true,
+            searchWord: "",
         };
     },
     methods: {
@@ -158,6 +164,12 @@ export default {
         },
         toCreatePage() {
             window.location.href = "/gacha/create";
+        },
+        search() {
+            if(!this.searchWord) {
+                return;
+            }
+            window.location.href = `/gacha?q=${this.searchWord}`;
         }
     }
 };

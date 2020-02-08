@@ -13,7 +13,12 @@ use App\Gacha;
 class GachaController extends Controller
 {
     public function index(Request $request) {//一覧
-        $gachas = Gacha::all();
+        $searchWord = $request->input('q', false);
+        $gachas = $searchWord
+            ? Gacha::where('gacha_name', 'like', "%$searchWord%")
+                ->orWhere('description', 'like', "%$searchWord%")
+                ->get()
+            : Gacha::all();
         return view('gacha/index', compact('gachas'));
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 
-use App\Gacha;
+use App\Models\Gacha;
 
 class GachaController extends Controller
 {
@@ -17,8 +17,9 @@ class GachaController extends Controller
         $gachas = $searchWord
             ? Gacha::where('gacha_name', 'like', "%$searchWord%")
                 ->orWhere('description', 'like', "%$searchWord%")
+                ->list()
                 ->get()
-            : Gacha::all();
+            : Gacha::list()->get();
         return view('gacha/index', compact('gachas'));
     }
 

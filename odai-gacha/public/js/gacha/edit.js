@@ -2769,6 +2769,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2785,10 +2787,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showPassword: false,
       tab: null,
       gacha: {
+        gacha_name: "",
+        description: "",
+        image_path: "",
+        password: "",
         needUsePass: false,
         needEditPass: true,
-        needDeletePass: true,
-        topics: {}
+        needDeletePass: true
       },
       rarities: [{
         rarity: 0,
@@ -2806,7 +2811,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         rarity: 3,
         rarity_name: "プラチナ",
         probability: 2
-      }]
+      }],
+      topics: {},
+      topicCount: 0
     };
   },
   computed: {
@@ -2832,7 +2839,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     try {
       for (var _iterator = this.rarities[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var rarity = _step.value;
-        this.gacha.topics[rarity.rarity] = [""];
+        this.$set(this.topics, rarity.rarity, [this.Topic()]);
       }
     } catch (err) {
       _didIteratorError = true;
@@ -2850,9 +2857,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
+    Topic: function Topic() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      return {
+        value: value,
+        id: this.topicCount++
+      };
+    },
     onSubmit: function onSubmit() {},
-    addOdai: function addOdai() {
-      this.gacha.topics[this.tab].push("");
+    addTopic: function addTopic() {
+      this.topics[this.tab].push(this.Topic());
+    },
+    removeTopic: function removeTopic(index) {
+      this.topics[this.tab].splice(index, 1);
+
+      if (this.topics[this.tab].length === 0) {
+        this.topics[this.tab].push(this.Topic());
+      }
+    },
+    changeTopicRarity: function changeTopicRarity(index, rarity) {
+      var moveTopic = this.topics[this.tab].splice(index, 1)[0];
+      this.topics[rarity].push(moveTopic);
     }
   }
 });
@@ -5314,8 +5339,9 @@ var render = function() {
                                   {
                                     staticClass: "mb-4",
                                     staticStyle: {
+                                      "min-height": "60px",
                                       "max-height": "500px",
-                                      overflow: "scroll"
+                                      "overflow-y": "scroll"
                                     },
                                     model: {
                                       value: _vm.tab,
@@ -5331,12 +5357,13 @@ var render = function() {
                                       { key: rarity.rarity },
                                       [
                                         _vm._l(
-                                          _vm.gacha.topics[rarity.rarity],
-                                          function(topic) {
+                                          _vm.topics[rarity.rarity],
+                                          function(topic, index) {
                                             return [
                                               _c(
                                                 "div",
                                                 {
+                                                  key: topic.id,
                                                   staticClass:
                                                     "d-flex align-center mb-2"
                                                 },
@@ -5347,7 +5374,8 @@ var render = function() {
                                                     attrs: {
                                                       dense: "",
                                                       label:
-                                                        "ガチャを回した時に出る「お題」を入力してください"
+                                                        "ガチャを回した時に出る「お題」を入力してください",
+                                                      "v-model": topic.value
                                                     }
                                                   }),
                                                   _vm._v(" "),
@@ -5416,11 +5444,12 @@ var render = function() {
                                                         "v-list",
                                                         _vm._l(
                                                           _vm.rarities,
-                                                          function(rarity, i) {
+                                                          function(rarity) {
                                                             return _c(
                                                               "v-list-item",
                                                               {
-                                                                key: i,
+                                                                key:
+                                                                  rarity.rarity,
                                                                 staticStyle: {
                                                                   "font-size":
                                                                     "0.5rerm"
@@ -5428,7 +5457,12 @@ var render = function() {
                                                                 on: {
                                                                   click: function(
                                                                     $event
-                                                                  ) {}
+                                                                  ) {
+                                                                    return _vm.changeTopicRarity(
+                                                                      index,
+                                                                      rarity.rarity
+                                                                    )
+                                                                  }
                                                                 }
                                                               },
                                                               [
@@ -5460,6 +5494,15 @@ var render = function() {
                                                       attrs: {
                                                         depressed: "",
                                                         color: "#eeeeee"
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.removeTopic(
+                                                            index
+                                                          )
+                                                        }
                                                       }
                                                     },
                                                     [
@@ -5510,7 +5553,7 @@ var render = function() {
                                           rounded: "",
                                           depressed: ""
                                         },
-                                        on: { click: _vm.addOdai }
+                                        on: { click: _vm.addTopic }
                                       },
                                       [
                                         _c("v-icon", { attrs: { leff: "" } }, [

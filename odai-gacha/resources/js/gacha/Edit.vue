@@ -129,17 +129,18 @@
                                         <v-tab>{{ rarity.rarity_name }}</v-tab>
                                     </template>
                                 </v-tabs>
-                                <v-tabs-items v-model="tab" class="mb-4" style="max-height:500px; overflow:scroll;">
+                                <v-tabs-items v-model="tab" class="mb-4" style="min-height: 60px; max-height: 500px; overflow-y: scroll;">
                                     <v-tab-item
                                         v-for="rarity in rarities"
                                         :key="rarity.rarity"
                                     >
-                                        <template v-for="topic in gacha.topics[rarity.rarity]">
-                                        <div class="d-flex align-center mb-2">
+                                        <template v-for="(topic, index) in topics[rarity.rarity]">
+                                        <div class="d-flex align-center mb-2" :key="topic.id">
                                             <TextField
                                                 class="flex-grow-1 mr-2"
                                                 dense
                                                 label="ガチャを回した時に出る「お題」を入力してください"
+                                                :v-model="topic.value"
                                             />
                                             <v-menu
                                                 transition="slide-x-transition"
@@ -159,9 +160,9 @@
                                                 <v-list>
                                                     <v-list-item
                                                     style="font-size:0.5rerm;"
-                                                    v-for="(rarity, i) in rarities"
-                                                    :key="i"
-                                                    @click=""
+                                                    v-for="rarity in rarities"
+                                                    :key="rarity.rarity"
+                                                    @click="changeTopicRarity(index, rarity.rarity)"
                                                     >
                                                     <v-list-item-title>{{ rarity.rarity_name }}</v-list-item-title>
                                                     </v-list-item>
@@ -171,6 +172,7 @@
                                                 depressed
                                                 color="#eeeeee"
                                                 class="px-4"
+                                                @click="removeTopic(index)"
                                             >
                                                 <v-icon color="grey darken-1"
                                                     >mdi-delete-forever</v-icon
@@ -186,7 +188,7 @@
                                         color="secondary"
                                         rounded
                                         depressed
-                                        @click="addOdai"
+                                        @click="addTopic"
                                     >
                                         <v-icon leff>mdi-plus</v-icon>お題追加
                                     </v-btn>
@@ -289,17 +291,22 @@ export default {
             showPassword: false,
             tab: null,
             gacha: {
+                gacha_name: "",
+                description: "",
+                image_path: "",
+                password: "",
                 needUsePass: false,
                 needEditPass: true,
                 needDeletePass: true,
-                topics: {},
             },
             rarities: [
                 { rarity: 0, rarity_name: "ノーマル", probability: 50 },
                 { rarity: 1, rarity_name: "シルバー", probability: 35 },
                 { rarity: 2, rarity_name: "ゴールド", probability: 13 },
                 { rarity: 3, rarity_name: "プラチナ", probability: 2 }
-            ]
+            ],
+            topics: {},
+            topicCount: 0,
         };
     },
     computed: {
@@ -315,13 +322,26 @@ export default {
     },
     mounted() {
         for (const rarity of this.rarities) {
-            this.gacha.topics[rarity.rarity] = [""];
+            this.$set(this.topics, rarity.rarity, [this.Topic()]);
         }
     },
     methods: {
+        Topic(value = "") {
+            return {value, id: this.topicCount++}
+        },
         onSubmit() {},
-        addOdai() {
-            this.gacha.topics[this.tab].push("");
+        addTopic() {
+            this.topics[this.tab].push(this.Topic());
+        },
+        removeTopic(index) {
+            this.topics[this.tab].splice(index, 1);
+            if (this.topics[this.tab].length === 0){
+                this.topics[this.tab].push(this.Topic());
+            }
+        },
+        changeTopicRarity(index, rarity) {
+            const moveTopic = this.topics[this.tab].splice(index, 1)[0];
+            this.topics[rarity].push(moveTopic);
         }
     }
 };

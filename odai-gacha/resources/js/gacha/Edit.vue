@@ -134,8 +134,12 @@
                                         v-for="rarity in rarities"
                                         :key="rarity.rarity"
                                     >
-                                        <template v-for="(topic, index) in topics[rarity.rarity]">
-                                        <div class="d-flex align-center mb-2" :key="topic.id">
+                                        <transition-group name="topic-list" tag="div">
+                                        <div
+                                            v-for="(topic, index) in topics[rarity.rarity]"
+                                            class="d-flex align-center mb-2 topic-row"
+                                            :key="topic.id"
+                                        >
                                             <TextField
                                                 class="flex-grow-1 mr-2"
                                                 dense
@@ -180,7 +184,7 @@
                                                 >
                                             </v-btn>
                                         </div>
-                                        </template>
+                                        </transition-group>
                                     </v-tab-item>
                                 </v-tabs-items>
                                 <div class="d-flex justify-center">
@@ -384,5 +388,16 @@ export default {
 }
 .v-list-item__title {
     font-size: 0.9rem !important;
+}
+.topic-list-enter-active, .topic-list-leave-active {
+    transition: all 0.2s ease-out;
+}
+.topic-list-enter {
+    opacity: 0;
+    transform: translateY(10px);
+}
+.topic-list-leave-to {
+    opacity: 0;
+    transform: translateX(-100%);
 }
 </style>

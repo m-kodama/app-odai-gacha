@@ -398,6 +398,6 @@ export default {
 }
 .topic-list-leave-to {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateX(100%);
 }
 </style>

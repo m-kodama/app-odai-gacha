@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return redirect('/gacha');
 });
+// TODO グループ機能を使用する
 Route::get('/gacha', 'GachaController@index');
 Route::get('/gacha/{gachaId}/edit', 'GachaController@edit');
 Route::get('/gacha/create', 'GachaController@create');
@@ -22,5 +23,6 @@ Route::post('/gacha', 'GachaController@createGachaDetail');
 Route::put('/gacha/{gachaId}', 'GachaController@updateGacha');
 Route::delete('/gacha/{gachaId}', 'GachaController@deleteGacha');
 Route::get('/gacha/{gachaId}/machine', 'GachaController@getMachine');
-// api TODO 別ファイルに分ける
+// TODO api系　別ファイルに分ける
 Route::post('/gacha/{gachaId}/auth', 'GachaController@auth');
+Route::get('/api/gacha/', 'GachaController@get');

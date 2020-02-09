@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\Gacha;
 
+// TODO 当初の想定よりもロジックが多くなってしまったため、Modelクラスに処理を分ける
 class GachaController extends Controller
 {
     public function index(Request $request) {//一覧
@@ -18,8 +19,9 @@ class GachaController extends Controller
             ? Gacha::where('gacha_name', 'like', "%$searchWord%")
                 ->orWhere('description', 'like', "%$searchWord%")
                 ->list()
+                ->orderBy(Gacha::UPDATED_AT, 'desc')
                 ->get()
-            : Gacha::list()->get();
+            : Gacha::list()->orderBy(Gacha::UPDATED_AT, 'desc')->get();
         return view('gacha/index', compact('gachas'));
     }
 
@@ -73,7 +75,7 @@ class GachaController extends Controller
         // TODO パスワードチェック
         $gacha->gacha_name = $request->gacha_name;
         $gacha->save();
-        
+
         return redirect("/gacha");
     }
 
@@ -81,14 +83,14 @@ class GachaController extends Controller
         $gacha = Gacha::findOrFail($gachaId);
         // TODO パスワードチェック
         $gacha->delete();
-        
+
         return redirect("/gacha");
     }
 
     public function create() {
         return view('gacha/edit');
     }
-    
+
     public function edit($gachaId) {
         $gacha = Gacha::findOrFail($gachaId);
         return view('gacha/edit', compact('gacha'));

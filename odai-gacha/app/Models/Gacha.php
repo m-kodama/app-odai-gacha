@@ -15,4 +15,19 @@ class Gacha extends Model
     {
         return $this->hasMany('App\Topic', 'gacha_id');
     }
+
+    // list()を呼んだらscopeList()が呼ばれる
+    public static function scopeList($query)
+    {
+        return $query->select([
+            'gacha_id',
+            'gacha_name',
+            'needUsePass',
+            'needEditPass',
+            'needDeletePass',
+            'description',
+            'created_at',
+            'updated_at'
+        ]);
+    }
 }

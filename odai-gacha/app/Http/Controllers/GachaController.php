@@ -17,8 +17,9 @@ class GachaController extends Controller
         $gachas = $searchWord
             ? Gacha::where('gacha_name', 'like', "%$searchWord%")
                 ->orWhere('description', 'like', "%$searchWord%")
+                ->list()
                 ->get()
-            : Gacha::all();
+            : Gacha::list()->get();
         return view('gacha/index', compact('gachas'));
     }
 

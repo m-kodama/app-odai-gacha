@@ -34,9 +34,12 @@
                                     style="width: 200px; padding-top:27px;"
                                     class="ml-4"
                                 >
+                                    <v-tooltip top>
+                                    <template v-slot:activator="{ on }">
                                     <div
                                         style="border-radius: 4px; background:rgba(0,0,0,.12); height: 100%; width:100%; user-select:none;"
                                         class="d-flex flex-column justify-center align-center"
+                                        v-on="on"
                                     >
                                         <v-icon
                                             color="rgba(0,0,0,.26)"
@@ -56,10 +59,15 @@
                                             (960 x 600)
                                         </div>
                                     </div>
+                                    </template>
+                                    <span>現在準備中です...</span>
+                                    </v-tooltip>
                                 </div>
                             </div>
                             <!-- レア度 -->
-                            <div class="mb-8">
+                            <v-tooltip top left>
+                            <template v-slot:activator="{ on }">
+                            <div class="mb-8" v-on="on">
                                 <div class="form-title">レア度</div>
                                 <div class="mb-4">
                                     <template v-for="rarity in rarities">
@@ -110,6 +118,9 @@
                                     </v-btn>
                                 </div>
                             </div>
+                            </template>
+                            <span>現在準備中です...</span>
+                            </v-tooltip>
                             <!-- お題 -->
                             <div class="mb-8">
                                 <div class="form-title">お題</div>

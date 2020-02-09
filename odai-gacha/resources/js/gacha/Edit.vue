@@ -159,10 +159,11 @@
                                                 </template>
                                                 <v-list>
                                                     <v-list-item
-                                                    style="font-size:0.5rerm;"
-                                                    v-for="rarity in rarities"
-                                                    :key="rarity.rarity"
-                                                    @click="changeTopicRarity(index, rarity.rarity)"
+                                                        style="font-size:0.5rerm;"
+                                                        v-for="rarity in rarities"
+                                                        :key="rarity.rarity"
+                                                        @click="changeTopicRarity(index, rarity.rarity)"
+                                                        :disabled="rarity.rarity === tab"
                                                     >
                                                     <v-list-item-title>{{ rarity.rarity_name }}</v-list-item-title>
                                                     </v-list-item>
@@ -234,6 +235,7 @@
                                     :clickAppend="
                                         () => (showPassword = !showPassword)
                                     "
+                                    :disabled="!(gacha.needUsePass || gacha.needEditPass || gacha.needDeletePass)"
                                 />
                                 <div
                                     class="pa-2 warning white--text"

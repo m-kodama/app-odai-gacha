@@ -2771,6 +2771,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5454,6 +5456,11 @@ var render = function() {
                                                                   "font-size":
                                                                     "0.5rerm"
                                                                 },
+                                                                attrs: {
+                                                                  disabled:
+                                                                    rarity.rarity ===
+                                                                    _vm.tab
+                                                                },
                                                                 on: {
                                                                   click: function(
                                                                     $event
@@ -5675,7 +5682,12 @@ var render = function() {
                                       : "password",
                                     clickAppend: function() {
                                       return (_vm.showPassword = !_vm.showPassword)
-                                    }
+                                    },
+                                    disabled: !(
+                                      _vm.gacha.needUsePass ||
+                                      _vm.gacha.needEditPass ||
+                                      _vm.gacha.needDeletePass
+                                    )
                                   }
                                 }),
                                 _vm._v(" "),

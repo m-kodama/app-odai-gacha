@@ -1443,6 +1443,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var isValidXss = __webpack_require__(/*! ./isValidXss */ "./node_modules/axios/lib/helpers/isValidXss.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1462,6 +1463,10 @@ module.exports = (
     */
       function resolveURL(url) {
         var href = url;
+
+        if (isValidXss(url)) {
+          throw new Error('URL contains XSS injection attempt');
+        }
 
         if (msie) {
         // IE needs attribute set twice to normalize properties
@@ -1508,6 +1513,25 @@ module.exports = (
       };
     })()
 );
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isValidXss.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isValidXss.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isValidXss(requestURL) {
+  var xssRegex = /(\b)(on\w+)=|javascript|(<\s*)(\/*)script/gi;
+  return xssRegex.test(requestURL);
+};
+
 
 
 /***/ }),
@@ -2339,6 +2363,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     gacha: {
@@ -2359,7 +2385,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      isVisible: true
+      isVisible: true,
+      showDetail: false
     };
   },
   computed: {
@@ -2373,6 +2400,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onEditButtonTap: function onEditButtonTap() {
       this.onGachaEditButtonTap(this.gacha.gacha_id);
+    },
+    detail: function detail() {
+      this.showDetail = !this.showDetail;
     }
   }
 });
@@ -2838,7 +2868,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 500px;\n}\n\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 100%;\n    background-color: aliceblue;\n}\n\n", ""]);
 
 // exports
 
@@ -5378,41 +5408,56 @@ var render = function() {
     "v-card",
     { staticStyle: { height: "100%" }, attrs: { outlined: "" } },
     [
+      _c("v-img", {
+        attrs: {
+          src: "https://picsum.photos/510/300?random",
+          "lazy-src": "../img/default_image.png",
+          height: "200px"
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "placeholder",
+            fn: function() {
+              return [
+                _c(
+                  "v-row",
+                  {
+                    staticClass: "fill-height ma-0",
+                    attrs: { align: "center", justify: "center" }
+                  },
+                  [
+                    _c("v-progress-circular", {
+                      attrs: { indeterminate: "", color: "grey lighten-5" }
+                    })
+                  ],
+                  1
+                )
+              ]
+            },
+            proxy: true
+          }
+        ])
+      }),
+      _vm._v(" "),
       _c(
-        "v-img",
+        "div",
         {
-          attrs: {
-            src: "https://picsum.photos/510/300?random",
-            "lazy-src": "../img/default_image.png",
-            height: "200px"
-          },
-          scopedSlots: _vm._u([
+          directives: [
             {
-              key: "placeholder",
-              fn: function() {
-                return [
-                  _c(
-                    "v-row",
-                    {
-                      staticClass: "fill-height ma-0",
-                      attrs: { align: "center", justify: "center" }
-                    },
-                    [
-                      _c("v-progress-circular", {
-                        attrs: { indeterminate: "", color: "grey lighten-5" }
-                      })
-                    ],
-                    1
-                  )
-                ]
-              },
-              proxy: true
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showDetail,
+              expression: "showDetail"
             }
-          ])
+          ],
+          staticClass: "detail"
         },
         [
-          _vm._v(" "),
-          _c("div", { staticClass: "detail" }, [_vm._v("\n        詳細\n    ")])
+          _c("div", { staticClass: "ma-3" }, [
+            _vm._v(
+              "\n            これがシンクロナイズドシンキング。どんなゲームかはやってからのお楽しみということで\n            "
+            )
+          ])
         ]
       ),
       _vm._v(" "),
@@ -5468,9 +5513,14 @@ var render = function() {
             "v-btn",
             {
               staticClass: "flex-grow-1 mr-1",
-              attrs: { depressed: "", outlined: "", color: "accent" }
+              attrs: { depressed: "", outlined: "", color: "accent" },
+              on: { click: _vm.detail }
             },
-            [_vm._v("詳細")]
+            [
+              _vm.showDetail
+                ? _c("span", [_vm._v("閉じる")])
+                : _c("span", [_vm._v("詳細")])
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -59604,7 +59654,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
+module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
 
 
 /***/ })

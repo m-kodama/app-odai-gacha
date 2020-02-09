@@ -13,11 +13,12 @@
                     ></v-progress-circular>
                 </v-row>
             </template>
-        <div class="detail">
-            詳細
-        </div>
         </v-img>
-
+            <div class="detail" v-show="showDetail" >
+                <div class="ma-3">
+                これがシンクロナイズドシンキング。どんなゲームかはやってからのお楽しみということで
+                </div>
+            </div>
         <v-card-title>
             <div class="flex-grow-1">{{ gacha.gacha_name }}</div>
             <v-tooltip top>
@@ -31,8 +32,9 @@
         </v-card-title>
         <v-card-subtitle>最終編集日：{{ gacha.updated_at }}</v-card-subtitle>
         <div class="card-buttons d-flex">
-            <v-btn depressed outlined color="accent" class="flex-grow-1 mr-1"
-                >詳細</v-btn
+            <v-btn depressed outlined color="accent" class="flex-grow-1 mr-1" @click="detail"
+                ><span v-if="showDetail">閉じる</span><span v-else>詳細</span>
+                </v-btn
             >
             <v-btn
                 depressed
@@ -62,17 +64,19 @@ export default {
         onGachaEditButtonTap: {
           type: Function,
           default: () => {}
-        }
+        },
     },
     data: function() {
         return {
-            isVisible: true
+            isVisible: true,
+            showDetail: false,
         };
     },
     computed: {
         gachas: function() {
             return JSON.parse(this._gachas);
         }
+
     },
     methods: {
         onUseButtonTap() {
@@ -80,6 +84,9 @@ export default {
         },
         onEditButtonTap() {
           this.onGachaEditButtonTap(this.gacha.gacha_id);
+        },
+        detail() {
+            this.showDetail = !this.showDetail;
         }
     }
 };
@@ -98,7 +105,8 @@ export default {
 .detail {
     position: absolute; top: 0px; right: 0px;
     height: 200px;
-    width: 500px;
+    width: 100%;
+    background-color: aliceblue;
 }
 
 </style>

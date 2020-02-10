@@ -71,7 +71,7 @@
                                 <div class="form-title">レア度</div>
                                 <div class="mb-4">
                                     <template v-for="rarity in rarities">
-                                        <div class="d-flex align-center mb-2">
+                                        <div class="d-flex align-center mb-2" :key="rarity.rarity">
                                             <TextField
                                                 class="flex-grow-1 mr-2"
                                                 dense
@@ -126,7 +126,7 @@
                                 <div class="form-title">お題</div>
                                 <v-tabs class="mb-4" height="40" v-model="tab">
                                     <template v-for="rarity in rarities">
-                                        <v-tab>{{ rarity.rarity_name }}</v-tab>
+                                        <v-tab :key="rarity.rarity">{{ rarity.rarity_name }}</v-tab>
                                     </template>
                                 </v-tabs>
                                 <v-tabs-items v-model="tab" class="mb-4" style="min-height: 60px; max-height: 500px; overflow-y: scroll;">

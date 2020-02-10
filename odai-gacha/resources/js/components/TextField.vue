@@ -1,7 +1,6 @@
 <template>
     <v-text-field
-        :value="value"
-        @input="$emit('input', $event.target.value)"
+        v-model="innerValue"
         :append-icon="appendIcon"
         @click:append="clickAppend()"
         :clearable="clearable"
@@ -24,7 +23,6 @@
 <script>
 export default {
     props: {
-        value: String,
         appendIcon: {
             type: String,
             default: undefined
@@ -89,6 +87,20 @@ export default {
             type: String,
             default: "text"
         },
+        value: {
+            type: String | Number,
+            default: "",
+        }
+    },
+    computed: {
+        innerValue: {
+            get () {
+                return this.$props.value;
+            },
+            set (value) {
+                this.$emit('change', value)
+            }
+        }
     }
 };
 </script>

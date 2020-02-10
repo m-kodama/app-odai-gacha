@@ -1431,7 +1431,6 @@ module.exports = function isAbsoluteURL(url) {
 
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
-var isValidXss = __webpack_require__(/*! ./isValidXss */ "./node_modules/axios/lib/helpers/isValidXss.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1451,10 +1450,6 @@ module.exports = (
     */
       function resolveURL(url) {
         var href = url;
-
-        if (isValidXss(url)) {
-          throw new Error('URL contains XSS injection attempt');
-        }
 
         if (msie) {
         // IE needs attribute set twice to normalize properties
@@ -1501,25 +1496,6 @@ module.exports = (
       };
     })()
 );
-
-
-/***/ }),
-
-/***/ "./node_modules/axios/lib/helpers/isValidXss.js":
-/*!******************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/isValidXss.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isValidXss(requestURL) {
-  var xssRegex = /(\b)(on\w+)=|javascript|(<\s*)(\/*)script/gi;
-  return xssRegex.test(requestURL);
-};
-
 
 
 /***/ }),
@@ -2429,10 +2405,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    value: String,
     appendIcon: {
       type: String,
       "default": undefined
@@ -2496,6 +2470,20 @@ __webpack_require__.r(__webpack_exports__);
     type: {
       type: String,
       "default": "text"
+    },
+    value: {
+      type: String | Number,
+      "default": ""
+    }
+  },
+  computed: {
+    innerValue: {
+      get: function get() {
+        return this.$props.value;
+      },
+      set: function set(value) {
+        this.$emit('change', value);
+      }
     }
   }
 });
@@ -2519,6 +2507,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -2907,6 +2896,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     changeTopicRarity: function changeTopicRarity(index, rarity) {
       var moveTopic = this.topics[this.tab].splice(index, 1)[0];
       this.topics[rarity].push(moveTopic);
+    },
+    onTopicUpdated: function onTopicUpdated(value, index, rarity, id) {
+      this.topics[rarity][index] = {
+        value: value,
+        id: id
+      };
     }
   }
 });
@@ -4934,7 +4929,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("v-text-field", {
     attrs: {
-      value: _vm.value,
       "append-icon": _vm.appendIcon,
       clearable: _vm.clearable,
       color: _vm.color,
@@ -4952,12 +4946,16 @@ var render = function() {
       type: _vm.type
     },
     on: {
-      input: function($event) {
-        return _vm.$emit("input", $event.target.value)
-      },
       "click:append": function($event) {
         return _vm.clickAppend()
       }
+    },
+    model: {
+      value: _vm.innerValue,
+      callback: function($$v) {
+        _vm.innerValue = $$v
+      },
+      expression: "innerValue"
     }
   })
 }
@@ -5418,7 +5416,17 @@ var render = function() {
                                                       dense: "",
                                                       label:
                                                         "ガチャを回した時に出る「お題」を入力してください",
-                                                      "v-model": topic.value
+                                                      value: topic.value
+                                                    },
+                                                    on: {
+                                                      change: function(value) {
+                                                        _vm.onTopicUpdated(
+                                                          value,
+                                                          index,
+                                                          rarity.rarity,
+                                                          topic.id
+                                                        )
+                                                      }
                                                     }
                                                   }),
                                                   _vm._v(" "),
@@ -59634,7 +59642,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/edit.js */"./resources/js/gacha/edit.js");
+module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/edit.js */"./resources/js/gacha/edit.js");
 
 
 /***/ })

@@ -144,7 +144,8 @@
                                                 class="flex-grow-1 mr-2"
                                                 dense
                                                 label="ガチャを回した時に出る「お題」を入力してください"
-                                                :v-model="topic.value"
+                                                :value="topic.value"
+                                                @change="(value) => {onTopicUpdated(value, index, rarity.rarity, topic.id)}"
                                             />
                                             <v-menu
                                                 transition="slide-x-transition"
@@ -348,6 +349,9 @@ export default {
         changeTopicRarity(index, rarity) {
             const moveTopic = this.topics[this.tab].splice(index, 1)[0];
             this.topics[rarity].push(moveTopic);
+        },
+        onTopicUpdated(value, index, rarity, id) {
+            this.topics[rarity][index] = { value, id };
         }
     }
 };

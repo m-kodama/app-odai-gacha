@@ -14,9 +14,9 @@
                 </v-row>
             </template>
         </v-img>
-            <div class="detail" v-show="showDetail" >
+            <div class="detail secondary" v-show="showDetail" >
                 <div class="ma-3">
-                これがシンクロナイズドシンキング。どんなゲームかはやってからのお楽しみということで
+                    {{ gacha.description }}
                 </div>
             </div>
         <v-card-title>
@@ -32,17 +32,18 @@
         </v-card-title>
         <v-card-subtitle>最終編集日：{{ gacha.updated_at }}</v-card-subtitle>
         <div class="card-buttons d-flex">
-            <v-btn depressed outlined color="accent" class="flex-grow-1 mr-1" @click="detail"
-                ><span v-if="showDetail">閉じる</span><span v-else>詳細</span>
-                </v-btn
-            >
+            <v-btn depressed outlined color="accent" @click="detail" style="width: calc((100% - 8px) / 2);">
+                <span v-if="showDetail">閉じる</span><span v-else>詳細</span>
+            </v-btn>
+            <div style="width: 8px;" />
             <v-btn
                 depressed
                 color="primary"
-                class="flex-grow-1 ml-1"
                 @click="onUseButtonTap"
-                >起動</v-btn
+                style="width: calc((100% - 8px) / 2);"
             >
+                起動
+            </v-btn>
         </div>
     </v-card>
 </template>
@@ -106,7 +107,10 @@ export default {
     position: absolute; top: 0px; right: 0px;
     height: 200px;
     width: 100%;
-    background-color: aliceblue;
+    opacity: 0.85;
+    font-size: 0.85rem;
+    color: #333333;
+    overflow-y: scroll;
 }
 
 </style>

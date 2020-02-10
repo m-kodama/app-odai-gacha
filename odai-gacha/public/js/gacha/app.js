@@ -1443,6 +1443,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var isValidXss = __webpack_require__(/*! ./isValidXss */ "./node_modules/axios/lib/helpers/isValidXss.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1462,6 +1463,10 @@ module.exports = (
     */
       function resolveURL(url) {
         var href = url;
+
+        if (isValidXss(url)) {
+          throw new Error('URL contains XSS injection attempt');
+        }
 
         if (msie) {
         // IE needs attribute set twice to normalize properties
@@ -1508,6 +1513,25 @@ module.exports = (
       };
     })()
 );
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isValidXss.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isValidXss.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isValidXss(requestURL) {
+  var xssRegex = /(\b)(on\w+)=|javascript|(<\s*)(\/*)script/gi;
+  return xssRegex.test(requestURL);
+};
+
 
 
 /***/ }),
@@ -2341,6 +2365,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     gacha: {
@@ -2844,7 +2869,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 100%;\n    background-color: aliceblue;\n}\n\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n\n", ""]);
 
 // exports
 
@@ -5426,12 +5451,14 @@ var render = function() {
               expression: "showDetail"
             }
           ],
-          staticClass: "detail"
+          staticClass: "detail secondary"
         },
         [
           _c("div", { staticClass: "ma-3" }, [
             _vm._v(
-              "\n            これがシンクロナイズドシンキング。どんなゲームかはやってからのお楽しみということで\n            "
+              "\n                " +
+                _vm._s(_vm.gacha.description) +
+                "\n            "
             )
           ])
         ]
@@ -5488,7 +5515,7 @@ var render = function() {
           _c(
             "v-btn",
             {
-              staticClass: "flex-grow-1 mr-1",
+              staticStyle: { width: "calc((100% - 8px) / 2)" },
               attrs: { depressed: "", outlined: "", color: "accent" },
               on: { click: _vm.detail }
             },
@@ -5499,14 +5526,16 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _c("div", { staticStyle: { width: "8px" } }),
+          _vm._v(" "),
           _c(
             "v-btn",
             {
-              staticClass: "flex-grow-1 ml-1",
+              staticStyle: { width: "calc((100% - 8px) / 2)" },
               attrs: { depressed: "", color: "primary" },
               on: { click: _vm.onUseButtonTap }
             },
-            [_vm._v("起動")]
+            [_vm._v("\n            起動\n        ")]
           )
         ],
         1
@@ -59630,7 +59659,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
+module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
 
 
 /***/ })

@@ -1,5 +1,7 @@
 <template>
     <v-text-field
+        :value="value"
+        @input="$emit('input', $event.target.value)"
         :append-icon="appendIcon"
         @click:append="clickAppend()"
         :clearable="clearable"
@@ -16,13 +18,13 @@
         :solo="solo"
         :suffix="suffix"
         :type="type"
-        :value="value"
     ></v-text-field>
 </template>
 
 <script>
 export default {
     props: {
+        value: String,
         appendIcon: {
             type: String,
             default: undefined
@@ -87,10 +89,6 @@ export default {
             type: String,
             default: "text"
         },
-        value: {
-            type: String | Number | Boolean,
-            default: undefined
-        }
     }
 };
 </script>

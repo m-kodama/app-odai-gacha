@@ -2348,6 +2348,9 @@ __webpack_require__.r(__webpack_exports__);
       gacha_id: String,
       gacha_name: String,
       image_path: String,
+      needUsePass: Boolean,
+      needEditPass: Boolean,
+      needDeletePass: Boolean,
       created_at: Date,
       updated_at: Date
     },
@@ -2367,8 +2370,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    gachas: function gachas() {
-      return JSON.parse(this._gachas);
+    updated_at: function updated_at() {
+      var d = new Date(this.gacha.updated_at);
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
     }
   },
   methods: {
@@ -5371,7 +5378,7 @@ var render = function() {
     [
       _c("v-img", {
         attrs: {
-          src: "https://picsum.photos/510/300?random",
+          src: "https://picsum.photos/seed/" + _vm.gacha.gacha_id + "/510/300",
           "lazy-src": "../img/default_image.png",
           height: "200px"
         },
@@ -5464,9 +5471,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-card-subtitle", [
-        _vm._v("最終編集日：" + _vm._s(_vm.gacha.updated_at))
-      ]),
+      _c("v-card-subtitle", [_vm._v("編集日：" + _vm._s(_vm.updated_at))]),
       _vm._v(" "),
       _c(
         "div",

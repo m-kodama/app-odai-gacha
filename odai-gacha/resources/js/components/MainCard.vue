@@ -1,7 +1,7 @@
 <template>
     <v-card outlined style="height:100%;">
         <v-img
-            src="https://picsum.photos/510/300?random"
+            :src="`https://picsum.photos/seed/${gacha.gacha_id}/510/300`"
             lazy-src="../img/default_image.png"
             height="200px"
         >
@@ -30,7 +30,7 @@
                 <span>編集</span>
             </v-tooltip>
         </v-card-title>
-        <v-card-subtitle>最終編集日：{{ gacha.updated_at }}</v-card-subtitle>
+        <v-card-subtitle>編集日：{{ updated_at }}</v-card-subtitle>
         <div class="card-buttons d-flex">
             <v-btn depressed outlined color="accent" @click="detail" style="width: calc((100% - 8px) / 2);">
                 <span v-if="showDetail">閉じる</span><span v-else>詳細</span>
@@ -55,6 +55,9 @@ export default {
             gacha_id: String,
             gacha_name: String,
             image_path: String,
+            needUsePass: Boolean,
+            needEditPass: Boolean,
+            needDeletePass: Boolean,
             created_at: Date,
             updated_at: Date
         },
@@ -74,10 +77,13 @@ export default {
         };
     },
     computed: {
-        gachas: function() {
-            return JSON.parse(this._gachas);
+        updated_at: function() {
+            const d = new Date(this.gacha.updated_at);
+            const year = d.getFullYear();
+            const month = d.getMonth() + 1;
+            const day = d.getDate();
+            return `${year}年${month}月${day}日`;
         }
-
     },
     methods: {
         onUseButtonTap() {

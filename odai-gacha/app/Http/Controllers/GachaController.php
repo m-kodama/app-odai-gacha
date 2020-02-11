@@ -96,6 +96,7 @@ class GachaController extends Controller
                     'rarity' => $rarity['rarity'],
                     'rarity_name' => $rarity['rarityName'],
                     'probability' => $rarity['probability'] * 10,
+                    'gacha_id' => $gacha_id,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ];

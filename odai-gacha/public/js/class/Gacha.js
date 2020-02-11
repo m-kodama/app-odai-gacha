@@ -14,7 +14,7 @@ const GACHA = {
       odaiCount += entry.texts.length;
     }
     if (odaiCount === 0) {
-      alert('お題がなくなりました。ブラウザを再読み込みしてください。');
+      return false;
     }
     let accum = 0;
     let groupIndex = 0;
@@ -23,11 +23,16 @@ const GACHA = {
       let textIndex = 0;
       for (const text of entry.texts) {
         accum += entry.prob / entry.texts.length;
-        if (rval < accum)
-          return new Odai(
+        if (rval < accum) {
+          const odai = new Odai(
             config[groupIndex].texts[textIndex],
             config[groupIndex].rarity
           );
+          console.log(config);
+          config[groupIndex].texts.splice(textIndex, 1);
+          console.log(config);
+          return odai;
+        }
         textIndex += 1;
       }
       groupIndex += 1;

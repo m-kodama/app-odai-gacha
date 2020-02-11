@@ -89,6 +89,11 @@ const startGacha = () => {
   document.getElementById('touch-eater').style.display = 'block';
   const gacha = document.getElementById('gacha-body');
   const odai = GACHA.getOdai();
+  if (!odai) {
+    alert('お題がなくなりました。ブラウザを再読み込みします');
+    window.location.reload();
+    return;
+  }
   const eggs = document.getElementsByClassName('egg');
   egg = eggs[odai.rarity];
 

@@ -2380,10 +2380,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onUseButtonTap: function onUseButtonTap() {
-      this.onGachaUseButtonTap(this.gacha.gacha_id);
+      this.onGachaUseButtonTap(this.gacha.gacha_id, this.gacha.needUsePass);
     },
     onEditButtonTap: function onEditButtonTap() {
-      this.onGachaEditButtonTap(this.gacha.gacha_id);
+      this.onGachaEditButtonTap(this.gacha.gacha_id, this.gacha.needEditPass);
     },
     detail: function detail() {
       this.showDetail = !this.showDetail;
@@ -2672,12 +2672,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     onNavIconTapped: function onNavIconTapped() {
       this.onResize();
     },
-    onGachaUseButtonTap: function onGachaUseButtonTap(gachaId) {
+    onGachaUseButtonTap: function onGachaUseButtonTap(gachaId, needPassword) {
+      if (!needPassword) {
+        window.location.href = "/gacha/".concat(gachaId, "/machine");
+        return;
+      }
+
       this.selectedGachaId = gachaId;
       this.authType = 0;
       this.showPasswordDialog = true;
     },
-    onGachaEditButtonTap: function onGachaEditButtonTap(gachaId) {
+    onGachaEditButtonTap: function onGachaEditButtonTap(gachaId, needPassword) {
       this.selectedGachaId = gachaId;
       this.authType = 1;
       this.showPasswordDialog = true;

@@ -95,12 +95,16 @@ export default {
         onNavIconTapped() {
             this.onResize();
         },
-        onGachaUseButtonTap(gachaId) {
+        onGachaUseButtonTap(gachaId, needPassword) {
+            if (!needPassword) {
+                window.location.href = `/gacha/${gachaId}/machine`
+                return
+            }
             this.selectedGachaId = gachaId;
             this.authType = 0;
             this.showPasswordDialog = true;
         },
-        onGachaEditButtonTap(gachaId) {
+        onGachaEditButtonTap(gachaId, needPassword) {
             this.selectedGachaId = gachaId;
             this.authType = 1;
             this.showPasswordDialog = true;

@@ -2380,10 +2380,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onUseButtonTap: function onUseButtonTap() {
-      this.onGachaUseButtonTap(this.gacha.gacha_id);
+      this.onGachaUseButtonTap(this.gacha.gacha_id, this.gacha.needUsePass);
     },
     onEditButtonTap: function onEditButtonTap() {
-      this.onGachaEditButtonTap(this.gacha.gacha_id);
+      this.onGachaEditButtonTap(this.gacha.gacha_id, this.gacha.needEditPass);
     },
     detail: function detail() {
       this.showDetail = !this.showDetail;

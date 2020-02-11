@@ -87,10 +87,10 @@ export default {
     },
     methods: {
         onUseButtonTap() {
-          this.onGachaUseButtonTap(this.gacha.gacha_id);
+          this.onGachaUseButtonTap(this.gacha.gacha_id, this.gacha.needUsePass);
         },
         onEditButtonTap() {
-          this.onGachaEditButtonTap(this.gacha.gacha_id);
+          this.onGachaEditButtonTap(this.gacha.gacha_id, this.gacha.needEditPass);
         },
         detail() {
             this.showDetail = !this.showDetail;

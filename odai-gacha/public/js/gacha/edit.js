@@ -2844,6 +2844,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2859,6 +2902,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       valid: false,
       showPassword: false,
       tab: null,
+      dialog: false,
+      dialogState: 'loading',
+      // loading or success or failed
       gacha: {
         gachaName: "",
         description: null,
@@ -2948,18 +2994,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _this = this;
+
         var topics, _i, _Object$keys, rarity, _topics, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, topic, request;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                this.dialogState = 'loading';
+                this.dialog = true;
                 topics = [];
                 _i = 0, _Object$keys = Object.keys(this.topics);
 
-              case 2:
+              case 4:
                 if (!(_i < _Object$keys.length)) {
-                  _context.next = 27;
+                  _context.next = 29;
                   break;
                 }
 
@@ -2968,7 +3018,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _iteratorNormalCompletion2 = true;
                 _didIteratorError2 = false;
                 _iteratorError2 = undefined;
-                _context.prev = 8;
+                _context.prev = 10;
 
                 for (_iterator2 = _topics[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                   topic = _step2.value;
@@ -2978,66 +3028,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-                _context.next = 16;
+                _context.next = 18;
                 break;
 
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](8);
+              case 14:
+                _context.prev = 14;
+                _context.t0 = _context["catch"](10);
                 _didIteratorError2 = true;
                 _iteratorError2 = _context.t0;
 
-              case 16:
-                _context.prev = 16;
-                _context.prev = 17;
+              case 18:
+                _context.prev = 18;
+                _context.prev = 19;
 
                 if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
                   _iterator2["return"]();
                 }
 
-              case 19:
-                _context.prev = 19;
+              case 21:
+                _context.prev = 21;
 
                 if (!_didIteratorError2) {
-                  _context.next = 22;
+                  _context.next = 24;
                   break;
                 }
 
                 throw _iteratorError2;
 
-              case 22:
-                return _context.finish(19);
-
-              case 23:
-                return _context.finish(16);
-
               case 24:
+                return _context.finish(21);
+
+              case 25:
+                return _context.finish(18);
+
+              case 26:
                 _i++;
-                _context.next = 2;
+                _context.next = 4;
                 break;
 
-              case 27:
+              case 29:
                 request = {
                   gacha: this.gacha,
                   rarity: this.rarities,
                   topics: topics
                 };
-                _context.next = 30;
-                return axios.post("/gacha", request).then(function (res) {// window.location.href = `/gacha`;
+                _context.next = 32;
+                return axios.post("/gacha", request).then(function (res) {
+                  _this.dialogState = 'success';
+                  window.location.href = "/gacha";
                 })["catch"](function (error) {
-                  console.log(error);
+                  _this.dialogState = 'failed';
                   console.log(error.response.data.errors);
                 });
 
-              case 30:
+              case 32:
                 return _context.abrupt("return", _context.sent);
 
-              case 31:
+              case 33:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[8, 12, 16, 24], [17,, 19, 23]]);
+        }, _callee, this, [[10, 14, 18, 26], [19,, 21, 25]]);
       }));
 
       function onSubmit() {
@@ -3198,7 +3250,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n.v-list-item__title[data-v-b6f307d6] {\n    font-size: 0.9rem !important;\n}\n.topic-list-enter-active[data-v-b6f307d6], .topic-list-leave-active[data-v-b6f307d6] {\n    transition: all 0.2s ease-out;\n}\n.topic-list-enter[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateY(10px);\n}\n.topic-list-leave-to[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateX(100%);\n}\n", ""]);
+exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n.v-list-item__title[data-v-b6f307d6] {\n    font-size: 0.9rem !important;\n}\n.topic-list-enter-active[data-v-b6f307d6], .topic-list-leave-active[data-v-b6f307d6] {\n    transition: all 0.2s ease-out;\n}\n.topic-list-enter[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateY(10px);\n}\n.topic-list-leave-to[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateX(100%);\n}\n.dialog-message[data-v-b6f307d6] {\n    text-align: center;\n    font-size: 1.25rem;\n    font-weight: bold;\n    color: #333;\n}\n.dialog-sub-message[data-v-b6f307d6] {\n    font-size:12px;\n    color: #757575;\n    font-weight:400;\n}\n", ""]);
 
 // exports
 
@@ -5888,867 +5940,1033 @@ var render = function() {
       _c(
         "v-content",
         [
-          _c("Header", { attrs: { showSearchBar: false } }, [
-            _c(
-              "div",
-              { staticClass: "app-main-content" },
-              [
-                _c(
-                  "v-card",
-                  { attrs: { outlined: "" } },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "d-flex justify-space-between align-center"
-                      },
-                      [
-                        _c("v-card-title", [_vm._v("ガチャ作成")]),
-                        _vm._v(" "),
-                        _c(
-                          "v-btn",
-                          {
-                            staticClass: "px-4",
-                            attrs: { depressed: "", color: "#eeeeee" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            削除\n                        "
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-form",
-                      {
-                        attrs: { autocomplete: "off" },
-                        model: {
-                          value: _vm.valid,
-                          callback: function($$v) {
-                            _vm.valid = $$v
-                          },
-                          expression: "valid"
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "card-content" },
-                          [
-                            _c("div", { staticClass: "d-flex mb-8" }, [
+          _c(
+            "Header",
+            { attrs: { showSearchBar: false } },
+            [
+              _c(
+                "div",
+                { staticClass: "app-main-content" },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { outlined: "" } },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex justify-space-between align-center"
+                        },
+                        [
+                          _c("v-card-title", [_vm._v("ガチャ作成")]),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "px-4",
+                              attrs: { depressed: "", color: "#eeeeee" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            削除\n                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-form",
+                        {
+                          attrs: { autocomplete: "off" },
+                          model: {
+                            value: _vm.valid,
+                            callback: function($$v) {
+                              _vm.valid = $$v
+                            },
+                            expression: "valid"
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "card-content" },
+                            [
+                              _c("div", { staticClass: "d-flex mb-8" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "flex-grow-1" },
+                                  [
+                                    _c("div", { staticClass: "form-title" }, [
+                                      _vm._v("タイトル")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("TextField", {
+                                      staticClass: "mb-4",
+                                      attrs: {
+                                        label: "タイトル",
+                                        value: _vm.gacha.gachaName,
+                                        rules: _vm.rules.gachaName,
+                                        counter: 50,
+                                        clearable: false,
+                                        hideDetails: false
+                                      },
+                                      on: {
+                                        change: function(value) {
+                                          _vm.gacha.gachaName = value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "form-title" }, [
+                                      _vm._v(
+                                        "\n                                    このガチャの説明\n                                "
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("v-textarea", {
+                                      attrs: {
+                                        color: "accent",
+                                        outlined: "",
+                                        solo: "",
+                                        flat: "",
+                                        label:
+                                          "このガチャの説明や使い方などを入力してください",
+                                        clearable: "",
+                                        "hide-details": "",
+                                        value: _vm.gacha.description
+                                      },
+                                      on: {
+                                        change: function(value) {
+                                          _vm.gacha.description = value
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "ml-4",
+                                    staticStyle: {
+                                      width: "200px",
+                                      "padding-top": "27px"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "v-tooltip",
+                                      {
+                                        attrs: { top: "" },
+                                        scopedSlots: _vm._u([
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              return [
+                                                _c(
+                                                  "div",
+                                                  _vm._g(
+                                                    {
+                                                      staticClass:
+                                                        "d-flex flex-column justify-center align-center",
+                                                      staticStyle: {
+                                                        "border-radius": "4px",
+                                                        background:
+                                                          "rgba(0,0,0,.12)",
+                                                        height: "100%",
+                                                        width: "100%",
+                                                        "user-select": "none"
+                                                      }
+                                                    },
+                                                    on
+                                                  ),
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      {
+                                                        staticClass: "mb-3",
+                                                        attrs: {
+                                                          color:
+                                                            "rgba(0,0,0,.26)",
+                                                          large: ""
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "mdi-cloud-upload"
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass: "mb-1",
+                                                        staticStyle: {
+                                                          color:
+                                                            "rgba(0,0,0,.26)",
+                                                          "font-size": "0.9rem",
+                                                          "font-weight": "bold"
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                        サムネイル画像\n                                    "
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticStyle: {
+                                                          color:
+                                                            "rgba(0,0,0,.26)",
+                                                          "font-size": "0.7rem"
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                        (960 x 600)\n                                    "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ])
+                                      },
+                                      [
+                                        _vm._v(" "),
+                                        _c("span", [
+                                          _vm._v("現在準備中です...")
+                                        ])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { top: "", left: "" },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "div",
+                                            _vm._g({ staticClass: "mb-8" }, on),
+                                            [
+                                              _c(
+                                                "div",
+                                                { staticClass: "form-title" },
+                                                [_vm._v("レア度")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                { staticClass: "mb-4" },
+                                                [
+                                                  _vm._l(_vm.rarities, function(
+                                                    rarity
+                                                  ) {
+                                                    return [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          key: rarity.rarity,
+                                                          staticClass:
+                                                            "d-flex align-center mb-2"
+                                                        },
+                                                        [
+                                                          _c("TextField", {
+                                                            staticClass:
+                                                              "flex-grow-1 mr-2",
+                                                            attrs: {
+                                                              dense: "",
+                                                              label:
+                                                                "レア度の名前",
+                                                              disabled: "",
+                                                              value:
+                                                                rarity.rarityName
+                                                            }
+                                                          }),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "mr-4",
+                                                              staticStyle: {
+                                                                width: "80px"
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("TextField", {
+                                                                attrs: {
+                                                                  dense: "",
+                                                                  label: "確率",
+                                                                  suffix: "%",
+                                                                  type:
+                                                                    "number",
+                                                                  disabled: "",
+                                                                  value:
+                                                                    rarity.probability,
+                                                                  clearable: false
+                                                                }
+                                                              })
+                                                            ],
+                                                            1
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-btn",
+                                                            {
+                                                              staticClass:
+                                                                "px-4",
+                                                              attrs: {
+                                                                depressed: "",
+                                                                color:
+                                                                  "#eeeeee",
+                                                                disabled: ""
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  attrs: {
+                                                                    color:
+                                                                      "grey darken-1"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "mdi-delete-forever"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    ]
+                                                  })
+                                                ],
+                                                2
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "d-flex justify-center"
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-btn",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "50% !important",
+                                                        "min-width": "120px",
+                                                        color: "#333"
+                                                      },
+                                                      attrs: {
+                                                        color: "secondary",
+                                                        rounded: "",
+                                                        depressed: "",
+                                                        disabled: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        { attrs: { leff: "" } },
+                                                        [_vm._v("mdi-plus")]
+                                                      ),
+                                                      _vm._v(
+                                                        "レア度追加\n                                "
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ])
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("現在準備中です...")])
+                                ]
+                              ),
+                              _vm._v(" "),
                               _c(
                                 "div",
-                                { staticClass: "flex-grow-1" },
+                                { staticClass: "mb-8" },
                                 [
                                   _c("div", { staticClass: "form-title" }, [
-                                    _vm._v("タイトル")
+                                    _vm._v("お題")
                                   ]),
                                   _vm._v(" "),
-                                  _c("TextField", {
-                                    staticClass: "mb-4",
-                                    attrs: {
-                                      label: "タイトル",
-                                      value: _vm.gacha.gachaName,
-                                      rules: _vm.rules.gachaName,
-                                      counter: 50,
-                                      clearable: false,
-                                      hideDetails: false
-                                    },
-                                    on: {
-                                      change: function(value) {
-                                        _vm.gacha.gachaName = value
+                                  _c(
+                                    "v-tabs",
+                                    {
+                                      staticClass: "mb-4",
+                                      attrs: { height: "40" },
+                                      model: {
+                                        value: _vm.tab,
+                                        callback: function($$v) {
+                                          _vm.tab = $$v
+                                        },
+                                        expression: "tab"
                                       }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "form-title" }, [
-                                    _vm._v(
-                                      "\n                                    このガチャの説明\n                                "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("v-textarea", {
-                                    attrs: {
-                                      color: "accent",
-                                      outlined: "",
-                                      solo: "",
-                                      flat: "",
-                                      label:
-                                        "このガチャの説明や使い方などを入力してください",
-                                      clearable: "",
-                                      "hide-details": "",
-                                      value: _vm.gacha.description
                                     },
-                                    on: {
-                                      change: function(value) {
-                                        _vm.gacha.description = value
+                                    [
+                                      _vm._l(_vm.rarities, function(rarity) {
+                                        return [
+                                          _c("v-tab", { key: rarity.rarity }, [
+                                            _vm._v(_vm._s(rarity.rarityName))
+                                          ])
+                                        ]
+                                      })
+                                    ],
+                                    2
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-tabs-items",
+                                    {
+                                      staticClass: "mb-4",
+                                      staticStyle: {
+                                        "min-height": "60px",
+                                        "max-height": "500px",
+                                        "overflow-y": "scroll"
+                                      },
+                                      model: {
+                                        value: _vm.tab,
+                                        callback: function($$v) {
+                                          _vm.tab = $$v
+                                        },
+                                        expression: "tab"
                                       }
-                                    }
-                                  })
+                                    },
+                                    _vm._l(_vm.rarities, function(rarity) {
+                                      return _c(
+                                        "v-tab-item",
+                                        { key: rarity.rarity },
+                                        [
+                                          _c(
+                                            "transition-group",
+                                            {
+                                              attrs: {
+                                                name: "topic-list",
+                                                tag: "div"
+                                              }
+                                            },
+                                            _vm._l(
+                                              _vm.topics[rarity.rarity],
+                                              function(topic, index) {
+                                                return _c(
+                                                  "div",
+                                                  {
+                                                    key: topic.id,
+                                                    staticClass:
+                                                      "d-flex align-center mb-2 topic-row"
+                                                  },
+                                                  [
+                                                    _c("TextField", {
+                                                      staticClass:
+                                                        "flex-grow-1 mr-2",
+                                                      attrs: {
+                                                        dense: "",
+                                                        label:
+                                                          "ガチャを回した時に出る「お題」を入力してください",
+                                                        value: topic.value
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          value
+                                                        ) {
+                                                          _vm.onTopicUpdated(
+                                                            value,
+                                                            index,
+                                                            rarity.rarity,
+                                                            topic.id
+                                                          )
+                                                        }
+                                                      }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-menu",
+                                                      {
+                                                        attrs: {
+                                                          transition:
+                                                            "slide-x-transition",
+                                                          bottom: "",
+                                                          left: ""
+                                                        },
+                                                        scopedSlots: _vm._u(
+                                                          [
+                                                            {
+                                                              key: "activator",
+                                                              fn: function(
+                                                                ref
+                                                              ) {
+                                                                var on = ref.on
+                                                                return [
+                                                                  _c(
+                                                                    "div",
+                                                                    _vm._g(
+                                                                      {
+                                                                        directives: [
+                                                                          {
+                                                                            name:
+                                                                              "ripple",
+                                                                            rawName:
+                                                                              "v-ripple"
+                                                                          }
+                                                                        ],
+                                                                        staticClass:
+                                                                          "square-button mr-4 d-flex align-center justify-center"
+                                                                      },
+                                                                      on
+                                                                    ),
+                                                                    [
+                                                                      _c(
+                                                                        "v-icon",
+                                                                        {
+                                                                          attrs: {
+                                                                            color:
+                                                                              "grey darken-1"
+                                                                          }
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "mdi-arrow-right"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                ]
+                                                              }
+                                                            }
+                                                          ],
+                                                          null,
+                                                          true
+                                                        )
+                                                      },
+                                                      [
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list",
+                                                          _vm._l(
+                                                            _vm.rarities,
+                                                            function(rarity) {
+                                                              return _c(
+                                                                "v-list-item",
+                                                                {
+                                                                  key:
+                                                                    rarity.rarity,
+                                                                  staticStyle: {
+                                                                    "font-size":
+                                                                      "0.5rerm"
+                                                                  },
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      rarity.rarity ===
+                                                                      _vm.tab
+                                                                  },
+                                                                  on: {
+                                                                    click: function(
+                                                                      $event
+                                                                    ) {
+                                                                      return _vm.changeTopicRarity(
+                                                                        index,
+                                                                        rarity.rarity
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "v-list-item-title",
+                                                                    [
+                                                                      _vm._v(
+                                                                        _vm._s(
+                                                                          rarity.rarityName
+                                                                        )
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                ],
+                                                                1
+                                                              )
+                                                            }
+                                                          ),
+                                                          1
+                                                        )
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-btn",
+                                                      {
+                                                        staticClass: "px-4",
+                                                        attrs: {
+                                                          depressed: "",
+                                                          color: "#eeeeee"
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.removeTopic(
+                                                              index
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "v-icon",
+                                                          {
+                                                            attrs: {
+                                                              color:
+                                                                "grey darken-1"
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "mdi-delete-forever"
+                                                            )
+                                                          ]
+                                                        )
+                                                      ],
+                                                      1
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    }),
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "d-flex justify-center" },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticStyle: {
+                                            width: "50% !important",
+                                            "min-width": "120px",
+                                            color: "#333"
+                                          },
+                                          attrs: {
+                                            color: "secondary",
+                                            rounded: "",
+                                            depressed: ""
+                                          },
+                                          on: { click: _vm.addTopic }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { leff: "" } },
+                                            [_vm._v("mdi-plus")]
+                                          ),
+                                          _vm._v(
+                                            "お題追加\n                                "
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
                               ),
                               _vm._v(" "),
                               _c(
                                 "div",
-                                {
-                                  staticClass: "ml-4",
-                                  staticStyle: {
-                                    width: "200px",
-                                    "padding-top": "27px"
-                                  }
-                                },
+                                { staticClass: "mb-8" },
                                 [
+                                  _c("div", { staticClass: "form-title" }, [
+                                    _vm._v("パスワード")
+                                  ]),
+                                  _vm._v(" "),
                                   _c(
-                                    "v-tooltip",
-                                    {
-                                      attrs: { top: "" },
-                                      scopedSlots: _vm._u([
-                                        {
-                                          key: "activator",
-                                          fn: function(ref) {
-                                            var on = ref.on
-                                            return [
-                                              _c(
-                                                "div",
-                                                _vm._g(
-                                                  {
-                                                    staticClass:
-                                                      "d-flex flex-column justify-center align-center",
-                                                    staticStyle: {
-                                                      "border-radius": "4px",
-                                                      background:
-                                                        "rgba(0,0,0,.12)",
-                                                      height: "100%",
-                                                      width: "100%",
-                                                      "user-select": "none"
-                                                    }
-                                                  },
-                                                  on
-                                                ),
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass: "mb-3",
-                                                      attrs: {
-                                                        color:
-                                                          "rgba(0,0,0,.26)",
-                                                        large: ""
-                                                      }
-                                                    },
-                                                    [_vm._v("mdi-cloud-upload")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass: "mb-1",
-                                                      staticStyle: {
-                                                        color:
-                                                          "rgba(0,0,0,.26)",
-                                                        "font-size": "0.9rem",
-                                                        "font-weight": "bold"
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                                        サムネイル画像\n                                    "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticStyle: {
-                                                        color:
-                                                          "rgba(0,0,0,.26)",
-                                                        "font-size": "0.7rem"
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                                        (960 x 600)\n                                    "
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ]
-                                          }
+                                    "div",
+                                    { staticClass: "form-description" },
+                                    [
+                                      _vm._v(
+                                        "\n                                ガチャの使用、編集、削除にパスワードをかけたい場合は、スイッチをONにしてください\n                            "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "d-flex" },
+                                    [
+                                      _c("div", {
+                                        staticStyle: { width: "8px" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-switch", {
+                                        attrs: {
+                                          color: "primary",
+                                          inset: "",
+                                          label: "使用"
+                                        },
+                                        model: {
+                                          value: _vm.gacha.needUsePass,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.gacha,
+                                              "needUsePass",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "gacha.needUsePass"
                                         }
-                                      ])
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", {
+                                        staticStyle: { width: "32px" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-switch", {
+                                        attrs: {
+                                          color: "primary",
+                                          inset: "",
+                                          label: "編集"
+                                        },
+                                        model: {
+                                          value: _vm.gacha.needEditPass,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.gacha,
+                                              "needEditPass",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "gacha.needEditPass"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", {
+                                        staticStyle: { width: "32px" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-switch", {
+                                        attrs: {
+                                          color: "primary",
+                                          inset: "",
+                                          label: "削除"
+                                        },
+                                        model: {
+                                          value: _vm.gacha.needDeletePass,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.gacha,
+                                              "needDeletePass",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "gacha.needDeletePass"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("TextField", {
+                                    staticClass: "mb-2",
+                                    attrs: {
+                                      label: "パスワード",
+                                      clearable: false,
+                                      "append-icon": _vm.showPassword
+                                        ? "mdi-eye"
+                                        : "mdi-eye-off",
+                                      type: _vm.showPassword
+                                        ? "text"
+                                        : "password",
+                                      clickAppend: function() {
+                                        return (_vm.showPassword = !_vm.showPassword)
+                                      },
+                                      disabled: !(
+                                        _vm.gacha.needUsePass ||
+                                        _vm.gacha.needEditPass ||
+                                        _vm.gacha.needDeletePass
+                                      ),
+                                      value: _vm.gacha.password
+                                    },
+                                    on: {
+                                      change: function(value) {
+                                        _vm.gacha.password = value
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "pa-2 warning white--text",
+                                      staticStyle: {
+                                        "border-radius": "4px",
+                                        "font-size": "0.9rem"
+                                      }
                                     },
                                     [
-                                      _vm._v(" "),
-                                      _c("span", [_vm._v("現在準備中です...")])
+                                      _vm._v(
+                                        "\n                                パスワードはガチャを起動、編集および削除する際に必要になります。"
+                                      ),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                                設定したパスワードは忘れないよう必ず保管してください。\n                            "
+                                      )
                                     ]
                                   )
                                 ],
                                 1
                               )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "d-flex justify-center align-center mb-4"
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "mr-4",
+                                  staticStyle: { width: "200px !important" },
+                                  attrs: {
+                                    depressed: "",
+                                    outlined: "",
+                                    color: "#aeaeae",
+                                    "x-large": "",
+                                    href: "/gacha"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            キャンセル\n                        "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  staticStyle: { width: "200px !important" },
+                                  attrs: {
+                                    depressed: "",
+                                    color: "accent",
+                                    "x-large": ""
+                                  },
+                                  on: { click: _vm.onSubmit }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            作成\n                        "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-dialog",
+                {
+                  attrs: { persistent: "", "max-width": "380" },
+                  model: {
+                    value: _vm.dialog,
+                    callback: function($$v) {
+                      _vm.dialog = $$v
+                    },
+                    expression: "dialog"
+                  }
+                },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass:
+                        "d-flex flex-column align-center justify-center",
+                      staticStyle: { height: "350px", padding: "32px" }
+                    },
+                    [
+                      _vm.dialogState === "loading"
+                        ? [
+                            _c(
+                              "div",
+                              { staticClass: "mb-10" },
+                              [
+                                _c("v-progress-circular", {
+                                  attrs: {
+                                    size: 64,
+                                    width: 7,
+                                    color: "accent",
+                                    indeterminate: ""
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dialog-message mt-6" }, [
+                              _vm._v("登録中...")
+                            ])
+                          ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.dialogState === "success"
+                        ? [
+                            _c(
+                              "div",
+                              { staticClass: "mb-10" },
+                              [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    staticClass: "mb-2 lock-icon",
+                                    attrs: { color: "accent", size: "64" }
+                                  },
+                                  [_vm._v("mdi-check-outline")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dialog-message mt-4" }, [
+                              _vm._v(
+                                "\n                            登録に成功しました"
+                              ),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "dialog-sub-message" },
+                                [_vm._v("ガチャ一覧ページに移動します")]
+                              )
+                            ])
+                          ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.dialogState === "failed"
+                        ? [
+                            _c(
+                              "div",
+                              { staticClass: "mb-10" },
+                              [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    staticClass: "mb-2 lock-icon",
+                                    attrs: { color: "primary", size: "64" }
+                                  },
+                                  [_vm._v("mdi-close-outline")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dialog-message mt-4" }, [
+                              _vm._v(
+                                "\n                            登録に失敗しました"
+                              ),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "dialog-sub-message" },
+                                [_vm._v("通信状況を確認してください")]
+                              )
                             ]),
                             _vm._v(" "),
                             _c(
-                              "v-tooltip",
-                              {
-                                attrs: { top: "", left: "" },
-                                scopedSlots: _vm._u([
-                                  {
-                                    key: "activator",
-                                    fn: function(ref) {
-                                      var on = ref.on
-                                      return [
-                                        _c(
-                                          "div",
-                                          _vm._g({ staticClass: "mb-8" }, on),
-                                          [
-                                            _c(
-                                              "div",
-                                              { staticClass: "form-title" },
-                                              [_vm._v("レア度")]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "mb-4" },
-                                              [
-                                                _vm._l(_vm.rarities, function(
-                                                  rarity
-                                                ) {
-                                                  return [
-                                                    _c(
-                                                      "div",
-                                                      {
-                                                        key: rarity.rarity,
-                                                        staticClass:
-                                                          "d-flex align-center mb-2"
-                                                      },
-                                                      [
-                                                        _c("TextField", {
-                                                          staticClass:
-                                                            "flex-grow-1 mr-2",
-                                                          attrs: {
-                                                            dense: "",
-                                                            label:
-                                                              "レア度の名前",
-                                                            disabled: "",
-                                                            value:
-                                                              rarity.rarityName
-                                                          }
-                                                        }),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass: "mr-4",
-                                                            staticStyle: {
-                                                              width: "80px"
-                                                            }
-                                                          },
-                                                          [
-                                                            _c("TextField", {
-                                                              attrs: {
-                                                                dense: "",
-                                                                label: "確率",
-                                                                suffix: "%",
-                                                                type: "number",
-                                                                disabled: "",
-                                                                value:
-                                                                  rarity.probability,
-                                                                clearable: false
-                                                              }
-                                                            })
-                                                          ],
-                                                          1
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "v-btn",
-                                                          {
-                                                            staticClass: "px-4",
-                                                            attrs: {
-                                                              depressed: "",
-                                                              color: "#eeeeee",
-                                                              disabled: ""
-                                                            }
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "v-icon",
-                                                              {
-                                                                attrs: {
-                                                                  color:
-                                                                    "grey darken-1"
-                                                                }
-                                                              },
-                                                              [
-                                                                _vm._v(
-                                                                  "mdi-delete-forever"
-                                                                )
-                                                              ]
-                                                            )
-                                                          ],
-                                                          1
-                                                        )
-                                                      ],
-                                                      1
-                                                    )
-                                                  ]
-                                                })
-                                              ],
-                                              2
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "d-flex justify-center"
-                                              },
-                                              [
-                                                _c(
-                                                  "v-btn",
-                                                  {
-                                                    staticStyle: {
-                                                      width: "50% !important",
-                                                      "min-width": "120px",
-                                                      color: "#333"
-                                                    },
-                                                    attrs: {
-                                                      color: "secondary",
-                                                      rounded: "",
-                                                      depressed: "",
-                                                      disabled: ""
-                                                    }
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "v-icon",
-                                                      { attrs: { leff: "" } },
-                                                      [_vm._v("mdi-plus")]
-                                                    ),
-                                                    _vm._v(
-                                                      "レア度追加\n                                "
-                                                    )
-                                                  ],
-                                                  1
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    }
-                                  }
-                                ])
-                              },
-                              [
-                                _vm._v(" "),
-                                _c("span", [_vm._v("現在準備中です...")])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-8" },
-                              [
-                                _c("div", { staticClass: "form-title" }, [
-                                  _vm._v("お題")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "v-tabs",
-                                  {
-                                    staticClass: "mb-4",
-                                    attrs: { height: "40" },
-                                    model: {
-                                      value: _vm.tab,
-                                      callback: function($$v) {
-                                        _vm.tab = $$v
-                                      },
-                                      expression: "tab"
-                                    }
-                                  },
-                                  [
-                                    _vm._l(_vm.rarities, function(rarity) {
-                                      return [
-                                        _c("v-tab", { key: rarity.rarity }, [
-                                          _vm._v(_vm._s(rarity.rarityName))
-                                        ])
-                                      ]
-                                    })
-                                  ],
-                                  2
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-tabs-items",
-                                  {
-                                    staticClass: "mb-4",
-                                    staticStyle: {
-                                      "min-height": "60px",
-                                      "max-height": "500px",
-                                      "overflow-y": "scroll"
-                                    },
-                                    model: {
-                                      value: _vm.tab,
-                                      callback: function($$v) {
-                                        _vm.tab = $$v
-                                      },
-                                      expression: "tab"
-                                    }
-                                  },
-                                  _vm._l(_vm.rarities, function(rarity) {
-                                    return _c(
-                                      "v-tab-item",
-                                      { key: rarity.rarity },
-                                      [
-                                        _c(
-                                          "transition-group",
-                                          {
-                                            attrs: {
-                                              name: "topic-list",
-                                              tag: "div"
-                                            }
-                                          },
-                                          _vm._l(
-                                            _vm.topics[rarity.rarity],
-                                            function(topic, index) {
-                                              return _c(
-                                                "div",
-                                                {
-                                                  key: topic.id,
-                                                  staticClass:
-                                                    "d-flex align-center mb-2 topic-row"
-                                                },
-                                                [
-                                                  _c("TextField", {
-                                                    staticClass:
-                                                      "flex-grow-1 mr-2",
-                                                    attrs: {
-                                                      dense: "",
-                                                      label:
-                                                        "ガチャを回した時に出る「お題」を入力してください",
-                                                      value: topic.value
-                                                    },
-                                                    on: {
-                                                      change: function(value) {
-                                                        _vm.onTopicUpdated(
-                                                          value,
-                                                          index,
-                                                          rarity.rarity,
-                                                          topic.id
-                                                        )
-                                                      }
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-menu",
-                                                    {
-                                                      attrs: {
-                                                        transition:
-                                                          "slide-x-transition",
-                                                        bottom: "",
-                                                        left: ""
-                                                      },
-                                                      scopedSlots: _vm._u(
-                                                        [
-                                                          {
-                                                            key: "activator",
-                                                            fn: function(ref) {
-                                                              var on = ref.on
-                                                              return [
-                                                                _c(
-                                                                  "div",
-                                                                  _vm._g(
-                                                                    {
-                                                                      directives: [
-                                                                        {
-                                                                          name:
-                                                                            "ripple",
-                                                                          rawName:
-                                                                            "v-ripple"
-                                                                        }
-                                                                      ],
-                                                                      staticClass:
-                                                                        "square-button mr-4 d-flex align-center justify-center"
-                                                                    },
-                                                                    on
-                                                                  ),
-                                                                  [
-                                                                    _c(
-                                                                      "v-icon",
-                                                                      {
-                                                                        attrs: {
-                                                                          color:
-                                                                            "grey darken-1"
-                                                                        }
-                                                                      },
-                                                                      [
-                                                                        _vm._v(
-                                                                          "mdi-arrow-right"
-                                                                        )
-                                                                      ]
-                                                                    )
-                                                                  ],
-                                                                  1
-                                                                )
-                                                              ]
-                                                            }
-                                                          }
-                                                        ],
-                                                        null,
-                                                        true
-                                                      )
-                                                    },
-                                                    [
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-list",
-                                                        _vm._l(
-                                                          _vm.rarities,
-                                                          function(rarity) {
-                                                            return _c(
-                                                              "v-list-item",
-                                                              {
-                                                                key:
-                                                                  rarity.rarity,
-                                                                staticStyle: {
-                                                                  "font-size":
-                                                                    "0.5rerm"
-                                                                },
-                                                                attrs: {
-                                                                  disabled:
-                                                                    rarity.rarity ===
-                                                                    _vm.tab
-                                                                },
-                                                                on: {
-                                                                  click: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.changeTopicRarity(
-                                                                      index,
-                                                                      rarity.rarity
-                                                                    )
-                                                                  }
-                                                                }
-                                                              },
-                                                              [
-                                                                _c(
-                                                                  "v-list-item-title",
-                                                                  [
-                                                                    _vm._v(
-                                                                      _vm._s(
-                                                                        rarity.rarityName
-                                                                      )
-                                                                    )
-                                                                  ]
-                                                                )
-                                                              ],
-                                                              1
-                                                            )
-                                                          }
-                                                        ),
-                                                        1
-                                                      )
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-btn",
-                                                    {
-                                                      staticClass: "px-4",
-                                                      attrs: {
-                                                        depressed: "",
-                                                        color: "#eeeeee"
-                                                      },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.removeTopic(
-                                                            index
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "v-icon",
-                                                        {
-                                                          attrs: {
-                                                            color:
-                                                              "grey darken-1"
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            "mdi-delete-forever"
-                                                          )
-                                                        ]
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            }
-                                          ),
-                                          0
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  }),
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "d-flex justify-center" },
-                                  [
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        staticStyle: {
-                                          width: "50% !important",
-                                          "min-width": "120px",
-                                          color: "#333"
-                                        },
-                                        attrs: {
-                                          color: "secondary",
-                                          rounded: "",
-                                          depressed: ""
-                                        },
-                                        on: { click: _vm.addTopic }
-                                      },
-                                      [
-                                        _c("v-icon", { attrs: { leff: "" } }, [
-                                          _vm._v("mdi-plus")
-                                        ]),
-                                        _vm._v(
-                                          "お題追加\n                                "
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-8" },
-                              [
-                                _c("div", { staticClass: "form-title" }, [
-                                  _vm._v("パスワード")
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-description" }, [
-                                  _vm._v(
-                                    "\n                                ガチャの使用、編集、削除にパスワードをかけたい場合は、スイッチをONにしてください\n                            "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "d-flex" },
-                                  [
-                                    _c("div", {
-                                      staticStyle: { width: "8px" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("v-switch", {
-                                      attrs: {
-                                        color: "primary",
-                                        inset: "",
-                                        label: "使用"
-                                      },
-                                      model: {
-                                        value: _vm.gacha.needUsePass,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.gacha,
-                                            "needUsePass",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "gacha.needUsePass"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", {
-                                      staticStyle: { width: "32px" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("v-switch", {
-                                      attrs: {
-                                        color: "primary",
-                                        inset: "",
-                                        label: "編集"
-                                      },
-                                      model: {
-                                        value: _vm.gacha.needEditPass,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.gacha,
-                                            "needEditPass",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "gacha.needEditPass"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", {
-                                      staticStyle: { width: "32px" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("v-switch", {
-                                      attrs: {
-                                        color: "primary",
-                                        inset: "",
-                                        label: "削除"
-                                      },
-                                      model: {
-                                        value: _vm.gacha.needDeletePass,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.gacha,
-                                            "needDeletePass",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "gacha.needDeletePass"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("TextField", {
-                                  staticClass: "mb-2",
-                                  attrs: {
-                                    label: "パスワード",
-                                    clearable: false,
-                                    "append-icon": _vm.showPassword
-                                      ? "mdi-eye"
-                                      : "mdi-eye-off",
-                                    type: _vm.showPassword
-                                      ? "text"
-                                      : "password",
-                                    clickAppend: function() {
-                                      return (_vm.showPassword = !_vm.showPassword)
-                                    },
-                                    disabled: !(
-                                      _vm.gacha.needUsePass ||
-                                      _vm.gacha.needEditPass ||
-                                      _vm.gacha.needDeletePass
-                                    ),
-                                    value: _vm.gacha.password
-                                  },
-                                  on: {
-                                    change: function(value) {
-                                      _vm.gacha.password = value
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "pa-2 warning white--text",
-                                    staticStyle: {
-                                      "border-radius": "4px",
-                                      "font-size": "0.9rem"
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                パスワードはガチャを起動、編集および削除する際に必要になります。"
-                                    ),
-                                    _c("br"),
-                                    _vm._v(
-                                      "\n                                設定したパスワードは忘れないよう必ず保管してください。\n                            "
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex justify-center align-center mb-4"
-                          },
-                          [
-                            _c(
                               "v-btn",
                               {
-                                staticClass: "mr-4",
-                                staticStyle: { width: "200px !important" },
+                                staticClass: "mt-3",
                                 attrs: {
+                                  color: "#eeeeee",
+                                  rounded: "",
                                   depressed: "",
-                                  outlined: "",
-                                  color: "#aeaeae",
-                                  "x-large": "",
-                                  href: "/gacha"
+                                  dense: ""
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.dialog = false
+                                  }
                                 }
                               },
                               [
                                 _vm._v(
-                                  "\n                            キャンセル\n                        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-btn",
-                              {
-                                staticStyle: { width: "200px !important" },
-                                attrs: {
-                                  depressed: "",
-                                  color: "accent",
-                                  "x-large": ""
-                                },
-                                on: { click: _vm.onSubmit }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            作成\n                        "
+                                  "\n                            閉じる\n                        "
                                 )
                               ]
                             )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ])
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )

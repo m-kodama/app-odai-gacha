@@ -25,12 +25,11 @@ class GachaRequest extends FormRequest
     {
         return [
             'gacha.gachaName' => 'required|string|max:50',
-            'gacha.description' => 'string|max:500',
+            'gacha.description' => 'max:500',
             'gacha.needUsePass' => 'required|boolean',
             'gacha.needEditPass' => 'required|boolean',
             'gacha.needDeletePass' => 'required|boolean',
             'gacha.password' => [
-                'string',
                 'max:16',
                 function ($attribute, $value, $fail) {
                     $input_data = $this->all();
@@ -41,7 +40,7 @@ class GachaRequest extends FormRequest
                             $fail('使用、編集、削除にロックをかける場合は、パスワードが必須です');
                         }
                     } else {
-                        if(!is_null($value) || $value !== "") {
+                        if(!is_null($value)) {
                             $fail('使用、編集、削除にロックをかけない場合は、パスワードは設定できません');
                         }
                     }

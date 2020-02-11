@@ -290,6 +290,49 @@
                         </v-form>
                     </v-card>
                 </div>
+                 <v-dialog v-model="dialog" persistent max-width="380">
+                    <v-card style="height: 350px; padding: 32px;" class="d-flex flex-column align-center justify-center">
+                        <template v-if="dialogState==='loading'">
+                            <div class="mb-10">
+                                <v-progress-circular
+                                    :size="64"
+                                    :width="7"
+                                    color="accent"
+                                    indeterminate
+                                ></v-progress-circular>
+                            </div>
+                            <div class="dialog-message mt-6">登録中...</div>
+                        </template>
+                        <template v-if="dialogState==='success'">
+                            <div class="mb-10">
+                              <v-icon color="accent" size="64" class="mb-2 lock-icon">mdi-check-outline</v-icon>
+                            </div>
+                            <div class="dialog-message mt-4">
+                                登録に成功しました<br>
+                                <span class="dialog-sub-message">ガチャ一覧ページに移動します</span>
+                            </div>
+                        </template>
+                        <template v-if="dialogState==='failed'">
+                            <div class="mb-10">
+                                <v-icon color="primary" size="64" class="mb-2 lock-icon">mdi-close-outline</v-icon>
+                            </div>
+                            <div class="dialog-message mt-4">
+                                登録に失敗しました<br>
+                                <span class="dialog-sub-message">通信状況を確認してください</span>
+                            </div>
+                            <v-btn
+                                class="mt-3"
+                                color="#eeeeee"
+                                rounded
+                                depressed
+                                @click="dialog=false"
+                                dense
+                            >
+                                閉じる
+                            </v-btn>
+                        </template>
+                    </v-card>
+                </v-dialog>
             </Header>
         </v-content>
     </v-app>
@@ -312,6 +355,8 @@ export default {
             valid: false,
             showPassword: false,
             tab: null,
+            dialog: false,
+            dialogState: 'loading', // loading or success or failed
             gacha: {
                 gachaName: "",
                 description: null,
@@ -358,6 +403,8 @@ export default {
             return {value, id: this.topicCount++}
         },
         async onSubmit() {
+            this.dialogState = 'loading';
+            this.dialog = true;
             const topics = [];
             for (const rarity of Object.keys(this.topics)) {
                 const _topics = this.topics[rarity];
@@ -372,10 +419,11 @@ export default {
              };
             return await axios.post(`/gacha`, request)
             .then((res) => {
-                // window.location.href = `/gacha`;
+                this.dialogState = 'success';
+                window.location.href = `/gacha`;
             })
             .catch((error) => {
-                console.log(error)
+                this.dialogState = 'failed';
                 console.log(error.response.data.errors)
             })
         },
@@ -445,5 +493,16 @@ export default {
 .topic-list-leave-to {
     opacity: 0;
     transform: translateX(100%);
+}
+.dialog-message {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+.dialog-sub-message {
+    font-size:12px;
+    color: #757575;
+    font-weight:400;
 }
 </style>

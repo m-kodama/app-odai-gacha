@@ -367,12 +367,11 @@ export default {
                     topics.push({ topic: topic.value, rarity });
                 }
             }
+            console.log(topics);
             const request = {
-                gacha: {
-                    ...this.gacha,
-                    topics
-                },
+                gacha: this.gacha,
                 rarity: this.rarities,
+                topics: topics
              };
             return await axios.post(`/gacha`, request)
             .then((res) => {
@@ -381,6 +380,7 @@ export default {
             })
             .catch((error) => {
                 console.log(error)
+                console.log(error.response.data.errors)
             })
         },
         addTopic() {

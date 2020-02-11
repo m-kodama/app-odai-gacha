@@ -13,7 +13,7 @@ class GachaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class GachaRequest extends FormRequest
     {
         return [
             'gacha.gachaName' => 'required|string|max:50',
-            'gacha.discription' => 'string|max:500',
+            'gacha.description' => 'string|max:500',
             'gacha.needUsePass' => 'required|boolean',
             'gacha.needEditPass' => 'required|boolean',
             'gacha.needDeletePass' => 'required|boolean',
@@ -34,7 +34,9 @@ class GachaRequest extends FormRequest
                 'max:16',
                 function ($attribute, $value, $fail) {
                     $input_data = $this->all();
-                    if ($input_data['needUsePass'] || $input_data['needEditPass'] || $input_data['needDeletePass']) {
+                    if ($input_data['gacha']['needUsePass'] 
+                        || $input_data['gacha']['needEditPass']
+                        || $input_data['gacha']['needDeletePass']) {
                         if(is_null($value) || $value === "") {
                             $fail('使用、編集、削除にロックをかける場合は、パスワードが必須です');
                         }
@@ -45,8 +47,9 @@ class GachaRequest extends FormRequest
                     }
                 }
             ],
-            'gacha.topics' => 'required|array|min:1|max:200',
-            'gacha.topics.*' => 'required|string|max:30',
+            'topics' => 'required|array|min:1|max:200',
+            'topics.*.topic' => 'required|string|max:30',
+            'topics.*.rarity' => 'required',
         ];
     }
 
@@ -60,13 +63,13 @@ class GachaRequest extends FormRequest
         return [
             'gacha.gachaName.required' => 'タイトルは必須です',
             'gacha.gachaName.max' => 'タイトルは50文字以内で入力してください',
-            'gacha.discription.max' => '説明は500文字以内で入力してください',
+            'gacha.description.max' => '説明は500文字以内で入力してください',
             'gacha.password.max' => 'パスワードは16文字以内で入力してください',
-            'gacha.topics.required' => 'お題は必須です',
-            'gacha.topics.min' => 'お題は1件以上入力してください',
-            'gacha.topics.max' => 'お題は200件以内で入力してください',
-            'gacha.topics.*.required' => 'お題には1文字以上入力してください',
-            'gacha.topics.*.max' => 'お題は30文字以内で入力してください',
+            'topics.required' => 'お題は必須です',
+            'topics.min' => 'お題は1件以上入力してください',
+            'topics.max' => 'お題は200件以内で入力してください',
+            'topics.*.required' => 'お題には1文字以上入力してください',
+            'topics.*.max' => 'お題は30文字以内で入力してください',
         ];
     }
 }

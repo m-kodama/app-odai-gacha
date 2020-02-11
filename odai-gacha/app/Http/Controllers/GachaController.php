@@ -9,7 +9,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Gacha;
-use App\Http\Requests;
+use App\Models\Topic;
+use App\Models\Rarity;
+use App\Http\Requests\GachaRequest;
+use Ulid\Ulid;
 
 // TODO 当初の想定よりもロジックが多くなってしまったため、Modelクラスに処理を分ける
 class GachaController extends Controller
@@ -64,12 +67,55 @@ class GachaController extends Controller
 
     public function createGachaDetail(GachaRequest $request) {
         info($request);
-        $gacha = new Gacha();
-        $gacha->gacha_name = $request->gacha_name;
-        $gacha->user_id = 1;
-        // $gacha->save();
-
-        return redirect("/gacha");
+        DB::beginTransaction();
+        try{
+            // ガチャマスタ
+            $gacha_id = Ulid::generate();
+            $gacha = new Gacha();
+            $gacha->gacha_id = $gacha_id;
+            $gacha->gacha_name = $request['gacha']['gachaName'];
+            $gacha->description = $request['gacha']['description'];
+            $gacha->needUsePass = $request['gacha']['needUsePass'];
+            $gacha->needEditPass = $request['gacha']['needEditPass'];
+            $gacha->needDeletePass = $request['gacha']['needDeletePass'];
+            if (!is_null($request['gacha']['password']) && $request['gacha']['password'] !== "") {
+                $gacha->password = bcrypt($request['gacha']['password']);
+            }
+            $gacha->user_id = 1;
+            $gacha->save();
+            // レア度
+            $rarity_id_map = [];
+            $rarity_params = [];
+            foreach($request['rarity'] as $rarity) {
+                $rarity_id = Ulid::generate();
+                $rarity_id_map[$rarity['rarity']] = $rarity_id;
+                $rarity_params[] = [
+                    'rarity_id' => $rarity_id,
+                    'rarity' => $rarity['rarity'],
+                    'rarity_name' => $rarity['rarityName'],
+                    'probability' => $rarity['probability'],
+                ];
+            }
+            DB::table('rarity')->insert($rarity_params);
+            // トピック
+            $topic_params = [];
+            foreach($request['topics'] as $topic) {
+                $topic_id = Ulid::generate();
+                $topic_params[] = [
+                    'topic_id' => $topic_id,
+                    'topic' => $topic['topic'],
+                    'gacha_id' => $gacha_id,
+                    'rarity_id' => $rarity_id_map[$topic['rarity']],
+                ];
+            }
+            DB::table('topics')->insert($topic_params);
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withInput();
+            abort(400);
+        }
+        DB::commit();
+        return $gacha_id;
     }
 
     public function updateGacha(Request $request, $gachaId) {

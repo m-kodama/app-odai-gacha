@@ -1443,7 +1443,6 @@ module.exports = function isAbsoluteURL(url) {
 
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
-var isValidXss = __webpack_require__(/*! ./isValidXss */ "./node_modules/axios/lib/helpers/isValidXss.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1463,10 +1462,6 @@ module.exports = (
     */
       function resolveURL(url) {
         var href = url;
-
-        if (isValidXss(url)) {
-          throw new Error('URL contains XSS injection attempt');
-        }
 
         if (msie) {
         // IE needs attribute set twice to normalize properties
@@ -1513,25 +1508,6 @@ module.exports = (
       };
     })()
 );
-
-
-/***/ }),
-
-/***/ "./node_modules/axios/lib/helpers/isValidXss.js":
-/*!******************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/isValidXss.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isValidXss(requestURL) {
-  var xssRegex = /(\b)(on\w+)=|javascript|(<\s*)(\/*)script/gi;
-  return xssRegex.test(requestURL);
-};
-
 
 
 /***/ }),
@@ -3036,23 +3012,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 break;
 
               case 29:
+                console.log(topics);
                 request = {
-                  gacha: _objectSpread({}, this.gacha, {
-                    topics: topics
-                  }),
-                  rarity: this.rarities
+                  gacha: this.gacha,
+                  rarity: this.rarities,
+                  topics: topics
                 };
-                _context.next = 32;
+                _context.next = 33;
                 return axios.post("/gacha", request).then(function (res) {
                   console.log(res); // window.location.href = `/gacha`;
                 })["catch"](function (error) {
                   console.log(error);
+                  console.log(error.response.data.errors);
                 });
 
-              case 32:
+              case 33:
                 return _context.abrupt("return", _context.sent);
 
-              case 33:
+              case 34:
               case "end":
                 return _context.stop();
             }
@@ -60592,7 +60569,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/gacha/edit.js */"./resources/js/gacha/edit.js");
+module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/edit.js */"./resources/js/gacha/edit.js");
 
 
 /***/ })

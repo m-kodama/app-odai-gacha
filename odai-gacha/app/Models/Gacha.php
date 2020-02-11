@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gacha extends Model
 {
+    protected $fillable = [
+        'gacha_id',
+        'gacha_name',
+        'description',
+        'needUsePass',
+        'needEditPass',
+        'needDeletePass',
+        'password',
+        'user_id',
+    ];
     protected $table = 'gacha_master';
     protected $primaryKey = 'gacha_id';
     public $incrementing = false;

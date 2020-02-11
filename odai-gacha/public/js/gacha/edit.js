@@ -2887,6 +2887,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2898,6 +2904,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     _gachas: String
   },
   data: function data() {
+    var _this = this;
+
     return {
       valid: false,
       showPassword: false,
@@ -2906,7 +2914,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       dialogState: 'loading',
       // loading or success or failed
       gacha: {
-        gachaName: "",
+        gachaName: null,
         description: null,
         imagePath: null,
         password: null,
@@ -2937,9 +2945,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         gachaName: [function (v) {
           return !!v || 'タイトルは必須です';
         }, function (v) {
-          return v.length <= 50 || 'タイトルは50文字以内で入力してください';
+          return v === null || v.length <= 50 || 'タイトルは50文字以内で入力してください';
+        }],
+        description: [function (v) {
+          return v === null || v.length <= 500 || '説明は500文字以内で入力してください';
+        }],
+        password: [function (v) {
+          return !_this.needPass || !!v || '使用、編集、削除にロックをかける場合は、パスワードが必須です';
+        }, function (v) {
+          return v === null || v.length <= 16 || 'パスワードは16文字以内で入力してください';
+        }],
+        topic: [function (v) {
+          return !!v || 'お題には1文字以上入力してください';
+        }, function (v) {
+          return v === null || v.length <= 30 || 'お題は30文字以内で入力してください';
         }]
-      }
+      },
+      topicsError: ""
     };
   },
   computed: {
@@ -2955,6 +2977,72 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return gachas;
+    },
+    topicLength: function topicLength() {
+      var count = 0;
+
+      for (var _i = 0, _Object$keys = Object.keys(this.topics); _i < _Object$keys.length; _i++) {
+        var key = _Object$keys[_i];
+        count += this.topics[key].length;
+      }
+
+      return count;
+    },
+    needPass: function needPass() {
+      return this.gacha.needUsePass || this.gacha.needEditPass || this.gacha.needDeletePass;
+    }
+  },
+  watch: {
+    'gacha.needUsePass': function gachaNeedUsePass(value, oldValue) {
+      if (!this.needPass) {
+        this.gacha.password = null;
+      }
+    },
+    'gacha.needEditPass': function gachaNeedEditPass(value, oldValue) {
+      if (!this.needPass) {
+        this.gacha.password = null;
+      }
+    },
+    'gacha.needDeletePass': function gachaNeedDeletePass(value, oldValue) {
+      if (!this.needPass) {
+        this.gacha.password = null;
+      }
+    },
+    topics: {
+      handler: function handler(val, oldValue) {
+        var count = [];
+        var totalCount = 0;
+
+        for (var _i2 = 0, _Object$keys2 = Object.keys(this.topics); _i2 < _Object$keys2.length; _i2++) {
+          var key = _Object$keys2[_i2];
+
+          if (count.key === undefined) {
+            count[key] = 0;
+          }
+
+          count[key] += this.topics[key].length;
+          totalCount += this.topics[key].length;
+        }
+
+        for (var _i3 = 0, _Object$keys3 = Object.keys(this.topics); _i3 < _Object$keys3.length; _i3++) {
+          var _key = _Object$keys3[_i3];
+
+          if (count[_key] === 0) {
+            this.topicsError = "お題はレア度ごとに1件以上入力してください";
+            this.valid = false;
+            return;
+          }
+        }
+
+        if (totalCount > 200) {
+          this.topicsError = "お題は200件以内で入力してください";
+          this.valid = false;
+          return;
+        }
+
+        this.topicsError = "";
+      },
+      deep: true
     }
   },
   mounted: function mounted() {
@@ -2994,9 +3082,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this = this;
+        var _this2 = this;
 
-        var topics, _i, _Object$keys, rarity, _topics, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, topic, request;
+        var topics, _i4, _Object$keys4, rarity, _topics, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, topic, request;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -3005,91 +3093,111 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 this.dialogState = 'loading';
                 this.dialog = true;
                 topics = [];
-                _i = 0, _Object$keys = Object.keys(this.topics);
+                _i4 = 0, _Object$keys4 = Object.keys(this.topics);
 
               case 4:
-                if (!(_i < _Object$keys.length)) {
-                  _context.next = 29;
+                if (!(_i4 < _Object$keys4.length)) {
+                  _context.next = 37;
                   break;
                 }
 
-                rarity = _Object$keys[_i];
+                rarity = _Object$keys4[_i4];
                 _topics = this.topics[rarity];
                 _iteratorNormalCompletion2 = true;
                 _didIteratorError2 = false;
                 _iteratorError2 = undefined;
                 _context.prev = 10;
+                _iterator2 = _topics[Symbol.iterator]();
 
-                for (_iterator2 = _topics[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                  topic = _step2.value;
-                  topics.push({
-                    topic: topic.value,
-                    rarity: rarity
-                  });
+              case 12:
+                if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
+                  _context.next = 20;
+                  break;
                 }
 
-                _context.next = 18;
+                topic = _step2.value;
+
+                if (topic.value) {
+                  _context.next = 16;
+                  break;
+                }
+
+                return _context.abrupt("continue", 17);
+
+              case 16:
+                topics.push({
+                  topic: topic.value,
+                  rarity: rarity
+                });
+
+              case 17:
+                _iteratorNormalCompletion2 = true;
+                _context.next = 12;
                 break;
 
-              case 14:
-                _context.prev = 14;
+              case 20:
+                _context.next = 26;
+                break;
+
+              case 22:
+                _context.prev = 22;
                 _context.t0 = _context["catch"](10);
                 _didIteratorError2 = true;
                 _iteratorError2 = _context.t0;
 
-              case 18:
-                _context.prev = 18;
-                _context.prev = 19;
+              case 26:
+                _context.prev = 26;
+                _context.prev = 27;
 
                 if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
                   _iterator2["return"]();
                 }
 
-              case 21:
-                _context.prev = 21;
+              case 29:
+                _context.prev = 29;
 
                 if (!_didIteratorError2) {
-                  _context.next = 24;
+                  _context.next = 32;
                   break;
                 }
 
                 throw _iteratorError2;
 
-              case 24:
-                return _context.finish(21);
+              case 32:
+                return _context.finish(29);
 
-              case 25:
-                return _context.finish(18);
+              case 33:
+                return _context.finish(26);
 
-              case 26:
-                _i++;
+              case 34:
+                _i4++;
                 _context.next = 4;
                 break;
 
-              case 29:
+              case 37:
                 request = {
                   gacha: this.gacha,
                   rarity: this.rarities,
                   topics: topics
                 };
-                _context.next = 32;
+                _context.next = 40;
                 return axios.post("/gacha", request).then(function (res) {
-                  _this.dialogState = 'success';
+                  _this2.dialogState = 'success';
                   window.location.href = "/gacha";
                 })["catch"](function (error) {
-                  _this.dialogState = 'failed';
+                  _this2.dialogState = 'failed';
                   console.log(error.response.data.errors);
                 });
 
-              case 32:
+              case 40:
                 return _context.abrupt("return", _context.sent);
 
-              case 33:
+              case 41:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[10, 14, 18, 26], [19,, 21, 25]]);
+        }, _callee, this, [[10, 22, 26, 34], [27,, 29, 33]]);
       }));
 
       function onSubmit() {
@@ -3112,7 +3220,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.topics[rarity][index] = {
         value: value,
         id: id
-      };
+      }; // 以下バリデーション
+
+      for (var _i5 = 0, _Object$keys5 = Object.keys(this.topics); _i5 < _Object$keys5.length; _i5++) {
+        var key = _Object$keys5[_i5];
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+          for (var _iterator3 = this.topics[key][Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var topic = _step3.value;
+
+            if (topic.value === null || topic.value.length < 1 || topic.value.length > 30) {
+              this.topicsError = "お題は1〜30文字で入力してください";
+              return;
+            }
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+              _iterator3["return"]();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
+      }
+
+      this.topicsError = "";
     }
   }
 });
@@ -6006,7 +6147,6 @@ var render = function() {
                                         value: _vm.gacha.gachaName,
                                         rules: _vm.rules.gachaName,
                                         counter: 50,
-                                        clearable: false,
                                         hideDetails: false
                                       },
                                       on: {
@@ -6031,8 +6171,10 @@ var render = function() {
                                         label:
                                           "このガチャの説明や使い方などを入力してください",
                                         clearable: "",
-                                        "hide-details": "",
-                                        value: _vm.gacha.description
+                                        "hide-details": false,
+                                        value: _vm.gacha.description,
+                                        rules: _vm.rules.description,
+                                        counter: 500
                                       },
                                       on: {
                                         change: function(value) {
@@ -6329,7 +6471,7 @@ var render = function() {
                                     "v-tabs",
                                     {
                                       staticClass: "mb-4",
-                                      attrs: { height: "40" },
+                                      attrs: { height: "40", color: "accent" },
                                       model: {
                                         value: _vm.tab,
                                         callback: function($$v) {
@@ -6353,7 +6495,6 @@ var render = function() {
                                   _c(
                                     "v-tabs-items",
                                     {
-                                      staticClass: "mb-4",
                                       staticStyle: {
                                         "min-height": "60px",
                                         "max-height": "500px",
@@ -6398,7 +6539,8 @@ var render = function() {
                                                         dense: "",
                                                         label:
                                                           "ガチャを回した時に出る「お題」を入力してください",
-                                                        value: topic.value
+                                                        value: topic.value,
+                                                        rules: _vm.rules.topic
                                                       },
                                                       on: {
                                                         change: function(
@@ -6581,6 +6723,18 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "div",
+                                    {
+                                      staticClass: "mb-2 error--text",
+                                      staticStyle: {
+                                        height: "18px",
+                                        "font-size": "12px"
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(_vm.topicsError))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
                                     { staticClass: "d-flex justify-center" },
                                     [
                                       _c(
@@ -6645,7 +6799,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("v-switch", {
                                         attrs: {
-                                          color: "primary",
+                                          color: "accent",
                                           inset: "",
                                           label: "使用"
                                         },
@@ -6668,7 +6822,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("v-switch", {
                                         attrs: {
-                                          color: "primary",
+                                          color: "accent",
                                           inset: "",
                                           label: "編集"
                                         },
@@ -6691,7 +6845,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("v-switch", {
                                         attrs: {
-                                          color: "primary",
+                                          color: "accent",
                                           inset: "",
                                           label: "削除"
                                         },
@@ -6730,7 +6884,9 @@ var render = function() {
                                         _vm.gacha.needEditPass ||
                                         _vm.gacha.needDeletePass
                                       ),
-                                      value: _vm.gacha.password
+                                      value: _vm.gacha.password,
+                                      "hide-details": false,
+                                      rules: _vm.rules.password
                                     },
                                     on: {
                                       change: function(value) {
@@ -6799,7 +6955,8 @@ var render = function() {
                                   attrs: {
                                     depressed: "",
                                     color: "accent",
-                                    "x-large": ""
+                                    "x-large": "",
+                                    disabled: !_vm.valid
                                   },
                                   on: { click: _vm.onSubmit }
                                 },

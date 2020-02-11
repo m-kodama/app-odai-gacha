@@ -23,7 +23,6 @@
                                         @change="(value) => {gacha.gachaName = value}"
                                         :rules="rules.gachaName"
                                         :counter="50"
-                                        :clearable="false"
                                         :hideDetails="false"
                                     />
                                     <div class="form-title">
@@ -36,9 +35,11 @@
                                         flat
                                         label="このガチャの説明や使い方などを入力してください"
                                         clearable
-                                        hide-details
+                                        :hide-details="false"
                                         :value="gacha.description"
                                         @change="(value) => {gacha.description = value}"
+                                        :rules="rules.description"
+                                        :counter="500"
                                     ></v-textarea>
                                 </div>
                                 <div
@@ -135,12 +136,12 @@
                             <!-- お題 -->
                             <div class="mb-8">
                                 <div class="form-title">お題</div>
-                                <v-tabs class="mb-4" height="40" v-model="tab">
+                                <v-tabs class="mb-4" height="40" v-model="tab" color="accent">
                                     <template v-for="rarity in rarities">
                                         <v-tab :key="rarity.rarity">{{ rarity.rarityName }}</v-tab>
                                     </template>
                                 </v-tabs>
-                                <v-tabs-items v-model="tab" class="mb-4" style="min-height: 60px; max-height: 500px; overflow-y: scroll;">
+                                <v-tabs-items v-model="tab" style="min-height: 60px; max-height: 500px; overflow-y: scroll;">
                                     <v-tab-item
                                         v-for="rarity in rarities"
                                         :key="rarity.rarity"
@@ -157,6 +158,7 @@
                                                 label="ガチャを回した時に出る「お題」を入力してください"
                                                 :value="topic.value"
                                                 @change="(value) => {onTopicUpdated(value, index, rarity.rarity, topic.id)}"
+                                                :rules="rules.topic"
                                             />
                                             <v-menu
                                                 transition="slide-x-transition"
@@ -199,6 +201,7 @@
                                         </transition-group>
                                     </v-tab-item>
                                 </v-tabs-items>
+                                <div class="mb-2 error--text" style="height:18px; font-size:12px;">{{ topicsError }}</div>
                                 <div class="d-flex justify-center">
                                     <v-btn
                                         style="width: 50% !important; min-width: 120px; color: #333;"
@@ -220,21 +223,21 @@
                                 <div class="d-flex">
                                     <div style="width:8px;"></div>
                                     <v-switch
-                                        color="primary"
+                                        color="accent"
                                         v-model="gacha.needUsePass"
                                         inset
                                         label="使用"
                                     ></v-switch>
                                     <div style="width:32px;"></div>
                                     <v-switch
-                                        color="primary"
+                                        color="accent"
                                         v-model="gacha.needEditPass"
                                         inset
                                         label="編集"
                                     ></v-switch>
                                     <div style="width:32px;"></div>
                                     <v-switch
-                                        color="primary"
+                                        color="accent"
                                         v-model="gacha.needDeletePass"
                                         inset
                                         label="削除"
@@ -254,6 +257,8 @@
                                     :disabled="!(gacha.needUsePass || gacha.needEditPass || gacha.needDeletePass)"
                                     :value="gacha.password"
                                     @change="(value) => {gacha.password = value}"
+                                    :hide-details="false"
+                                    :rules="rules.password"
                                 />
                                 <div
                                     class="pa-2 warning white--text"
@@ -283,6 +288,7 @@
                                 color="accent"
                                 x-large
                                 @click="onSubmit"
+                                :disabled="!valid"
                             >
                                 作成
                             </v-btn>
@@ -358,7 +364,7 @@ export default {
             dialog: false,
             dialogState: 'loading', // loading or success or failed
             gacha: {
-                gachaName: "",
+                gachaName: null,
                 description: null,
                 imagePath: null,
                 password: null,
@@ -377,9 +383,21 @@ export default {
             rules: {
                 gachaName: [
                     v => !!v || 'タイトルは必須です',
-                    v => v.length <= 50 || 'タイトルは50文字以内で入力してください'
+                    v => (v === null || v.length <= 50) || 'タイトルは50文字以内で入力してください'
+                ],
+                description: [
+                    v => (v === null || v.length <= 500) || '説明は500文字以内で入力してください'
+                ],
+                password: [
+                    v => (!this.needPass || !!v) || '使用、編集、削除にロックをかける場合は、パスワードが必須です',
+                    v => (v === null || v.length <= 16) || 'パスワードは16文字以内で入力してください',
+                ],
+                topic: [
+                    v => !!v || 'お題には1文字以上入力してください',
+                    v => (v === null || v.length <= 30) || 'お題は30文字以内で入力してください'
                 ]
-            }
+            },
+            topicsError: "",
         };
     },
     computed: {
@@ -391,6 +409,60 @@ export default {
                 gachas.push(copyGacha);
             }
             return gachas;
+        },
+        topicLength: function() {
+            let count = 0;
+            for(const key of Object.keys(this.topics)) {
+                count += this.topics[key].length;
+            }
+            return count;
+        },
+        needPass: function() {
+            return this.gacha.needUsePass || this.gacha.needEditPass || this.gacha.needDeletePass;
+        }
+    },
+    watch: {
+        'gacha.needUsePass': function (value, oldValue) {
+            if (!this.needPass) {
+                this.gacha.password = null;
+            }
+        },
+        'gacha.needEditPass': function (value, oldValue) {
+            if (!this.needPass) {
+                this.gacha.password = null;
+            }
+        },
+        'gacha.needDeletePass': function (value, oldValue) {
+            if (!this.needPass) {
+                this.gacha.password = null;
+            }
+        },
+        topics: {
+            handler: function (val, oldValue) {
+                let count = [];
+                let totalCount = 0;
+                for(const key of Object.keys(this.topics)) {
+                    if (count.key === undefined) {
+                        count[key] = 0;
+                    }
+                    count[key] += this.topics[key].length;
+                    totalCount += this.topics[key].length;
+                }
+                for(const key of Object.keys(this.topics)) {
+                    if (count[key] === 0) {
+                        this.topicsError = "お題はレア度ごとに1件以上入力してください";
+                        this.valid = false;
+                        return;
+                    }
+                }
+                if (totalCount > 200) {
+                    this.topicsError = "お題は200件以内で入力してください";
+                    this.valid = false;
+                    return;
+                }
+                this.topicsError = "";
+            },
+            deep: true
         }
     },
     mounted() {
@@ -409,6 +481,9 @@ export default {
             for (const rarity of Object.keys(this.topics)) {
                 const _topics = this.topics[rarity];
                 for (const topic of _topics) {
+                    if (!topic.value) {
+                        continue;
+                    }
                     topics.push({ topic: topic.value, rarity });
                 }
             }
@@ -439,6 +514,16 @@ export default {
         },
         onTopicUpdated(value, index, rarity, id) {
             this.topics[rarity][index] = { value, id };
+            // 以下バリデーション
+            for(const key of Object.keys(this.topics)) {
+                for (const topic of this.topics[key]) {
+                    if (topic.value === null || topic.value.length < 1 || topic.value.length > 30) {
+                        this.topicsError = "お題は1〜30文字で入力してください";
+                        return;
+                    }
+                }
+            }
+            this.topicsError = "";
         }
     }
 };

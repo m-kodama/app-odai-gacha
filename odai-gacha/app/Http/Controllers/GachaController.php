@@ -13,6 +13,7 @@ use App\Models\Topic;
 use App\Models\Rarity;
 use App\Http\Requests\GachaRequest;
 use Ulid\Ulid;
+use Carbon\Carbon;
 
 // TODO 当初の想定よりもロジックが多くなってしまったため、Modelクラスに処理を分ける
 class GachaController extends Controller
@@ -66,7 +67,6 @@ class GachaController extends Controller
     }
 
     public function createGachaDetail(GachaRequest $request) {
-        info($request);
         DB::beginTransaction();
         try{
             // ガチャマスタ
@@ -83,6 +83,8 @@ class GachaController extends Controller
             }
             $gacha->user_id = 1;
             $gacha->save();
+            // 現在時刻
+            $now = Carbon::now();
             // レア度
             $rarity_id_map = [];
             $rarity_params = [];
@@ -93,7 +95,9 @@ class GachaController extends Controller
                     'rarity_id' => $rarity_id,
                     'rarity' => $rarity['rarity'],
                     'rarity_name' => $rarity['rarityName'],
-                    'probability' => $rarity['probability'],
+                    'probability' => $rarity['probability'] * 10,
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ];
             }
             DB::table('rarity')->insert($rarity_params);
@@ -106,6 +110,8 @@ class GachaController extends Controller
                     'topic' => $topic['topic'],
                     'gacha_id' => $gacha_id,
                     'rarity_id' => $rarity_id_map[$topic['rarity']],
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ];
             }
             DB::table('topics')->insert($topic_params);

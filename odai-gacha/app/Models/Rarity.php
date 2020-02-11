@@ -14,5 +14,7 @@ class Rarity extends Model
       'rarity',
       'rarity_name',
       'probability',
+      'created_at',
+      'updated_at'
   ];
 }

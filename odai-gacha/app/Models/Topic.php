@@ -12,6 +12,8 @@ class Topic extends Model {
       'topic',
       'gacha_id',
       'rarity_id',
+      'created_at',
+      'updated_at',
   ];
 
   //belongsTo設定

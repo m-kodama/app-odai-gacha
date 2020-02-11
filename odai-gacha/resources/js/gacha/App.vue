@@ -14,9 +14,8 @@
                         :style="mainCardStyles"
                         class="main-card-wrapper pa-2"
                         v-for="gacha in gachas"
-                        :key="gacha.key"
+                        :key="gacha.gacha_id"
                     >
-                        <!-- // TODO gacah_idに戻す -->
                         <MainCard :gacha="gacha" :onGachaUseButtonTap="onGachaUseButtonTap" :onGachaEditButtonTap="onGachaEditButtonTap"/>
                     </div>
                     <div class="mx-auto mt-2 mb-4" style="font-size: 0.8rem;color: #757575;">{{ messsasge }}</div>
@@ -62,17 +61,12 @@ export default {
     },
     computed: {
         gachas: function() {
-            const originGacha = JSON.parse(this._gachas)[0];
-            if (!originGacha) {
+            const gacha = JSON.parse(this._gachas);
+            if (!gacha) {
                 this.messsasge = "すみません、該当するガチャは見つかりませんでした。"
                 return [];
             }
-            const gachas = [];
-            for (let i = 0; i < 30; i++) {
-                const copyGacha = Object.assign({}, { ...originGacha, key: i });
-                gachas.push(copyGacha);
-            }
-            return gachas;
+            return gacha;
         },
         mainCardStyles() {
             return {

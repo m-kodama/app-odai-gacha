@@ -358,8 +358,6 @@ export default {
             return {value, id: this.topicCount++}
         },
         async onSubmit() {
-            console.log(this.gacha);
-            console.log(this.topics);
             const topics = [];
             for (const rarity of Object.keys(this.topics)) {
                 const _topics = this.topics[rarity];
@@ -367,7 +365,6 @@ export default {
                     topics.push({ topic: topic.value, rarity });
                 }
             }
-            console.log(topics);
             const request = {
                 gacha: this.gacha,
                 rarity: this.rarities,
@@ -375,7 +372,6 @@ export default {
              };
             return await axios.post(`/gacha`, request)
             .then((res) => {
-                console.log(res)
                 // window.location.href = `/gacha`;
             })
             .catch((error) => {

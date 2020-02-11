@@ -2947,14 +2947,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(this.gacha);
-                console.log(this.topics);
                 topics = [];
                 _i = 0, _Object$keys = Object.keys(this.topics);
 
-              case 4:
+              case 2:
                 if (!(_i < _Object$keys.length)) {
-                  _context.next = 29;
+                  _context.next = 27;
                   break;
                 }
 
@@ -2963,7 +2961,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _iteratorNormalCompletion2 = true;
                 _didIteratorError2 = false;
                 _iteratorError2 = undefined;
-                _context.prev = 10;
+                _context.prev = 8;
 
                 for (_iterator2 = _topics[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                   topic = _step2.value;
@@ -2973,68 +2971,66 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-                _context.next = 18;
+                _context.next = 16;
                 break;
 
-              case 14:
-                _context.prev = 14;
-                _context.t0 = _context["catch"](10);
+              case 12:
+                _context.prev = 12;
+                _context.t0 = _context["catch"](8);
                 _didIteratorError2 = true;
                 _iteratorError2 = _context.t0;
 
-              case 18:
-                _context.prev = 18;
-                _context.prev = 19;
+              case 16:
+                _context.prev = 16;
+                _context.prev = 17;
 
                 if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
                   _iterator2["return"]();
                 }
 
-              case 21:
-                _context.prev = 21;
+              case 19:
+                _context.prev = 19;
 
                 if (!_didIteratorError2) {
-                  _context.next = 24;
+                  _context.next = 22;
                   break;
                 }
 
                 throw _iteratorError2;
 
+              case 22:
+                return _context.finish(19);
+
+              case 23:
+                return _context.finish(16);
+
               case 24:
-                return _context.finish(21);
-
-              case 25:
-                return _context.finish(18);
-
-              case 26:
                 _i++;
-                _context.next = 4;
+                _context.next = 2;
                 break;
 
-              case 29:
-                console.log(topics);
+              case 27:
                 request = {
                   gacha: this.gacha,
                   rarity: this.rarities,
                   topics: topics
                 };
-                _context.next = 33;
-                return axios.post("/gacha", request).then(function (res) {
-                  console.log(res); // window.location.href = `/gacha`;
+                _context.next = 30;
+                return axios.post("/gacha", request).then(function (res) {// window.location.href = `/gacha`;
                 })["catch"](function (error) {
                   console.log(error);
                   console.log(error.response.data.errors);
                 });
 
-              case 33:
+              case 30:
                 return _context.abrupt("return", _context.sent);
 
-              case 34:
+              case 31:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[10, 14, 18, 26], [19,, 21, 25]]);
+        }, _callee, this, [[8, 12, 16, 24], [17,, 19, 23]]);
       }));
 
       function onSubmit() {

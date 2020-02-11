@@ -17,6 +17,9 @@
         :solo="solo"
         :suffix="suffix"
         :type="type"
+        :rules="rules"
+        :counter="counter"
+        required
     ></v-text-field>
 </template>
 
@@ -90,7 +93,15 @@ export default {
         value: {
             type: String | Number,
             default: "",
-        }
+        },
+        rules: {
+            type: Array,
+            default: () => [],
+        },
+        counter: {
+            type: String | Number | Boolean,
+            default: undefined,
+        },
     },
     computed: {
         innerValue: {

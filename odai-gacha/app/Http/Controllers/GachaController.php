@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Gacha;
+use App\Http\Requests;
 
 // TODO 当初の想定よりもロジックが多くなってしまったため、Modelクラスに処理を分ける
 class GachaController extends Controller
@@ -61,11 +62,12 @@ class GachaController extends Controller
         return view('gacha/machine', compact('odai'));
     }
 
-    public function createGachaDetail(Request $request) {
+    public function createGachaDetail(GachaRequest $request) {
+        info($request);
         $gacha = new Gacha();
         $gacha->gacha_name = $request->gacha_name;
         $gacha->user_id = 1;
-        $gacha->save();
+        // $gacha->save();
 
         return redirect("/gacha");
     }

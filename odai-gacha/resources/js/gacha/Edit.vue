@@ -16,7 +16,16 @@
                             <div class="d-flex mb-8">
                                 <div class="flex-grow-1">
                                     <div class="form-title">タイトル</div>
-                                    <TextField class="mb-8" label="タイトル" />
+                                    <TextField 
+                                        class="mb-4"
+                                        label="タイトル"
+                                        :value="gacha.gachaName"
+                                        @change="(value) => {gacha.gachaName = value}"
+                                        :rules="rules.gachaName"
+                                        :counter="50"
+                                        :clearable="false"
+                                        :hideDetails="false"
+                                    />
                                     <div class="form-title">
                                         このガチャの説明
                                     </div>
@@ -28,6 +37,8 @@
                                         label="このガチャの説明や使い方などを入力してください"
                                         clearable
                                         hide-details
+                                        :value="gacha.description"
+                                        @change="(value) => {gacha.description = value}"
                                     ></v-textarea>
                                 </div>
                                 <div
@@ -77,7 +88,7 @@
                                                 dense
                                                 label="レア度の名前"
                                                 disabled
-                                                :value="rarity.rarity_name"
+                                                :value="rarity.rarityName"
                                             />
                                             <div
                                                 class="mr-4"
@@ -126,7 +137,7 @@
                                 <div class="form-title">お題</div>
                                 <v-tabs class="mb-4" height="40" v-model="tab">
                                     <template v-for="rarity in rarities">
-                                        <v-tab :key="rarity.rarity">{{ rarity.rarity_name }}</v-tab>
+                                        <v-tab :key="rarity.rarity">{{ rarity.rarityName }}</v-tab>
                                     </template>
                                 </v-tabs>
                                 <v-tabs-items v-model="tab" class="mb-4" style="min-height: 60px; max-height: 500px; overflow-y: scroll;">
@@ -170,7 +181,7 @@
                                                         @click="changeTopicRarity(index, rarity.rarity)"
                                                         :disabled="rarity.rarity === tab"
                                                     >
-                                                    <v-list-item-title>{{ rarity.rarity_name }}</v-list-item-title>
+                                                    <v-list-item-title>{{ rarity.rarityName }}</v-list-item-title>
                                                     </v-list-item>
                                                 </v-list>
                                             </v-menu>
@@ -241,6 +252,8 @@
                                         () => (showPassword = !showPassword)
                                     "
                                     :disabled="!(gacha.needUsePass || gacha.needEditPass || gacha.needDeletePass)"
+                                    :value="gacha.password"
+                                    @change="(value) => {gacha.password = value}"
                                 />
                                 <div
                                     class="pa-2 warning white--text"
@@ -260,6 +273,7 @@
                                 color="#aeaeae"
                                 class="mr-4"
                                 x-large
+                                href="/gacha"
                             >
                                 キャンセル
                             </v-btn>
@@ -268,6 +282,7 @@
                                 depressed
                                 color="accent"
                                 x-large
+                                @click="onSubmit"
                             >
                                 作成
                             </v-btn>
@@ -298,22 +313,28 @@ export default {
             showPassword: false,
             tab: null,
             gacha: {
-                gacha_name: "",
-                description: "",
-                image_path: "",
-                password: "",
+                gachaName: "",
+                description: null,
+                imagePath: null,
+                password: null,
                 needUsePass: false,
                 needEditPass: true,
                 needDeletePass: true,
             },
             rarities: [
-                { rarity: 0, rarity_name: "ノーマル", probability: 50 },
-                { rarity: 1, rarity_name: "シルバー", probability: 35 },
-                { rarity: 2, rarity_name: "ゴールド", probability: 13 },
-                { rarity: 3, rarity_name: "プラチナ", probability: 2 }
+                { rarity: 0, rarityName: "ノーマル", probability: 50 },
+                { rarity: 1, rarityName: "シルバー", probability: 35 },
+                { rarity: 2, rarityName: "ゴールド", probability: 13 },
+                { rarity: 3, rarityName: "プラチナ", probability: 2 }
             ],
             topics: {},
             topicCount: 0,
+            rules: {
+                gachaName: [
+                    v => !!v || 'タイトルは必須です',
+                    v => v.length <= 50 || 'タイトルは50文字以内で入力してください'
+                ]
+            }
         };
     },
     computed: {
@@ -336,7 +357,32 @@ export default {
         Topic(value = "") {
             return {value, id: this.topicCount++}
         },
-        onSubmit() {},
+        async onSubmit() {
+            console.log(this.gacha);
+            console.log(this.topics);
+            const topics = [];
+            for (const rarity of Object.keys(this.topics)) {
+                const _topics = this.topics[rarity];
+                for (const topic of _topics) {
+                    topics.push({ topic: topic.value, rarity });
+                }
+            }
+            const request = {
+                gacha: {
+                    ...this.gacha,
+                    topics
+                },
+                rarity: this.rarities,
+             };
+            return await axios.post(`/gacha`, request)
+            .then((res) => {
+                console.log(res)
+                // window.location.href = `/gacha`;
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
         addTopic() {
             this.topics[this.tab].push(this.Topic());
         },

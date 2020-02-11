@@ -146,9 +146,20 @@ class GachaController extends Controller
         return view('gacha/edit');
     }
 
-    public function edit($gachaId) {
-        $gacha = Gacha::findOrFail($gachaId);
-        return view('gacha/edit', compact('gacha'));
+    public function edit(Request $request, $gachaId) {
+        $_gacha = Gacha::findOrFail($gachaId);
+        if ($_gacha->needEditPass){
+            $authedGacha = $request->session()->get('authedGacha', function(){
+                abort(404);
+            });
+            if (!in_array($gachaId ,$authedGacha['edit'])){
+                abort(404);
+            }
+        }
+        $gacha = $_gacha->list()->get();
+        $rarity = $_gacha->rarity()->get();
+        $topics = $_gacha->topics()->get();
+        return view('gacha/edit', compact('gacha', 'rarity', 'topics'));
     }
 
     public function auth(Request $request, $gachaId) {

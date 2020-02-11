@@ -13,7 +13,7 @@
                         <v-form v-model="valid" autocomplete="off">
                         <div class="card-content">
                             <!-- タイトル・説明・サムネイル画像s -->
-                            <div class="d-flex mb-8">
+                            <div class="d-flex mb-4">
                                 <div class="flex-grow-1">
                                     <div class="form-title">タイトル</div>
                                     <TextField 
@@ -354,7 +354,9 @@ export default {
         TextField
     },
     props: {
-        _gachas: String
+        _gacha: String,
+        _rarity: String,
+        _topics: String,
     },
     data: function() {
         return {
@@ -401,14 +403,23 @@ export default {
         };
     },
     computed: {
-        gachas: function() {
-            const originGacha = JSON.parse(this._gachas)[0];
-            const gachas = [];
-            for (let i = 0; i < 30; i++) {
-                const copyGacha = Object.assign({}, { ...originGacha, key: i });
-                gachas.push(copyGacha);
+        originGacha: function() {
+            if (this._gacha === undefined || this._gacha === null || this._gacha === "") {
+                return null;
             }
-            return gachas;
+            return JSON.parse(this._gacha);
+        },
+        originRarity: function() {
+            if (this._rarity === undefined || this._rarity === null || this._rarity === "") {
+                return null;
+            }
+            return JSON.parse(this._rarity);
+        },
+        originTopics: function() {
+            if (this._topics === undefined || this._topics === null || this._topics === "") {
+                return null;
+            }
+            return JSON.parse(this._topics);
         },
         topicLength: function() {
             let count = 0;
@@ -419,6 +430,9 @@ export default {
         },
         needPass: function() {
             return this.gacha.needUsePass || this.gacha.needEditPass || this.gacha.needDeletePass;
+        },
+        isEdit: function() {
+            return this.originGacha && this.originRarity && this.originTopics;
         }
     },
     watch: {
@@ -466,8 +480,26 @@ export default {
         }
     },
     mounted() {
+        // レア度の初期化
         for (const rarity of this.rarities) {
             this.$set(this.topics, rarity.rarity, [this.Topic()]);
+        }
+        // 編集の場合
+        if (this.isEdit) {
+            this.gacha = {
+                ...this.gacha,
+                gachaName: this.originGacha.gacha_name,
+                imagePath: this.originGacha.image_path,
+                needUsePass: this.originGacha.needUsePass,
+                needEditPass: this.originGacha.needEditPass,
+                needDeletePass: this.originGacha.needDeletePass,
+            }
+            const mapIdToRarity = new Map(this.originRarity.map(rarity => {
+                return [rarity.rarity_id, rarity.rarity];
+            }));
+            for (const topic of this.originTopics) {
+                this.topics[mapIdToRarity.get(topic.rarity_id)] = this.Topic(topic.topic);
+            }
         }
     },
     methods: {

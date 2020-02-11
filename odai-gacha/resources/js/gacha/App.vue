@@ -54,6 +54,7 @@ export default {
             showInfoCard: true,
             showPasswordDialog: false,
             selectedGachaId: null,
+            selectedType: null,
             authType: null,
             resetPasswordDialog: () => {},
             messsasge: "現在登録されているガチャは以上です。",
@@ -101,11 +102,17 @@ export default {
                 return
             }
             this.selectedGachaId = gachaId;
+            this.selectedType = 'machine';
             this.authType = 0;
             this.showPasswordDialog = true;
         },
         onGachaEditButtonTap(gachaId, needPassword) {
+            if (!needPassword) {
+                window.location.href = `/gacha/${gachaId}/edit`
+                return
+            }
             this.selectedGachaId = gachaId;
+            this.selectedType = 'edit';
             this.authType = 1;
             this.showPasswordDialog = true;
         },
@@ -113,7 +120,7 @@ export default {
             const request = { password, type: this.authType };
             return await axios.post(`/gacha/${this.selectedGachaId}/auth`, request)
             .then((res) => {
-                window.location.href = `/gacha/${res.data}/machine`;
+                window.location.href = `/gacha/${res.data}/${this.selectedType}`;
                 return true;
             })
             .catch((error) => {

@@ -23,7 +23,11 @@ class Gacha extends Model
     //hasMany設定
     public function topics()
     {
-        return $this->hasMany('App\Topic', 'gacha_id');
+        return $this->hasMany('App\Models\Topic', 'gacha_id');
+    }
+    public function rarity()
+    {
+        return $this->hasMany('App\Models\Rarity', 'gacha_id');
     }
 
     // list()を呼んだらscopeList()が呼ばれる

@@ -9,7 +9,7 @@
             ></v-app-bar-nav-icon>
             <div class="d-flex logo">
               <a class="d-flex" href="/gacha">
-                <v-img src="../img/logo_icon.png" max-width="30"></v-img>
+                <v-img src="/img/logo_icon.png" max-width="30"></v-img>
                 <v-toolbar-title class="primary--text font-weight-bold"
                     >お題ガチャ</v-toolbar-title
                 >

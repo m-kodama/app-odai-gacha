@@ -2628,6 +2628,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       showInfoCard: true,
       showPasswordDialog: false,
       selectedGachaId: null,
+      selectedType: null,
       authType: null,
       resetPasswordDialog: function resetPasswordDialog() {},
       messsasge: "現在登録されているガチャは以上です。"
@@ -2679,11 +2680,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.selectedGachaId = gachaId;
+      this.selectedType = 'machine';
       this.authType = 0;
       this.showPasswordDialog = true;
     },
     onGachaEditButtonTap: function onGachaEditButtonTap(gachaId, needPassword) {
+      if (!needPassword) {
+        window.location.href = "/gacha/".concat(gachaId, "/edit");
+        return;
+      }
+
       this.selectedGachaId = gachaId;
+      this.selectedType = 'edit';
       this.authType = 1;
       this.showPasswordDialog = true;
     },
@@ -2691,6 +2699,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(password) {
+        var _this = this;
+
         var request;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -2702,7 +2712,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 };
                 _context.next = 3;
                 return axios.post("/gacha/".concat(this.selectedGachaId, "/auth"), request).then(function (res) {
-                  window.location.href = "/gacha/".concat(res.data, "/machine");
+                  window.location.href = "/gacha/".concat(res.data, "/").concat(_this.selectedType);
                   return true;
                 })["catch"](function (error) {
                   return false;
@@ -4969,7 +4979,7 @@ var render = function() {
               { staticClass: "d-flex", attrs: { href: "/gacha" } },
               [
                 _c("v-img", {
-                  attrs: { src: "../img/logo_icon.png", "max-width": "30" }
+                  attrs: { src: "/img/logo_icon.png", "max-width": "30" }
                 }),
                 _vm._v(" "),
                 _c(

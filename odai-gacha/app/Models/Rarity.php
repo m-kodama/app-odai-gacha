@@ -14,6 +14,7 @@ class Rarity extends Model
       'rarity',
       'rarity_name',
       'probability',
+      'gacha_id',
       'created_at',
       'updated_at'
   ];

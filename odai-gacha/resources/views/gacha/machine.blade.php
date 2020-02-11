@@ -18,6 +18,8 @@
       <div id="touch-eater"></div>
       <img src="../../img/gacha_body.png" alt="" id="gacha-body" class="gacha" draggable="false">
       <img src="../../img/gacha_handle.png" alt="" id="handle" class="gacha" draggable="false">
+      <img src="../../img/arrow.png" alt="" id="arrow" class="arrow" draggable="false">
+      <div id="arrow-text">後ろに回してね</div>
       <img src="../../img/egg_normal.png" alt="" id="egg-normal" class="egg" draggable="false">
       <img src="../../img/egg_silver.png" alt="" id="egg-sliver" class="egg" draggable="false">
       <img src="../../img/egg_gold.png" alt="" id="egg-gold" class="egg" draggable="false">

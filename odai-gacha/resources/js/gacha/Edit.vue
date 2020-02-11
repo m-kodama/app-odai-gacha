@@ -432,9 +432,6 @@ export default {
         },
         removeTopic(index) {
             this.topics[this.tab].splice(index, 1);
-            if (this.topics[this.tab].length === 0){
-                this.topics[this.tab].push(this.Topic());
-            }
         },
         changeTopicRarity(index, rarity) {
             const moveTopic = this.topics[this.tab].splice(index, 1)[0];

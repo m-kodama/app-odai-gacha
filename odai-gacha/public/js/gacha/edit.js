@@ -3103,10 +3103,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     removeTopic: function removeTopic(index) {
       this.topics[this.tab].splice(index, 1);
-
-      if (this.topics[this.tab].length === 0) {
-        this.topics[this.tab].push(this.Topic());
-      }
     },
     changeTopicRarity: function changeTopicRarity(index, rarity) {
       var moveTopic = this.topics[this.tab].splice(index, 1)[0];

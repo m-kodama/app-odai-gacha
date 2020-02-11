@@ -18,8 +18,8 @@
                     >
                         <MainCard :gacha="gacha" :onGachaUseButtonTap="onGachaUseButtonTap" :onGachaEditButtonTap="onGachaEditButtonTap"/>
                     </div>
-                    <div class="mx-auto mt-2 mb-4" style="font-size: 0.8rem;color: #757575;">{{ messsasge }}</div>
                 </div>
+                <div class="mx-auto mt-2 mb-8" style="font-size: 0.8rem;color: #757575; text-align:center;">{{ messsasge }}</div>
             </Header>
             <v-dialog v-model="showPasswordDialog" max-width="400" @click:outside="resetPasswordDialog">
                 <PasswordConfirmCard
@@ -56,7 +56,7 @@ export default {
             selectedGachaId: null,
             authType: null,
             resetPasswordDialog: () => {},
-            messsasge: "",
+            messsasge: "現在登録されているガチャは以上です。",
         };
     },
     computed: {

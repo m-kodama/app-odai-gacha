@@ -2630,7 +2630,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selectedGachaId: null,
       authType: null,
       resetPasswordDialog: function resetPasswordDialog() {},
-      messsasge: ""
+      messsasge: "現在登録されているガチャは以上です。"
     };
   },
   computed: {
@@ -5749,18 +5749,22 @@ var render = function() {
                     ],
                     1
                   )
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "mx-auto mt-2 mb-4",
-                    staticStyle: { "font-size": "0.8rem", color: "#757575" }
-                  },
-                  [_vm._v(_vm._s(_vm.messsasge))]
-                )
+                })
               ],
               2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "mx-auto mt-2 mb-8",
+                staticStyle: {
+                  "font-size": "0.8rem",
+                  color: "#757575",
+                  "text-align": "center"
+                }
+              },
+              [_vm._v(_vm._s(_vm.messsasge))]
             )
           ]),
           _vm._v(" "),

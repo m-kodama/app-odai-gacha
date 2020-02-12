@@ -258,7 +258,7 @@
                                     :value="gacha.password"
                                     @change="(value) => {gacha.password = value}"
                                     :hide-details="false"
-                                    :rules="rules.password"
+                                    :rules="this.needPass ? rules.needPassword : rules.password"
                                 />
                                 <div
                                     class="pa-2 warning white--text"
@@ -391,7 +391,10 @@ export default {
                     v => (v === null || v.length <= 500) || '説明は500文字以内で入力してください'
                 ],
                 password: [
-                    v => (!this.needPass || !!v) || '使用、編集、削除にロックをかける場合は、パスワードが必須です',
+                    v => (v === null || v.length <= 16) || 'パスワードは16文字以内で入力してください',
+                ],
+                needPassword: [
+                    v => !!v || '使用、編集、削除にロックをかける場合は、パスワードが必須です',
                     v => (v === null || v.length <= 16) || 'パスワードは16文字以内で入力してください',
                 ],
                 topic: [

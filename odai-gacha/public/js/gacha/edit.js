@@ -2906,8 +2906,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     _topics: Array | Number
   },
   data: function data() {
-    var _this = this;
-
     return {
       valid: false,
       showPassword: false,
@@ -2953,7 +2951,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return v === null || v.length <= 500 || '説明は500文字以内で入力してください';
         }],
         password: [function (v) {
-          return !_this.needPass || !!v || '使用、編集、削除にロックをかける場合は、パスワードが必須です';
+          return v === null || v.length <= 16 || 'パスワードは16文字以内で入力してください';
+        }],
+        needPassword: [function (v) {
+          return !!v || '使用、編集、削除にロックをかける場合は、パスワードが必須です';
         }, function (v) {
           return v === null || v.length <= 16 || 'パスワードは16文字以内で入力してください';
         }],
@@ -3140,7 +3141,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this2 = this;
+        var _this = this;
 
         var topics, _i4, _Object$keys4, rarity, _topics, _iteratorNormalCompletion4, _didIteratorError4, _iteratorError4, _iterator4, _step4, topic, request;
 
@@ -3240,10 +3241,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
                 _context.next = 40;
                 return axios.post("/gacha", request).then(function (res) {
-                  _this2.dialogState = 'success';
+                  _this.dialogState = 'success';
                   window.location.href = "/gacha";
                 })["catch"](function (error) {
-                  _this2.dialogState = 'failed';
+                  _this.dialogState = 'failed';
                   console.log(error.response.data.errors);
                 });
 
@@ -6946,7 +6947,9 @@ var render = function() {
                                       ),
                                       value: _vm.gacha.password,
                                       "hide-details": false,
-                                      rules: _vm.rules.password
+                                      rules: this.needPass
+                                        ? _vm.rules.needPassword
+                                        : _vm.rules.password
                                     },
                                     on: {
                                       change: function(value) {

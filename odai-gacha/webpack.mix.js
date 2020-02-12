@@ -15,6 +15,6 @@ mix.browserSync({
     proxy: "0.0.0.0:8000", // アプリの起動アドレス
     open: false // ブラウザを自動で開かない
 })
-    .js("resources/js/app.js", "public/js")
-    .sass("resources/sass/app.scss", "public/css")
+    .js("resources/js/gacha/app.js", "public/js/gacha")
+    .js("resources/js/gacha/edit.js", "public/js/gacha")
     .version();

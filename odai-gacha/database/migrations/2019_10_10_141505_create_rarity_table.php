@@ -14,7 +14,8 @@ class CreateRarityTable extends Migration
     public function up()
     {
         Schema::create('rarity', function (Blueprint $table) {
-            $table->bigIncrements('rarity_id');
+            $table->char('rarity_id', 26);
+            $table->primary('rarity_id');
             $table->unsignedTinyInteger('rarity');
             $table->integer('probability');
             $table->string('rarity_name');

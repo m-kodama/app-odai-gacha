@@ -290,7 +290,8 @@
                                 @click="onSubmit"
                                 :disabled="!valid"
                             >
-                                作成
+                                <template v-if="isEdit">更新</template>
+                                <template v-else>作成</template>
                             </v-btn>
                         </div>
                         </v-form>
@@ -307,14 +308,19 @@
                                     indeterminate
                                 ></v-progress-circular>
                             </div>
-                            <div class="dialog-message mt-6">登録中...</div>
+                            <div class="dialog-message mt-6">
+                                <template v-if="isEdit">更新中...</template>
+                                <template v-else>作成中...</template>
+                            </div>
                         </template>
                         <template v-if="dialogState==='success'">
                             <div class="mb-10">
                               <v-icon color="accent" size="64" class="mb-2 lock-icon">mdi-check-outline</v-icon>
                             </div>
                             <div class="dialog-message mt-4">
-                                登録に成功しました<br>
+                                <template v-if="isEdit">更新に成功しました</template>
+                                <template v-else>作成に成功しました</template>
+                                <br>
                                 <span class="dialog-sub-message">ガチャ一覧ページに移動します</span>
                             </div>
                         </template>
@@ -323,7 +329,9 @@
                                 <v-icon color="primary" size="64" class="mb-2 lock-icon">mdi-close-outline</v-icon>
                             </div>
                             <div class="dialog-message mt-4">
-                                登録に失敗しました<br>
+                                <template v-if="isEdit">更新に失敗しました</template>
+                                <template v-else>作成に失敗しました</template>
+                                <br>
                                 <span class="dialog-sub-message">通信状況を確認してください</span>
                             </div>
                             <v-btn
@@ -366,6 +374,7 @@ export default {
             dialog: false,
             dialogState: 'loading', // loading or success or failed
             gacha: {
+                gachaId: null,
                 gachaName: null,
                 description: null,
                 imagePath: null,
@@ -375,12 +384,13 @@ export default {
                 needDeletePass: true,
             },
             rarities: [
-                { rarity: 0, rarityName: "ノーマル", probability: 50 },
-                { rarity: 1, rarityName: "シルバー", probability: 35 },
-                { rarity: 2, rarityName: "ゴールド", probability: 13 },
-                { rarity: 3, rarityName: "プラチナ", probability: 2 }
+                { rarityId: null, rarity: 0, rarityName: "ノーマル", probability: 50 },
+                { rarityId: null, rarity: 1, rarityName: "シルバー", probability: 35 },
+                { rarityId: null, rarity: 2, rarityName: "ゴールド", probability: 13 },
+                { rarityId: null, rarity: 3, rarityName: "プラチナ", probability: 2 }
             ],
             topics: {},
+            removedTopics: [],
             topicCount: 0,
             rules: {
                 gachaName: [
@@ -477,17 +487,27 @@ export default {
         if (this.isEdit) {
             this.gacha = {
                 ...this.gacha,
+                gachaId: this._gacha.gacha_id,
                 gachaName: this._gacha.gacha_name,
+                description: this._gacha.description,
                 imagePath: this._gacha.image_path,
                 needUsePass: this._gacha.needUsePass,
                 needEditPass: this._gacha.needEditPass,
                 needDeletePass: this._gacha.needDeletePass,
             }
+            this.rarities = [];
+            for (const rarity of this._rarity) {
+                this.rarities.push({
+                    rarityId: rarity.rarity_id,
+                    rarity: rarity.rarity,
+                    rarityName: rarity.rarity_name,
+                    probability: rarity.probability / 10 });
+            }
             const mapIdToRarity = new Map(this._rarity.map(rarity => {
                 return [rarity.rarity_id, rarity.rarity];
             }));
             for (const topic of this._topics) {
-                this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic));
+                this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
             }
         } else {
             for (const rarity of this.rarities) {
@@ -496,8 +516,8 @@ export default {
         }
     },
     methods: {
-        Topic(value = "") {
-            return {value, id: this.topicCount++}
+        Topic(value = "", topicId = null) {
+            return {value, id: this.topicCount++, topicId};
         },
         async onSubmit() {
             this.dialogState = 'loading';
@@ -509,15 +529,17 @@ export default {
                     if (!topic.value) {
                         continue;
                     }
-                    topics.push({ topic: topic.value, rarity });
+                    topics.push({ topicId: topic.topicId, topic: topic.value, rarity });
                 }
             }
             const request = {
                 gacha: this.gacha,
                 rarity: this.rarities,
-                topics: topics
+                topics: topics,
+                removedTopics: this.removedTopics
              };
-            return await axios.post(`/gacha`, request)
+             const method = this.isEdit ? axios.put(`/gacha/${this._gacha.gacha_id}`, request) :axios.post(`/gacha`, request);
+            return await method
             .then((res) => {
                 this.dialogState = 'success';
                 window.location.href = `/gacha`;
@@ -531,7 +553,10 @@ export default {
             this.topics[this.tab].push(this.Topic());
         },
         removeTopic(index) {
-            this.topics[this.tab].splice(index, 1);
+            const removed = this.topics[this.tab].splice(index, 1)[0];
+            if (removed.topicId !== null) {
+                this.removedTopics.push(removed);
+            }
         },
         changeTopicRarity(index, rarity) {
             const moveTopic = this.topics[this.tab].splice(index, 1)[0];

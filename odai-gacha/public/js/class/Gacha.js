@@ -28,9 +28,7 @@ const GACHA = {
             config[groupIndex].texts[textIndex],
             config[groupIndex].rarity
           );
-          console.log(config);
           config[groupIndex].texts.splice(textIndex, 1);
-          console.log(config);
           return odai;
         }
         textIndex += 1;

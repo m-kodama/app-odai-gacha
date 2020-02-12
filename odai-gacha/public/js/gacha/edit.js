@@ -2893,6 +2893,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2914,6 +2922,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       dialogState: 'loading',
       // loading or success or failed
       gacha: {
+        gachaId: null,
         gachaName: null,
         description: null,
         imagePath: null,
@@ -2923,23 +2932,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         needDeletePass: true
       },
       rarities: [{
+        rarityId: null,
         rarity: 0,
         rarityName: "ノーマル",
         probability: 50
       }, {
+        rarityId: null,
         rarity: 1,
         rarityName: "シルバー",
         probability: 35
       }, {
+        rarityId: null,
         rarity: 2,
         rarityName: "ゴールド",
         probability: 13
       }, {
+        rarityId: null,
         rarity: 3,
         rarityName: "プラチナ",
         probability: 2
       }],
       topics: {},
+      removedTopics: [],
       topicCount: 0,
       rules: {
         gachaName: [function (v) {
@@ -3046,8 +3060,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     try {
       for (var _iterator = this.rarities[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var _rarity = _step.value;
-        this.$set(this.topics, _rarity.rarity, []);
+        var _rarity2 = _step.value;
+        this.$set(this.topics, _rarity2.rarity, []);
       }
     } catch (err) {
       _didIteratorError = true;
@@ -3071,23 +3085,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     if (this.isEdit) {
       this.gacha = _objectSpread({}, this.gacha, {
+        gachaId: this._gacha.gacha_id,
         gachaName: this._gacha.gacha_name,
+        description: this._gacha.description,
         imagePath: this._gacha.image_path,
         needUsePass: this._gacha.needUsePass,
         needEditPass: this._gacha.needEditPass,
         needDeletePass: this._gacha.needDeletePass
       });
-      var mapIdToRarity = new Map(this._rarity.map(function (rarity) {
-        return [rarity.rarity_id, rarity.rarity];
-      }));
+      this.rarities = [];
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = this._topics[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var topic = _step2.value;
-          this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic));
+        for (var _iterator2 = this._rarity[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var rarity = _step2.value;
+          this.rarities.push({
+            rarityId: rarity.rarity_id,
+            rarity: rarity.rarity,
+            rarityName: rarity.rarity_name,
+            probability: rarity.probability / 10
+          });
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -3103,15 +3122,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       }
-    } else {
+
+      var mapIdToRarity = new Map(this._rarity.map(function (rarity) {
+        return [rarity.rarity_id, rarity.rarity];
+      }));
       var _iteratorNormalCompletion3 = true;
       var _didIteratorError3 = false;
       var _iteratorError3 = undefined;
 
       try {
-        for (var _iterator3 = this.rarities[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var rarity = _step3.value;
-          this.topics[rarity.rarity].push(this.Topic());
+        for (var _iterator3 = this._topics[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var topic = _step3.value;
+          this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
         }
       } catch (err) {
         _didIteratorError3 = true;
@@ -3127,14 +3149,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       }
+    } else {
+      var _iteratorNormalCompletion4 = true;
+      var _didIteratorError4 = false;
+      var _iteratorError4 = undefined;
+
+      try {
+        for (var _iterator4 = this.rarities[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          var _rarity = _step4.value;
+
+          this.topics[_rarity.rarity].push(this.Topic());
+        }
+      } catch (err) {
+        _didIteratorError4 = true;
+        _iteratorError4 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+            _iterator4["return"]();
+          }
+        } finally {
+          if (_didIteratorError4) {
+            throw _iteratorError4;
+          }
+        }
+      }
     }
   },
   methods: {
     Topic: function Topic() {
       var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var topicId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       return {
         value: value,
-        id: this.topicCount++
+        id: this.topicCount++,
+        topicId: topicId
       };
     },
     onSubmit: function () {
@@ -3143,7 +3192,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _this = this;
 
-        var topics, _i4, _Object$keys4, rarity, _topics, _iteratorNormalCompletion4, _didIteratorError4, _iteratorError4, _iterator4, _step4, topic, request;
+        var topics, _i4, _Object$keys4, rarity, _topics, _iteratorNormalCompletion5, _didIteratorError5, _iteratorError5, _iterator5, _step5, topic, request, method;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -3162,19 +3211,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 rarity = _Object$keys4[_i4];
                 _topics = this.topics[rarity];
-                _iteratorNormalCompletion4 = true;
-                _didIteratorError4 = false;
-                _iteratorError4 = undefined;
+                _iteratorNormalCompletion5 = true;
+                _didIteratorError5 = false;
+                _iteratorError5 = undefined;
                 _context.prev = 10;
-                _iterator4 = _topics[Symbol.iterator]();
+                _iterator5 = _topics[Symbol.iterator]();
 
               case 12:
-                if (_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done) {
+                if (_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done) {
                   _context.next = 20;
                   break;
                 }
 
-                topic = _step4.value;
+                topic = _step5.value;
 
                 if (topic.value) {
                   _context.next = 16;
@@ -3185,12 +3234,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 16:
                 topics.push({
+                  topicId: topic.topicId,
                   topic: topic.value,
                   rarity: rarity
                 });
 
               case 17:
-                _iteratorNormalCompletion4 = true;
+                _iteratorNormalCompletion5 = true;
                 _context.next = 12;
                 break;
 
@@ -3201,26 +3251,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 22:
                 _context.prev = 22;
                 _context.t0 = _context["catch"](10);
-                _didIteratorError4 = true;
-                _iteratorError4 = _context.t0;
+                _didIteratorError5 = true;
+                _iteratorError5 = _context.t0;
 
               case 26:
                 _context.prev = 26;
                 _context.prev = 27;
 
-                if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-                  _iterator4["return"]();
+                if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+                  _iterator5["return"]();
                 }
 
               case 29:
                 _context.prev = 29;
 
-                if (!_didIteratorError4) {
+                if (!_didIteratorError5) {
                   _context.next = 32;
                   break;
                 }
 
-                throw _iteratorError4;
+                throw _iteratorError5;
 
               case 32:
                 return _context.finish(29);
@@ -3237,10 +3287,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 request = {
                   gacha: this.gacha,
                   rarity: this.rarities,
-                  topics: topics
+                  topics: topics,
+                  removedTopics: this.removedTopics
                 };
-                _context.next = 40;
-                return axios.post("/gacha", request).then(function (res) {
+                method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);
+                _context.next = 41;
+                return method.then(function (res) {
                   _this.dialogState = 'success';
                   window.location.href = "/gacha";
                 })["catch"](function (error) {
@@ -3248,10 +3300,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   console.log(error.response.data.errors);
                 });
 
-              case 40:
+              case 41:
                 return _context.abrupt("return", _context.sent);
 
-              case 41:
+              case 42:
               case "end":
                 return _context.stop();
             }
@@ -3269,7 +3321,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.topics[this.tab].push(this.Topic());
     },
     removeTopic: function removeTopic(index) {
-      this.topics[this.tab].splice(index, 1);
+      var removed = this.topics[this.tab].splice(index, 1)[0];
+
+      if (removed.topicId !== null) {
+        this.removedTopics.push(removed);
+      }
     },
     changeTopicRarity: function changeTopicRarity(index, rarity) {
       var moveTopic = this.topics[this.tab].splice(index, 1)[0];
@@ -3283,13 +3339,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       for (var _i5 = 0, _Object$keys5 = Object.keys(this.topics); _i5 < _Object$keys5.length; _i5++) {
         var key = _Object$keys5[_i5];
-        var _iteratorNormalCompletion5 = true;
-        var _didIteratorError5 = false;
-        var _iteratorError5 = undefined;
+        var _iteratorNormalCompletion6 = true;
+        var _didIteratorError6 = false;
+        var _iteratorError6 = undefined;
 
         try {
-          for (var _iterator5 = this.topics[key][Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-            var topic = _step5.value;
+          for (var _iterator6 = this.topics[key][Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+            var topic = _step6.value;
 
             if (topic.value === null || topic.value.length < 1 || topic.value.length > 30) {
               this.topicsError = "お題は1〜30文字で入力してください";
@@ -3297,16 +3353,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
         } catch (err) {
-          _didIteratorError5 = true;
-          _iteratorError5 = err;
+          _didIteratorError6 = true;
+          _iteratorError6 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-              _iterator5["return"]();
+            if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+              _iterator6["return"]();
             }
           } finally {
-            if (_didIteratorError5) {
-              throw _iteratorError5;
+            if (_didIteratorError6) {
+              throw _iteratorError6;
             }
           }
         }
@@ -7024,10 +7080,11 @@ var render = function() {
                                   on: { click: _vm.onSubmit }
                                 },
                                 [
-                                  _vm._v(
-                                    "\n                            作成\n                        "
-                                  )
-                                ]
+                                  _vm.isEdit
+                                    ? [_vm._v("更新")]
+                                    : [_vm._v("作成")]
+                                ],
+                                2
                               )
                             ],
                             1
@@ -7080,9 +7137,16 @@ var render = function() {
                               1
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "dialog-message mt-6" }, [
-                              _vm._v("登録中...")
-                            ])
+                            _c(
+                              "div",
+                              { staticClass: "dialog-message mt-6" },
+                              [
+                                _vm.isEdit
+                                  ? [_vm._v("更新中...")]
+                                  : [_vm._v("作成中...")]
+                              ],
+                              2
+                            )
                           ]
                         : _vm._e(),
                       _vm._v(" "),
@@ -7104,18 +7168,24 @@ var render = function() {
                               1
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "dialog-message mt-4" }, [
-                              _vm._v(
-                                "\n                            登録に成功しました"
-                              ),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "dialog-sub-message" },
-                                [_vm._v("ガチャ一覧ページに移動します")]
-                              )
-                            ])
+                            _c(
+                              "div",
+                              { staticClass: "dialog-message mt-4" },
+                              [
+                                _vm.isEdit
+                                  ? [_vm._v("更新に成功しました")]
+                                  : [_vm._v("作成に成功しました")],
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "dialog-sub-message" },
+                                  [_vm._v("ガチャ一覧ページに移動します")]
+                                )
+                              ],
+                              2
+                            )
                           ]
                         : _vm._e(),
                       _vm._v(" "),
@@ -7137,18 +7207,24 @@ var render = function() {
                               1
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "dialog-message mt-4" }, [
-                              _vm._v(
-                                "\n                            登録に失敗しました"
-                              ),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "dialog-sub-message" },
-                                [_vm._v("通信状況を確認してください")]
-                              )
-                            ]),
+                            _c(
+                              "div",
+                              { staticClass: "dialog-message mt-4" },
+                              [
+                                _vm.isEdit
+                                  ? [_vm._v("更新に失敗しました")]
+                                  : [_vm._v("作成に失敗しました")],
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "dialog-sub-message" },
+                                  [_vm._v("通信状況を確認してください")]
+                                )
+                              ],
+                              2
+                            ),
                             _vm._v(" "),
                             _c(
                               "v-btn",

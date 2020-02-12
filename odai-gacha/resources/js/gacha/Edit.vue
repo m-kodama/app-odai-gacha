@@ -549,10 +549,10 @@ export default {
         for (const rarity of this.rarities) {
             this.$set(this.topics, rarity.rarity, []);
         }
-        console.log(this.isEdit);
-        console.log(this._gacha);
-        console.log(this._rarity);
-        console.log(this._topics);
+        // console.log(this.isEdit);
+        // console.log(this._gacha);
+        // console.log(this._rarity);
+        // console.log(this._topics);
         // 編集の場合
         if (this.isEdit) {
             this.gacha = {
@@ -616,7 +616,7 @@ export default {
             })
             .catch((error) => {
                 this.dialogState = 'failed';
-                console.log(error.response.data.errors)
+                // console.log(error.response.data.errors);
             })
         },
         addTopic() {
@@ -662,7 +662,7 @@ export default {
             })
             .catch((error) => {
                 this.deleteDialogState = 'failed';
-                console.log(error.response.data.errors);
+                // console.log(error.response.data.errors);
             })
         },
         async onPasswordConfirm(password) {

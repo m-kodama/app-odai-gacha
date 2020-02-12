@@ -93,7 +93,7 @@
 /*! no exports provided */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/app.js'");
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/app.js'");
 
 /***/ }),
 
@@ -115,8 +115,8 @@ throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/mizoguchihiroto/Desktop/odai/app-odai-gacha/odai-gacha/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

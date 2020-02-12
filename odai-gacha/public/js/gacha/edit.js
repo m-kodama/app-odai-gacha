@@ -2393,6 +2393,166 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    onSubmit: {
+      type: Function,
+      "default": function () {
+        var _default2 = _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        function _default() {
+          return _default2.apply(this, arguments);
+        }
+
+        return _default;
+      }()
+    }
+  },
+  data: function data() {
+    return {
+      password: "",
+      loading: false,
+      isSuccess: null,
+      isVibration: false
+    };
+  },
+  computed: {
+    isHiddenErrorMesssage: function isHiddenErrorMesssage() {
+      return this.isSuccess || this.isSuccess === null;
+    }
+  },
+  mounted: function mounted() {
+    this.$emit('reset-event', this.reset);
+  },
+  methods: {
+    onTap: function () {
+      var _onTap = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.loading = true;
+                _context2.next = 3;
+                return this.onSubmit(this.password);
+
+              case 3:
+                this.isSuccess = _context2.sent;
+                this.loading = false;
+
+                if (this.isSuccess) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                this.isVibration = true;
+                _context2.next = 9;
+                return new Promise(function (r) {
+                  return setTimeout(r, 200);
+                });
+
+              case 9:
+                this.isVibration = false;
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function onTap() {
+        return _onTap.apply(this, arguments);
+      }
+
+      return onTap;
+    }(),
+    reset: function reset() {
+      this.password = "";
+      this.isSuccess = null;
+      this.loading = false;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TextField.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TextField.vue?vue&type=script&lang=js& ***!
@@ -2535,6 +2695,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
 /* harmony import */ var _components_TextField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/TextField */ "./resources/js/components/TextField.vue");
+/* harmony import */ var _components_PasswordConfirmCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/PasswordConfirmCard */ "./resources/js/components/PasswordConfirmCard.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2901,12 +3062,78 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Header: _components_Header__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TextField: _components_TextField__WEBPACK_IMPORTED_MODULE_2__["default"]
+    TextField: _components_TextField__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PasswordConfirmCard: _components_PasswordConfirmCard__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
     _gacha: Object | Number,
@@ -2921,6 +3148,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       dialog: false,
       dialogState: 'loading',
       // loading or success or failed
+      deleteDialog: false,
+      deleteDialogState: 'confirm',
+      showPasswordDialog: false,
+      resetPasswordDialog: function resetPasswordDialog() {},
       gacha: {
         gachaId: null,
         gachaName: null,
@@ -3369,6 +3600,93 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.topicsError = "";
+    },
+    onDeleteButton: function onDeleteButton() {
+      if (this._gacha.needDeletePass) {
+        this.showPasswordDialog = true;
+      } else {
+        this.deleteDialogState = 'confirm';
+        this.deleteDialog = true;
+      }
+    },
+    deleteGacha: function () {
+      var _deleteGacha = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this2 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.deleteDialogState = 'loading';
+                _context2.next = 3;
+                return axios["delete"]("/gacha/".concat(this._gacha.gacha_id), {}).then(function (res) {
+                  _this2.deleteDialogState = 'success';
+                  window.location.href = "/gacha";
+                })["catch"](function (error) {
+                  _this2.deleteDialogState = 'failed';
+                  console.log(error.response.data.errors);
+                });
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function deleteGacha() {
+        return _deleteGacha.apply(this, arguments);
+      }
+
+      return deleteGacha;
+    }(),
+    onPasswordConfirm: function () {
+      var _onPasswordConfirm = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(password) {
+        var _this3 = this;
+
+        var request;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                request = {
+                  password: password,
+                  type: 2
+                };
+                _context3.next = 3;
+                return axios.post("/gacha/".concat(this._gacha.gacha_id, "/auth"), request).then(function (res) {
+                  _this3.showPasswordDialog = false;
+                  _this3.deleteDialogState = 'confirm';
+                  _this3.deleteDialog = true;
+                  return true;
+                })["catch"](function (error) {
+                  return false;
+                });
+
+              case 3:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function onPasswordConfirm(_x) {
+        return _onPasswordConfirm.apply(this, arguments);
+      }
+
+      return onPasswordConfirm;
+    }(),
+    setResetPasswordDialog: function setResetPasswordDialog(event) {
+      this.resetPasswordDialog = event;
     }
   }
 });
@@ -3484,6 +3802,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n  visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n  animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n    transform: translateX(0px);\n}\n33% {\n    transform: translateX(10px);\n}\n66% {\n    transform: translateX(-8px);\n}\n100% {\n    transform: translateX(4px);\n}\n}\n", ""]);
 
 // exports
 
@@ -4873,6 +5210,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/gacha/Edit.vue?vue&type=style&index=0&id=b6f307d6&scoped=true&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/gacha/Edit.vue?vue&type=style&index=0&id=b6f307d6&scoped=true&lang=css& ***!
@@ -6114,6 +6481,161 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    {
+      staticClass: "pa-10 d-flex flex-column align-center justify-center",
+      attrs: { outlined: "" }
+    },
+    [
+      _vm.isSuccess
+        ? _c(
+            "div",
+            {
+              staticClass: "d-flex flex-column align-center justify-center",
+              staticStyle: { padding: "32px 0 48px 0" }
+            },
+            [
+              _c(
+                "v-icon",
+                {
+                  staticClass: "mb-2 lock-icon",
+                  attrs: { color: "accent", size: "48" }
+                },
+                [_vm._v("mdi-lock-open-variant-outline")]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "accent--text",
+                  staticStyle: { "font-weight": "700", "font-size": "1.2rem" }
+                },
+                [_vm._v("ロックを解除しました")]
+              )
+            ],
+            1
+          )
+        : _c(
+            "div",
+            {
+              staticClass: "d-flex flex-column align-center justify-center",
+              staticStyle: { padding: "32px 0 48px 0" }
+            },
+            [
+              _c(
+                "v-icon",
+                {
+                  staticClass: "mb-2 lock-icon",
+                  class: { vibration: _vm.isVibration },
+                  attrs: { color: "primary", size: "48" }
+                },
+                [_vm._v("mdi-lock-outline")]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "primary--text",
+                  staticStyle: { "font-weight": "700", "font-size": "1.2rem" }
+                },
+                [_vm._v("ロックされています")]
+              )
+            ],
+            1
+          ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "error--text mb-2",
+          class: { hidden: _vm.isHiddenErrorMesssage }
+        },
+        [_vm._v("パスワードが違います。")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "d-flex", staticStyle: { width: "100%" } },
+        [
+          _c("v-text-field", {
+            staticClass: "mb-4 flex-grow-1",
+            attrs: {
+              color: "accent",
+              outlined: "",
+              solo: "",
+              flat: "",
+              label: "パスワード",
+              clearable: "",
+              "hide-details": "",
+              type: "password",
+              disabled: _vm.loading
+            },
+            model: {
+              value: _vm.password,
+              callback: function($$v) {
+                _vm.password = $$v
+              },
+              expression: "password"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          staticStyle: {
+            width: "200px !important",
+            transition: "all 0.2s ease-in-out"
+          },
+          attrs: {
+            depressed: "",
+            color: "accent",
+            large: "",
+            loading: _vm.loading,
+            disabled: !_vm.password
+          },
+          on: { click: _vm.onTap }
+        },
+        [
+          _vm.isSuccess
+            ? [
+                _c("v-icon", { attrs: { color: "white", size: "24" } }, [
+                  _vm._v("mdi-check")
+                ])
+              ]
+            : [_c("span", [_vm._v("解除")])]
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TextField.vue?vue&type=template&id=ecf2c91c&scoped=true&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TextField.vue?vue&type=template&id=ecf2c91c&scoped=true& ***!
@@ -6218,7 +6740,8 @@ var render = function() {
                                 "v-btn",
                                 {
                                   staticClass: "px-4",
-                                  attrs: { depressed: "", color: "#eeeeee" }
+                                  attrs: { depressed: "", color: "#eeeeee" },
+                                  on: { click: _vm.onDeleteButton }
                                 },
                                 [
                                   _vm._v(
@@ -7253,6 +7776,255 @@ var render = function() {
                     ],
                     2
                   )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-dialog",
+                {
+                  attrs: { persistent: "", "max-width": "380" },
+                  model: {
+                    value: _vm.deleteDialog,
+                    callback: function($$v) {
+                      _vm.deleteDialog = $$v
+                    },
+                    expression: "deleteDialog"
+                  }
+                },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass:
+                        "d-flex flex-column align-center justify-center",
+                      staticStyle: { height: "350px", padding: "32px" }
+                    },
+                    [
+                      _vm.deleteDialogState === "confirm"
+                        ? [
+                            _c(
+                              "div",
+                              { staticClass: "mb-10" },
+                              [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    staticClass: "mb-2 lock-icon",
+                                    attrs: { color: "primary", size: "64" }
+                                  },
+                                  [_vm._v("mdi-delete-alert-outline")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dialog-message mt-4" }, [
+                              _vm._v("本当に削除しますか？"),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "dialog-sub-message" },
+                                [
+                                  _vm._v(
+                                    "削除したガチャは元に戻すことができません"
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "d-flex align-center justify-center mt-3"
+                              },
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticStyle: { width: "120px !important" },
+                                    attrs: {
+                                      color: "#eeeeee",
+                                      depressed: "",
+                                      dense: ""
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.deleteDialog = false
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                キャンセル\n                            "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticStyle: { width: "16px" } }),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticStyle: { width: "120px !important" },
+                                    attrs: {
+                                      color: "primary",
+                                      depressed: "",
+                                      dense: ""
+                                    },
+                                    on: { click: _vm.deleteGacha }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                削除\n                            "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.deleteDialogState === "loading"
+                        ? [
+                            _c(
+                              "div",
+                              { staticClass: "mb-10" },
+                              [
+                                _c("v-progress-circular", {
+                                  attrs: {
+                                    size: 64,
+                                    width: 7,
+                                    color: "accent",
+                                    indeterminate: ""
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dialog-message mt-6" }, [
+                              _vm._v("削除中...")
+                            ])
+                          ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.deleteDialogState === "success"
+                        ? [
+                            _c(
+                              "div",
+                              { staticClass: "mb-10" },
+                              [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    staticClass: "mb-2 lock-icon",
+                                    attrs: { color: "accent", size: "64" }
+                                  },
+                                  [_vm._v("mdi-check-outline")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dialog-message mt-4" }, [
+                              _vm._v("削除に成功しました"),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "dialog-sub-message" },
+                                [_vm._v("ガチャ一覧ページに移動します")]
+                              )
+                            ])
+                          ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.deleteDialogState === "failed"
+                        ? [
+                            _c(
+                              "div",
+                              { staticClass: "mb-10" },
+                              [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    staticClass: "mb-2 lock-icon",
+                                    attrs: { color: "primary", size: "64" }
+                                  },
+                                  [_vm._v("mdi-close-outline")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dialog-message mt-4" }, [
+                              _vm._v("削除に失敗しました"),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "dialog-sub-message" },
+                                [_vm._v("通信状況を確認してください")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "mt-3",
+                                attrs: {
+                                  color: "#eeeeee",
+                                  rounded: "",
+                                  depressed: "",
+                                  dense: ""
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.dialog = false
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            閉じる\n                        "
+                                )
+                              ]
+                            )
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-dialog",
+                {
+                  attrs: { "max-width": "400" },
+                  on: { "click:outside": _vm.resetPasswordDialog },
+                  model: {
+                    value: _vm.showPasswordDialog,
+                    callback: function($$v) {
+                      _vm.showPasswordDialog = $$v
+                    },
+                    expression: "showPasswordDialog"
+                  }
+                },
+                [
+                  _c("PasswordConfirmCard", {
+                    attrs: { onSubmit: _vm.onPasswordConfirm },
+                    on: {
+                      "reset-event": function($event) {
+                        return _vm.setResetPasswordDialog($event)
+                      }
+                    }
+                  })
                 ],
                 1
               )
@@ -60860,6 +61632,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PasswordConfirmCard.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/PasswordConfirmCard.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true& */ "./resources/js/components/PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true&");
+/* harmony import */ var _PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PasswordConfirmCard.vue?vue&type=script&lang=js& */ "./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& */ "./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "58f26fba",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PasswordConfirmCard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordConfirmCard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=style&index=0&id=58f26fba&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_style_index_0_id_58f26fba_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PasswordConfirmCard.vue?vue&type=template&id=58f26fba&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordConfirmCard_vue_vue_type_template_id_58f26fba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/TextField.vue":
 /*!***********************************************!*\
   !*** ./resources/js/components/TextField.vue ***!
@@ -60933,14 +61792,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************!*\
   !*** ./resources/js/gacha/Edit.vue ***!
   \*************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Edit_vue_vue_type_template_id_b6f307d6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Edit.vue?vue&type=template&id=b6f307d6&scoped=true& */ "./resources/js/gacha/Edit.vue?vue&type=template&id=b6f307d6&scoped=true&");
 /* harmony import */ var _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Edit.vue?vue&type=script&lang=js& */ "./resources/js/gacha/Edit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Edit_vue_vue_type_style_index_0_id_b6f307d6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Edit.vue?vue&type=style&index=0&id=b6f307d6&scoped=true&lang=css& */ "./resources/js/gacha/Edit.vue?vue&type=style&index=0&id=b6f307d6&scoped=true&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _Edit_vue_vue_type_style_index_0_id_b6f307d6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Edit.vue?vue&type=style&index=0&id=b6f307d6&scoped=true&lang=css& */ "./resources/js/gacha/Edit.vue?vue&type=style&index=0&id=b6f307d6&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -60972,7 +61832,7 @@ component.options.__file = "resources/js/gacha/Edit.vue"
 /*!**************************************************************!*\
   !*** ./resources/js/gacha/Edit.vue?vue&type=script&lang=js& ***!
   \**************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

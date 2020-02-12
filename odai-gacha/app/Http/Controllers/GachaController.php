@@ -125,7 +125,7 @@ class GachaController extends Controller
         return $gacha_id;
     }
 
-    public function updateGacha(Request $request, $gachaId) {
+    public function updateGacha(GachaRequest $request, $gachaId) {
         $gacha = Gacha::findOrFail($gachaId);
         if ($gacha->needEditPass){
             $authedGacha = $request->session()->get('authedGacha', function(){
@@ -190,12 +190,29 @@ class GachaController extends Controller
         return $gachaId;
     }
 
-    public function deleteGacha($gachaId) {
+    public function deleteGacha(Request $request, $gachaId) {
         $gacha = Gacha::findOrFail($gachaId);
-        // TODO パスワードチェック
-        $gacha->delete();
+        if ($gacha->needEditPass){
+            $authedGacha = $request->session()->get('authedGacha', function(){
+                abort(404);
+            });
+            if (!in_array($gachaId ,$authedGacha['delete'])){
+                abort(404);
+            }
+        }
+        DB::beginTransaction();
+        try{
+            Topic::where('gacha_id','=', $gachaId)->delete();
+            Rarity::where('gacha_id','=', $gachaId)->delete();
+            $gacha->delete();
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withInput();
+            abort(400);
+        }
+        DB::commit();
 
-        return redirect("/gacha");
+        return 'success';
     }
 
     public function create() {

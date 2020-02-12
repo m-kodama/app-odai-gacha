@@ -1,0 +1,81 @@
+html{
+  overscroll-behavior: none;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(#fefefe, #777777);
+  height: 100vh;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+#stage {
+  touch-action: none;
+  overscroll-behavior: none;
+  position: relative;
+  top: -2%;
+  z-index: 100;
+  margin: 0% auto;
+  width: 100%;
+  height: 100vh;
+}
+#handle, #gacha-body {
+  touch-action: none;
+  overscroll-behavior: none;
+}
+img {
+  position: absolute;
+  -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+img.egg {
+  visibility:hidden;
+}
+#touch-eater {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+}
+#odai {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  opacity: 0;
+  width: 90%;
+  padding: 32px 16px 4px 16px;
+  position: absolute;
+  z-index: 100;
+  border-radius: 8px;
+  color: #333;
+  background-color: #ffffff;
+  box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.2);
+  border: solid 16px #0054a6;
+  text-align: center;
+}
+#odai-text {
+  font-size: 48px;
+  line-height: 1.3;
+  font-weight: bold;
+  background: -webkit-linear-gradient(#3498db 0%, #9b59b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#close-btn {
+  box-sizing: border-box;
+  width: 30%;
+  height: 48px;
+  padding: 1em;
+  color: #1b1b1b;
+  background: #fff;
+  border: 1px solid #fff;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+#close-btn:hover {
+  background: #f2f2f2;
+  cursor: pointer;
+}

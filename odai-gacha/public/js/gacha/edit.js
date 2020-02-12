@@ -3047,8 +3047,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       for (var _iterator = this.rarities[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var _rarity = _step.value;
         this.$set(this.topics, _rarity.rarity, []);
-      } // 編集の場合
-
+      }
     } catch (err) {
       _didIteratorError = true;
       _iteratorError = err;
@@ -3063,6 +3062,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
     }
+
+    console.log(this.isEdit);
+    console.log(this._gacha);
+    console.log(this._rarity);
+    console.log(this._topics); // 編集の場合
 
     if (this.isEdit) {
       this.gacha = _objectSpread({}, this.gacha, {

@@ -6,7 +6,7 @@
                     <v-card outlined>
                         <div class="d-flex justify-space-between align-center">
                             <v-card-title>ガチャ作成</v-card-title>
-                            <v-btn depressed color="#eeeeee" class="px-4">
+                            <v-btn v-if="this.isEdit" depressed color="#eeeeee" class="px-4">
                                 削除
                             </v-btn>
                         </div>
@@ -354,9 +354,9 @@ export default {
         TextField
     },
     props: {
-        _gacha: String,
-        _rarity: String,
-        _topics: String,
+        _gacha: Object | Number,
+        _rarity: Array | Number,
+        _topics: Array | Number,
     },
     data: function() {
         return {
@@ -403,24 +403,6 @@ export default {
         };
     },
     computed: {
-        originGacha: function() {
-            if (this._gacha === undefined || this._gacha === null || this._gacha === "") {
-                return null;
-            }
-            return JSON.parse(this._gacha);
-        },
-        originRarity: function() {
-            if (this._rarity === undefined || this._rarity === null || this._rarity === "") {
-                return null;
-            }
-            return JSON.parse(this._rarity);
-        },
-        originTopics: function() {
-            if (this._topics === undefined || this._topics === null || this._topics === "") {
-                return null;
-            }
-            return JSON.parse(this._topics);
-        },
         topicLength: function() {
             let count = 0;
             for(const key of Object.keys(this.topics)) {
@@ -432,7 +414,7 @@ export default {
             return this.gacha.needUsePass || this.gacha.needEditPass || this.gacha.needDeletePass;
         },
         isEdit: function() {
-            return this.originGacha && this.originRarity && this.originTopics;
+            return !!this._gacha && !!this._rarity && !!this._topics;
         }
     },
     watch: {
@@ -482,23 +464,27 @@ export default {
     mounted() {
         // レア度の初期化
         for (const rarity of this.rarities) {
-            this.$set(this.topics, rarity.rarity, [this.Topic()]);
+            this.$set(this.topics, rarity.rarity, []);
         }
         // 編集の場合
         if (this.isEdit) {
             this.gacha = {
                 ...this.gacha,
-                gachaName: this.originGacha.gacha_name,
-                imagePath: this.originGacha.image_path,
-                needUsePass: this.originGacha.needUsePass,
-                needEditPass: this.originGacha.needEditPass,
-                needDeletePass: this.originGacha.needDeletePass,
+                gachaName: this._gacha.gacha_name,
+                imagePath: this._gacha.image_path,
+                needUsePass: this._gacha.needUsePass,
+                needEditPass: this._gacha.needEditPass,
+                needDeletePass: this._gacha.needDeletePass,
             }
-            const mapIdToRarity = new Map(this.originRarity.map(rarity => {
+            const mapIdToRarity = new Map(this._rarity.map(rarity => {
                 return [rarity.rarity_id, rarity.rarity];
             }));
-            for (const topic of this.originTopics) {
-                this.topics[mapIdToRarity.get(topic.rarity_id)] = this.Topic(topic.topic);
+            for (const topic of this._topics) {
+                this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic));
+            }
+        } else {
+            for (const rarity of this.rarities) {
+                this.topics[rarity.rarity].push(this.Topic())
             }
         }
     },

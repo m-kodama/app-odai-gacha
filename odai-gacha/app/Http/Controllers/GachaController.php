@@ -156,7 +156,7 @@ class GachaController extends Controller
                 abort(404);
             }
         }
-        $gacha = $_gacha->list()->get();
+        $gacha = $_gacha->list()->get()->first();
         $rarity = $_gacha->rarity()->get();
         $topics = $_gacha->topics()->get();
         return view('gacha/edit', compact('gacha', 'rarity', 'topics'));

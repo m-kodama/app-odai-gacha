@@ -11,10 +11,10 @@
 </head>
 <body>
   <div id="app">
-    <Edit 
-      _gacha="{{ $gacha ?? ''}}"
-      _rarity="{{ $rarity ?? ''}}"
-      _topics="{{ $topics ?? ''}}"
+    <Edit
+      :_gacha="{{ $gacha ?? 0}}"
+      :_rarity="{{ $rarity ?? 0}}"
+      :_topics="{{ $topics ?? 0}}"
     >
     </Edit>
   </div>

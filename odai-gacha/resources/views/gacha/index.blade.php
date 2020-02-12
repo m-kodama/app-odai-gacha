@@ -1,22 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>お題ガチャ</title>
-  <script src="js/lib/anime.min.js"></script>
-  <script src="js/util.js"></script>
-  <script src="js/class/Handle.js"></script>
-  <script src="js/class/Gacha.js"></script>
-  <script src="js/index.js"></script>
-  <link rel="stylesheet" href="css/index.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+
+  <script src="{{ mix('js/gacha/app.js') }}" defer></script> 
 </head>
 <body>
-  <div>
-  @foreach($gachas as $gacha)
-  <p><a href="http://localhost:8000/gacha/{{$gacha->gacha_id}}/edit">{{$gacha->gacha_name}}</a></p>
-  @endforeach
+  <div id="app">
+    <App _gachas="{{ $gachas }}"></App>
   </div>
 </body>
 </html>

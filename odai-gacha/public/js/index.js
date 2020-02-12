@@ -10,9 +10,12 @@ const init = () => {
   for (let img of imgs) {
     img.width *= imgScale;
   }
+  const arrowText = document.getElementById('arrow-text');
+  arrowText.style.fontSize = 48 * imgScale + 'px';
 
   // 初期配置
   const handle = document.getElementById('handle');
+  const arrow = document.getElementById('arrow');
   const eggNormal = document.getElementById('egg-normal');
   const eggSilver = document.getElementById('egg-sliver');
   const eggGold = document.getElementById('egg-gold');
@@ -20,12 +23,16 @@ const init = () => {
   // left
   gacha.style.right = gacha.clientWidth * -0.3 + 'px';
   handle.style.right = gacha.clientWidth * 0.1 + 'px';
+  arrow.style.right = gacha.clientWidth * 0.24 + 'px';
+  arrowText.style.right = gacha.clientWidth * 0.1 + 'px';
   eggNormal.style.right = gacha.clientWidth * 0.4 + 'px';
   eggSilver.style.right = eggNormal.style.right;
   eggGold.style.right = eggNormal.style.right;
   eggPlatinum.style.right = eggNormal.style.right;
   // top
   handle.style.top = gacha.clientHeight * 0.275 + 'px';
+  arrow.style.top = gacha.clientHeight * 0.8 + 'px';
+  arrowText.style.top = gacha.clientHeight * 0.93 + 'px';
   eggNormal.style.top = gacha.clientHeight * 0.35 + 'px';
   eggSilver.style.top = eggNormal.style.top;
   eggGold.style.top = eggNormal.style.top;
@@ -82,10 +89,19 @@ const startGacha = () => {
   document.getElementById('touch-eater').style.display = 'block';
   const gacha = document.getElementById('gacha-body');
   const odai = GACHA.getOdai();
+  if (!odai) {
+    alert('お題がなくなりました。ブラウザを再読み込みします');
+    window.location.reload();
+    return;
+  }
   const eggs = document.getElementsByClassName('egg');
   egg = eggs[odai.rarity];
 
   // アニメーション開始
+  const arrow = document.getElementById('arrow');
+  const arrowText = document.getElementById('arrow-text');
+  arrow.style.visibility = 'hidden';
+  arrowText.style.visibility = 'hidden';
   const timeline = anime.timeline();
   timeline
     // ハンドルのアニメーション
@@ -184,4 +200,8 @@ const onClickCloseBtn = () => {
     egg.style.visibility = 'hidden';
     egg.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)';
   }
+  const arrow = document.getElementById('arrow');
+  const arrowText = document.getElementById('arrow-text');
+  arrow.style.visibility = 'visible';
+  arrowText.style.visibility = 'visible';
 };

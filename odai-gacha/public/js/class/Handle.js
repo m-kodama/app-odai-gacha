@@ -48,7 +48,7 @@ class Handle {
     this.rotate += diffDeg;
     this.preDeg = deg;
     if (this.rotate > 0) return false;
-    if (this.rotate >= -90) {
+    if (this.rotate >= -45) {
       this.element.style.transform = `rotate(${this.rotate}deg)`;
       return false;
     }

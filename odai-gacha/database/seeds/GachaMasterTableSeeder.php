@@ -2,6 +2,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Ulid\Ulid;
 
 class GachaMasterTableSeeder extends Seeder
 {
@@ -13,10 +14,14 @@ class GachaMasterTableSeeder extends Seeder
     public function run()
     {
         DB::table('gacha_master')->insert([
+            'gacha_id' => '01E02KJWM2PHQT336EEP065X4N',
             'gacha_name' => 'シンクロナイズドシンキング',
             'user_id' => 1,
             'password' => bcrypt('1234'),
-            'description' => 'その人の答えは・・・',
+            'needUsePass' => true,
+            'needEditPass' => true,
+            'needDeletePass' => true,
+            'description' => 'アイスブレイクに使えるゲームです。',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
         ]);

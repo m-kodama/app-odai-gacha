@@ -8,6 +8,7 @@
 **アイスブレイク**や**くじ引き**、**ソーシャルゲームのガチャシミュレータ**など、様々な場面で利用できるかもしれません。
 
 
+
 ## 🏷 環境構築｜Usage
 
 事前に `dcoker` と `docker-compose` をインストールしてください。
@@ -22,6 +23,7 @@
 - `php artisan db:seed`
 - `npm install`
 - `npm run watch`
+
 
 
 ## 🏷 特徴・機能｜Features

@@ -1,15 +1,15 @@
-# 🦖 お題ガチャ｜Odai Gacha
+# お題ガチャ｜Odai Gacha
 
 ![localhost_3000_gacha_](https://user-images.githubusercontent.com/28724739/74842408-b61b3b00-536d-11ea-869c-abfc83c06bb3.png)
 
-## 🥚 お題ガチャとは｜What is Odai Gacha
+## 🦖 お題ガチャとは｜What is Odai Gacha
 お題ガチャは「**お題**」と「**排出率**」を自由に設定して、**自分だけのガチャを作れる**サービスです。
 
 **アイスブレイク**や**くじ引き**、**ソーシャルゲームのガチャシミュレータ**など、様々な場面で利用できるかもしれません。
 
 <br>
 
-## 🥚 環境構築｜Usage
+## 🦖 環境構築｜Usage
 
 事前に `dcoker` と `docker-compose` をインストールしてください。
 
@@ -26,7 +26,7 @@
 
 <br>
 
-## 🥚 特徴・機能｜Features
+## 🦖 特徴・機能｜Features
 
 ### 1.ガチャ作成・編集｜Create & Edit Gacha
 #### 1.1 ガチャから出るお題を自由に設定できる

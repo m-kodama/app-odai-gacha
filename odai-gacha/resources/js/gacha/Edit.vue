@@ -157,7 +157,7 @@
                                                 dense
                                                 label="ガチャを回した時に出る「お題」を入力してください"
                                                 :value="topic.value"
-                                                @change="(value) => {onTopicUpdated(value, index, rarity.rarity, topic.id)}"
+                                                @change="(value) => {onTopicUpdated(value, index, rarity.rarity, topic.id, topic.topicId)}"
                                                 :rules="rules.topic"
                                             />
                                             <v-menu
@@ -608,7 +608,7 @@ export default {
                 topics: topics,
                 removedTopics: this.removedTopics
              };
-            console.log(request);
+            // console.log(request);
             const method = this.isEdit ? axios.put(`/gacha/${this._gacha.gacha_id}`, request) :axios.post(`/gacha`, request);
             return await method
             .then((res) => {
@@ -617,7 +617,7 @@ export default {
             })
             .catch((error) => {
                 this.dialogState = 'failed';
-                console.log(error.response.data.errors);
+                // console.log(error.response.data.errors);
             })
         },
         addTopic() {
@@ -633,8 +633,8 @@ export default {
             const moveTopic = this.topics[this.tab].splice(index, 1)[0];
             this.topics[rarity].push(moveTopic);
         },
-        onTopicUpdated(value, index, rarity, id) {
-            this.topics[rarity][index] = { value, id };
+        onTopicUpdated(value, index, rarity, id, topicId) {
+            this.topics[rarity][index] = { value, id, topicId };
             // 以下バリデーション
             for(const key of Object.keys(this.topics)) {
                 for (const topic of this.topics[key]) {

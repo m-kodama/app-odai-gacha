@@ -3520,22 +3520,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   rarity: this.rarities,
                   topics: topics,
                   removedTopics: this.removedTopics
-                };
-                console.log(request);
+                }; // console.log(request);
+
                 method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);
-                _context.next = 42;
+                _context.next = 41;
                 return method.then(function (res) {
                   _this.dialogState = 'success';
                   window.location.href = "/gacha";
                 })["catch"](function (error) {
-                  _this.dialogState = 'failed';
-                  console.log(error.response.data.errors);
+                  _this.dialogState = 'failed'; // console.log(error.response.data.errors);
                 });
 
-              case 42:
+              case 41:
                 return _context.abrupt("return", _context.sent);
 
-              case 43:
+              case 42:
               case "end":
                 return _context.stop();
             }
@@ -3563,10 +3562,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var moveTopic = this.topics[this.tab].splice(index, 1)[0];
       this.topics[rarity].push(moveTopic);
     },
-    onTopicUpdated: function onTopicUpdated(value, index, rarity, id) {
+    onTopicUpdated: function onTopicUpdated(value, index, rarity, id, topicId) {
       this.topics[rarity][index] = {
         value: value,
-        id: id
+        id: id,
+        topicId: topicId
       }; // 以下バリデーション
 
       for (var _i5 = 0, _Object$keys5 = Object.keys(this.topics); _i5 < _Object$keys5.length; _i5++) {
@@ -7190,7 +7190,8 @@ var render = function() {
                                                             value,
                                                             index,
                                                             rarity.rarity,
-                                                            topic.id
+                                                            topic.id,
+                                                            topic.topicId
                                                           )
                                                         }
                                                       }

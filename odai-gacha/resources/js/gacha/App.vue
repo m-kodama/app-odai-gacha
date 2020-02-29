@@ -118,7 +118,7 @@ export default {
         },
         onSubmit: async function(password) {
             const request = { password, type: this.authType };
-            return await axios.post(`/gacha/${this.selectedGachaId}/auth`, request)
+            return await axios.post(`/api/gacha/${this.selectedGachaId}/auth`, request)
             .then((res) => {
                 window.location.href = `/gacha/${res.data}/${this.selectedType}`;
                 return true;

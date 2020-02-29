@@ -668,7 +668,7 @@ export default {
         },
         async onPasswordConfirm(password) {
             const request = { password, type: 2 };
-            return await axios.post(`/gacha/${this._gacha.gacha_id}/auth`, request)
+            return await axios.post(`/api/gacha/${this._gacha.gacha_id}/auth`, request)
             .then((res) => {
                 this.showPasswordDialog = false;
                 this.deleteDialogState = 'confirm';

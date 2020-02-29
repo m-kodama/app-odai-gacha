@@ -3659,7 +3659,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   type: 2
                 };
                 _context3.next = 3;
-                return axios.post("/gacha/".concat(this._gacha.gacha_id, "/auth"), request).then(function (res) {
+                return axios.post("/api/gacha/".concat(this._gacha.gacha_id, "/auth"), request).then(function (res) {
                   _this3.showPasswordDialog = false;
                   _this3.deleteDialogState = 'confirm';
                   _this3.deleteDialog = true;

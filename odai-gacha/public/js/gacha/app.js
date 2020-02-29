@@ -2711,7 +2711,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: this.authType
                 };
                 _context.next = 3;
-                return axios.post("/gacha/".concat(this.selectedGachaId, "/auth"), request).then(function (res) {
+                return axios.post("/api/gacha/".concat(this.selectedGachaId, "/auth"), request).then(function (res) {
                   window.location.href = "/gacha/".concat(res.data, "/").concat(_this.selectedType);
                   return true;
                 })["catch"](function (error) {

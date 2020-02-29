@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
+use Ulid\Ulid;
+
 use Illuminate\Database\Eloquent\Model;
+
 
 class Gacha extends Model
 {
+    protected $table = 'gacha_master';
+    protected $primaryKey = 'gacha_id';
+    protected $keyType = 'char';
+    public $incrementing = false;
     protected $fillable = [
         'gacha_id',
         'gacha_name',
@@ -16,9 +23,13 @@ class Gacha extends Model
         'password',
         'user_id',
     ];
-    protected $table = 'gacha_master';
-    protected $primaryKey = 'gacha_id';
-    public $incrementing = false;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->attributes['gacha_id'] = Ulid::generate();
+    }
 
     //hasMany設定
     public function topics()

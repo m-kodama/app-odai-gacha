@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Ulid\Ulid;
 
 class Topic extends Model {
 
@@ -16,7 +17,14 @@ class Topic extends Model {
       'updated_at',
   ];
 
-  //belongsTo設定
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->attributes['topic_id'] = Ulid::generate();
+    }
+
+    //belongsTo設定
     public function rarity()
     {
         return $this->belongsTo('App\Models\Rarity', 'rarity_id');

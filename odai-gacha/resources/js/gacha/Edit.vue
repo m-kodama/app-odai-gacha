@@ -608,6 +608,7 @@ export default {
                 topics: topics,
                 removedTopics: this.removedTopics
              };
+            console.log(request);
             const method = this.isEdit ? axios.put(`/gacha/${this._gacha.gacha_id}`, request) :axios.post(`/gacha`, request);
             return await method
             .then((res) => {
@@ -616,7 +617,7 @@ export default {
             })
             .catch((error) => {
                 this.dialogState = 'failed';
-                // console.log(error.response.data.errors);
+                console.log(error.response.data.errors);
             })
         },
         addTopic() {

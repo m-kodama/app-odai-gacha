@@ -3521,19 +3521,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   topics: topics,
                   removedTopics: this.removedTopics
                 };
+                console.log(request);
                 method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);
-                _context.next = 41;
+                _context.next = 42;
                 return method.then(function (res) {
                   _this.dialogState = 'success';
                   window.location.href = "/gacha";
                 })["catch"](function (error) {
-                  _this.dialogState = 'failed'; // console.log(error.response.data.errors);
+                  _this.dialogState = 'failed';
+                  console.log(error.response.data.errors);
                 });
 
-              case 41:
+              case 42:
                 return _context.abrupt("return", _context.sent);
 
-              case 42:
+              case 43:
               case "end":
                 return _context.stop();
             }

@@ -6,7 +6,6 @@ use Ulid\Ulid;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class Gacha extends Model
 {
     protected $table = 'gacha_master';
@@ -21,7 +20,7 @@ class Gacha extends Model
         'needEditPass',
         'needDeletePass',
         'password',
-        'user_id',
+        'user_id'
     ];
 
     public function __construct(array $attributes = [])

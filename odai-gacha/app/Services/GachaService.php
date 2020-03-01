@@ -33,7 +33,9 @@ class GachaService
                 ->list()
                 ->orderBy(Gacha::UPDATED_AT, 'desc')
                 ->get()
-            : Gacha::list()->orderBy(Gacha::UPDATED_AT, 'desc')->get();
+            : Gacha::list()
+                ->orderBy(Gacha::UPDATED_AT, 'desc')
+                ->get();
     }
 
     public function getGachaDetail(string $gachaId)
@@ -48,11 +50,11 @@ class GachaService
             ->get();
 
         $odai = array();
-        foreach($topics as $topic) {
-            if(!isset($odai[$topic->rarity])) {
+        foreach ($topics as $topic) {
+            if (!isset($odai[$topic->rarity])) {
                 $odai[$topic->rarity] = [];
             }
-            if(!isset($odai[$topic->rarity]['texts'])) {
+            if (!isset($odai[$topic->rarity]['texts'])) {
                 $odai[$topic->rarity]['rarity'] = $topic->rarity;
                 $odai[$topic->rarity]['prob'] = $topic->probability;
                 $odai[$topic->rarity]['texts'] = [];
@@ -68,7 +70,7 @@ class GachaService
     {
         $gachaId = null;
         DB::beginTransaction();
-        try{
+        try {
             // ガチャマスタ
             $gacha = new Gacha();
             $gacha->gacha_name = $request['gacha']['gachaName'];
@@ -86,7 +88,7 @@ class GachaService
             // レア度
             $rarity_id_map = [];
             $rarity_params = [];
-            foreach($request['rarity'] as $rarity) {
+            foreach ($request['rarity'] as $rarity) {
                 $rarity_id = Ulid::generate();
                 $rarity_id_map[$rarity['rarity']] = $rarity_id;
                 $rarity_params[] = [
@@ -96,13 +98,13 @@ class GachaService
                     'probability' => $rarity['probability'] * 10,
                     'gacha_id' => $gacha->gacha_id,
                     'created_at' => $now,
-                    'updated_at' => $now,
+                    'updated_at' => $now
                 ];
             }
             DB::table('rarity')->insert($rarity_params);
             // トピック
             $topic_params = [];
-            foreach($request['topics'] as $topic) {
+            foreach ($request['topics'] as $topic) {
                 $topic_id = Ulid::generate();
                 $topic_params[] = [
                     'topic_id' => $topic_id,
@@ -110,13 +112,12 @@ class GachaService
                     'gacha_id' => $gacha->gacha_id,
                     'rarity_id' => $rarity_id_map[$topic['rarity']],
                     'created_at' => $now,
-                    'updated_at' => $now,
+                    'updated_at' => $now
                 ];
             }
             DB::table('topics')->insert($topic_params);
             $gachaId = $gacha->gacha_id;
-
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             return null;
         }
@@ -128,7 +129,7 @@ class GachaService
     {
         $gachaId = null;
         DB::beginTransaction();
-        try{
+        try {
             // ガチャマスタ
             $gacha->gacha_name = $request['gacha']['gachaName'];
             $gacha->description = $request['gacha']['description'];
@@ -138,14 +139,14 @@ class GachaService
             if (!is_null($request['gacha']['password']) && $request['gacha']['password'] !== "") {
                 $gacha->password = bcrypt($request['gacha']['password']);
             } else {
-                 $gacha->password = null;
+                $gacha->password = null;
             }
             $gacha->save();
             // 現在時刻
             $now = Carbon::now();
             // レア度
             $rarity_id_map = [];
-            foreach($request['rarity'] as $rarity) {
+            foreach ($request['rarity'] as $rarity) {
                 $rarity_id = $rarity['rarityId'] ?? Ulid::generate();
                 $rarity_id_map[$rarity['rarity']] = $rarity_id;
                 $params = [
@@ -153,30 +154,29 @@ class GachaService
                     'rarity_name' => $rarity['rarityName'],
                     'probability' => $rarity['probability'] * 10,
                     'gacha_id' => $gacha->gacha_id,
-                    'updated_at' => $now,
+                    'updated_at' => $now
                 ];
                 DB::table('rarity')->updateOrInsert(['rarity_id' => $rarity_id], $params);
             }
             // トピック
-            foreach($request['topics'] as $topic) {
+            foreach ($request['topics'] as $topic) {
                 $topic_id = $topic['topicId'] ?? Ulid::generate();
                 $params = [
                     'topic' => $topic['topic'],
                     'gacha_id' => $gacha->gacha_id,
                     'rarity_id' => $rarity_id_map[$topic['rarity']],
-                    'updated_at' => $now,
+                    'updated_at' => $now
                 ];
-                if (!isSet($topic['topicId'])) {
-                  $params['created_at'] = $now;
+                if (!isset($topic['topicId'])) {
+                    $params['created_at'] = $now;
                 }
-                DB::table('topics')->updateOrInsert(['topic_id' => $topic_id,], $params);
+                DB::table('topics')->updateOrInsert(['topic_id' => $topic_id], $params);
             }
-            foreach($request['removedTopics'] as $topic) {
-                Topic::where('topic_id','=', $topic['topicId'])->delete();
+            foreach ($request['removedTopics'] as $topic) {
+                Topic::where('topic_id', '=', $topic['topicId'])->delete();
             }
             $gachaId = $gacha->gacha_id;
-
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             return null;
         }
@@ -188,10 +188,10 @@ class GachaService
     {
         DB::beginTransaction();
         try {
-            Topic::where('gacha_id','=', $gacha->gacha_id)->delete();
-            Rarity::where('gacha_id','=', $gacha->gacha_id)->delete();
+            Topic::where('gacha_id', '=', $gacha->gacha_id)->delete();
+            Rarity::where('gacha_id', '=', $gacha->gacha_id)->delete();
             $gacha->delete();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             return null;
         }
@@ -201,7 +201,7 @@ class GachaService
 
     public function auth(Request $request, Gacha $gacha)
     {
-        $authedGacha = $request->session()->get('authedGacha', function(){
+        $authedGacha = $request->session()->get('authedGacha', function () {
             return array(
                 'use' => array(),
                 'edit' => array(),
@@ -246,13 +246,13 @@ class GachaService
             return true;
         }
 
-        $authedGacha = $request->session()->get('authedGacha', function() {
+        $authedGacha = $request->session()->get('authedGacha', function () {
             return null;
         });
         if (empty($authedGacha)) {
             return false;
         }
-        if (in_array($gacha->gacha_id ,$authedGacha[$type])) {
+        if (in_array($gacha->gacha_id, $authedGacha[$type])) {
             return true;
         }
         return false;

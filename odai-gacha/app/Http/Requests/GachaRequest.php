@@ -33,14 +33,16 @@ class GachaRequest extends FormRequest
                 'max:16',
                 function ($attribute, $value, $fail) {
                     $input_data = $this->all();
-                    if ($input_data['gacha']['needUsePass'] 
-                        || $input_data['gacha']['needEditPass']
-                        || $input_data['gacha']['needDeletePass']) {
-                        if(is_null($value) || $value === "") {
+                    if (
+                        $input_data['gacha']['needUsePass'] ||
+                        $input_data['gacha']['needEditPass'] ||
+                        $input_data['gacha']['needDeletePass']
+                    ) {
+                        if (is_null($value) || $value === "") {
                             $fail('使用、編集、削除にロックをかける場合は、パスワードが必須です');
                         }
                     } else {
-                        if(!is_null($value)) {
+                        if (!is_null($value)) {
                             $fail('使用、編集、削除にロックをかけない場合は、パスワードは設定できません');
                         }
                     }
@@ -48,7 +50,7 @@ class GachaRequest extends FormRequest
             ],
             'topics' => 'required|array|min:1|max:200',
             'topics.*.topic' => 'required|string|max:30',
-            'topics.*.rarity' => 'required',
+            'topics.*.rarity' => 'required'
         ];
     }
 
@@ -68,7 +70,7 @@ class GachaRequest extends FormRequest
             'topics.min' => 'お題は1件以上入力してください',
             'topics.max' => 'お題は200件以内で入力してください',
             'topics.*.required' => 'お題には1文字以上入力してください',
-            'topics.*.max' => 'お題は30文字以内で入力してください',
+            'topics.*.max' => 'お題は30文字以内で入力してください'
         ];
     }
 }

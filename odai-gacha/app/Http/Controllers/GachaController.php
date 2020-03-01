@@ -47,16 +47,18 @@ class GachaController extends Controller
         return view('gacha/machine', compact('odai'));
     }
 
-    public function createGachaDetail(GachaRequest $request) {
+    public function createGachaDetail(GachaRequest $request)
+    {
         $gachaId = $this->gacha_service->createGacha($request);
-        if(empty($gachaId)) {
+        if (empty($gachaId)) {
             return back()->withInput();
             abort(400);
         }
         return $gacha_id;
     }
 
-    public function updateGacha(GachaRequest $request, $gachaId) {
+    public function updateGacha(GachaRequest $request, $gachaId)
+    {
         $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
@@ -65,14 +67,15 @@ class GachaController extends Controller
             abort(404);
         }
         $updatedGachaId = $this->gacha_service->updateGacha($request, $gacha);
-        if(empty($updatedGachaId)) {
+        if (empty($updatedGachaId)) {
             return back()->withInput();
             abort(400);
         }
         return $updatedGachaId;
     }
 
-    public function deleteGacha(Request $request, $gachaId) {
+    public function deleteGacha(Request $request, $gachaId)
+    {
         $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
@@ -87,11 +90,13 @@ class GachaController extends Controller
         abort(400);
     }
 
-    public function create() {
+    public function create()
+    {
         return view('gacha/edit');
     }
 
-    public function edit(Request $request, $gachaId) {
+    public function edit(Request $request, $gachaId)
+    {
         $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
@@ -104,7 +109,8 @@ class GachaController extends Controller
         return view('gacha/edit', compact('gacha', 'rarity', 'topics'));
     }
 
-    public function auth(Request $request, $gachaId) {
+    public function auth(Request $request, $gachaId)
+    {
         $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
@@ -114,5 +120,4 @@ class GachaController extends Controller
         }
         abort(400);
     }
-
 }

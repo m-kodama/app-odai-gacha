@@ -18,7 +18,10 @@ class CreateGachaMasterTable extends Migration
             $table->primary('gacha_id');
             $table->string('gacha_name', 50);
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table
+                ->foreign('user_id')
+                ->references('id')
+                ->on('users');
             $table->string('password')->nullable();
             $table->boolean('needUsePass')->default(false);
             $table->boolean('needEditPass')->default(false);

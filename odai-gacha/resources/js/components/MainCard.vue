@@ -7,18 +7,15 @@
         >
             <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                    <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                    ></v-progress-circular>
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-row>
             </template>
         </v-img>
-            <div class="detail secondary" v-show="showDetail" >
-                <div class="ma-3">
-                    {{ gacha.description }}
-                </div>
+        <div class="detail secondary" v-show="showDetail">
+            <div class="ma-3">
+                {{ gacha.description }}
             </div>
+        </div>
         <v-card-title>
             <div class="flex-grow-1">{{ gacha.gacha_name }}</div>
             <v-tooltip top>
@@ -36,12 +33,7 @@
                 <span v-if="showDetail">閉じる</span><span v-else>詳細</span>
             </v-btn>
             <div style="width: 8px;" />
-            <v-btn
-                depressed
-                color="primary"
-                @click="onUseButtonTap"
-                style="width: calc((100% - 8px) / 2);"
-            >
+            <v-btn depressed color="primary" @click="onUseButtonTap" style="width: calc((100% - 8px) / 2);">
                 起動
             </v-btn>
         </div>
@@ -59,15 +51,15 @@ export default {
             needEditPass: Boolean,
             needDeletePass: Boolean,
             created_at: Date,
-            updated_at: Date
+            updated_at: Date,
         },
         onGachaUseButtonTap: {
-          type: Function,
-          default: () => {}
+            type: Function,
+            default: () => {},
         },
         onGachaEditButtonTap: {
-          type: Function,
-          default: () => {}
+            type: Function,
+            default: () => {},
         },
     },
     data: function() {
@@ -83,19 +75,19 @@ export default {
             const month = d.getMonth() + 1;
             const day = d.getDate();
             return `${year}年${month}月${day}日`;
-        }
+        },
     },
     methods: {
         onUseButtonTap() {
-          this.onGachaUseButtonTap(this.gacha.gacha_id, this.gacha.needUsePass);
+            this.onGachaUseButtonTap(this.gacha.gacha_id, this.gacha.needUsePass);
         },
         onEditButtonTap() {
-          this.onGachaEditButtonTap(this.gacha.gacha_id, this.gacha.needEditPass);
+            this.onGachaEditButtonTap(this.gacha.gacha_id, this.gacha.needEditPass);
         },
         detail() {
             this.showDetail = !this.showDetail;
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -110,7 +102,9 @@ export default {
     align-items: flex-start;
 }
 .detail {
-    position: absolute; top: 0px; right: 0px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
     height: 200px;
     width: 100%;
     opacity: 0.85;
@@ -118,5 +112,4 @@ export default {
     color: #333333;
     overflow-y: scroll;
 }
-
 </style>

@@ -28,67 +28,67 @@ export default {
     props: {
         appendIcon: {
             type: String,
-            default: undefined
+            default: undefined,
         },
         clickAppend: {
             type: Function,
-            default: () => {}
+            default: () => {},
         },
         clearable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         color: {
             type: String,
-            default: "accent"
+            default: "accent",
         },
         dense: {
             type: Boolean,
-            default: false
+            default: false,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         flat: {
             type: Boolean,
-            default: true
+            default: true,
         },
         hideDetails: {
             type: Boolean | String,
-            default: true
+            default: true,
         },
         label: {
             type: String,
-            default: undefined
+            default: undefined,
         },
         outlined: {
             type: Boolean,
-            default: true
+            default: true,
         },
         placeholder: {
             type: String,
-            default: undefined
+            default: undefined,
         },
         prefix: {
             type: String,
-            default: undefined
+            default: undefined,
         },
         readonly: {
             type: Boolean,
-            default: false
+            default: false,
         },
         solo: {
             type: Boolean,
-            default: true
+            default: true,
         },
         suffix: {
             type: String,
-            default: undefined
+            default: undefined,
         },
         type: {
             type: String,
-            default: "text"
+            default: "text",
         },
         value: {
             type: String | Number,
@@ -105,14 +105,14 @@ export default {
     },
     computed: {
         innerValue: {
-            get () {
+            get() {
                 return this.$props.value;
             },
-            set (value) {
-                this.$emit('change', value)
-            }
-        }
-    }
+            set(value) {
+                this.$emit("change", value);
+            },
+        },
+    },
 };
 </script>
 

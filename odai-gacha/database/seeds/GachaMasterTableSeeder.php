@@ -1,6 +1,5 @@
 
 <?php
-
 use Illuminate\Database\Seeder;
 use Ulid\Ulid;
 
@@ -23,7 +22,8 @@ class GachaMasterTableSeeder extends Seeder
             'needDeletePass' => true,
             'description' => 'アイスブレイクに使えるゲームです。',
             'created_at' => new DateTime(),
-            'updated_at' => new DateTime(),
+            'updated_at' => new DateTime()
         ]);
     }
 }
+

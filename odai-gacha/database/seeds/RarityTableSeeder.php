@@ -20,7 +20,7 @@ class RarityTableSeeder extends Seeder
                 'probability' => 500,
                 'gacha_id' => '01E02KJWM2PHQT336EEP065X4N',
                 'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
+                'updated_at' => new DateTime()
             ],
             [
                 'rarity_id' => '01E02KJWM2PHQT336EEP065X4P',
@@ -29,7 +29,7 @@ class RarityTableSeeder extends Seeder
                 'probability' => 350,
                 'gacha_id' => '01E02KJWM2PHQT336EEP065X4N',
                 'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
+                'updated_at' => new DateTime()
             ],
             [
                 'rarity_id' => '01E02KJWM2PHQT336EEP065X4Q',
@@ -38,7 +38,7 @@ class RarityTableSeeder extends Seeder
                 'probability' => 130,
                 'gacha_id' => '01E02KJWM2PHQT336EEP065X4N',
                 'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
+                'updated_at' => new DateTime()
             ],
             [
                 'rarity_id' => '01E02KJWM2PHQT336EEP065X4R',
@@ -47,7 +47,7 @@ class RarityTableSeeder extends Seeder
                 'rarity_name' => 'プラチナ',
                 'probability' => 20,
                 'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
+                'updated_at' => new DateTime()
             ]
         ]);
     }

@@ -2156,28 +2156,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2268,6 +2246,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2292,14 +2274,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2455,6 +2429,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     onSubmit: {
@@ -2496,7 +2474,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    this.$emit('reset-event', this.reset);
+    this.$emit("reset-event", this.reset);
   },
   methods: {
     onTap: function () {
@@ -2674,7 +2652,7 @@ __webpack_require__.r(__webpack_exports__);
         return this.$props.value;
       },
       set: function set(value) {
-        this.$emit('change', value);
+        this.$emit("change", value);
       }
     }
   }
@@ -3126,6 +3104,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3146,10 +3140,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showPassword: false,
       tab: null,
       dialog: false,
-      dialogState: 'loading',
+      dialogState: "loading",
       // loading or success or failed
       deleteDialog: false,
-      deleteDialogState: 'confirm',
+      deleteDialogState: "confirm",
       showPasswordDialog: false,
       resetPasswordDialog: function resetPasswordDialog() {},
       gacha: {
@@ -3188,25 +3182,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       topicCount: 0,
       rules: {
         gachaName: [function (v) {
-          return !!v || 'タイトルは必須です';
+          return !!v || "タイトルは必須です";
         }, function (v) {
-          return v === null || v.length <= 50 || 'タイトルは50文字以内で入力してください';
+          return v === null || v.length <= 50 || "タイトルは50文字以内で入力してください";
         }],
         description: [function (v) {
-          return v === null || v.length <= 500 || '説明は500文字以内で入力してください';
+          return v === null || v.length <= 500 || "説明は500文字以内で入力してください";
         }],
         password: [function (v) {
-          return v === null || v.length <= 16 || 'パスワードは16文字以内で入力してください';
+          return v === null || v.length <= 16 || "パスワードは16文字以内で入力してください";
         }],
         needPassword: [function (v) {
-          return !!v || '使用、編集、削除にロックをかける場合は、パスワードが必須です';
+          return !!v || "使用、編集、削除にロックをかける場合は、パスワードが必須です";
         }, function (v) {
-          return v === null || v.length <= 16 || 'パスワードは16文字以内で入力してください';
+          return v === null || v.length <= 16 || "パスワードは16文字以内で入力してください";
         }],
         topic: [function (v) {
-          return !!v || 'お題には1文字以上入力してください';
+          return !!v || "お題には1文字以上入力してください";
         }, function (v) {
-          return v === null || v.length <= 30 || 'お題は30文字以内で入力してください';
+          return v === null || v.length <= 30 || "お題は30文字以内で入力してください";
         }]
       },
       topicsError: ""
@@ -3231,17 +3225,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   watch: {
-    'gacha.needUsePass': function gachaNeedUsePass(value, oldValue) {
+    "gacha.needUsePass": function gachaNeedUsePass(value, oldValue) {
       if (!this.needPass) {
         this.gacha.password = null;
       }
     },
-    'gacha.needEditPass': function gachaNeedEditPass(value, oldValue) {
+    "gacha.needEditPass": function gachaNeedEditPass(value, oldValue) {
       if (!this.needPass) {
         this.gacha.password = null;
       }
     },
-    'gacha.needDeletePass': function gachaNeedDeletePass(value, oldValue) {
+    "gacha.needDeletePass": function gachaNeedDeletePass(value, oldValue) {
       if (!this.needPass) {
         this.gacha.password = null;
       }
@@ -3429,7 +3423,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.dialogState = 'loading';
+                this.dialogState = "loading";
                 this.dialog = true;
                 topics = [];
                 _i4 = 0, _Object$keys4 = Object.keys(this.topics);
@@ -3525,10 +3519,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);
                 _context.next = 41;
                 return method.then(function (res) {
-                  _this.dialogState = 'success';
+                  _this.dialogState = "success";
                   window.location.href = "/gacha";
                 })["catch"](function (error) {
-                  _this.dialogState = 'failed'; // console.log(error.response.data.errors);
+                  _this.dialogState = "failed"; // console.log(error.response.data.errors);
                 });
 
               case 41:
@@ -3606,7 +3600,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this._gacha.needDeletePass) {
         this.showPasswordDialog = true;
       } else {
-        this.deleteDialogState = 'confirm';
+        this.deleteDialogState = "confirm";
         this.deleteDialog = true;
       }
     },
@@ -3620,13 +3614,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                this.deleteDialogState = 'loading';
+                this.deleteDialogState = "loading";
                 _context2.next = 3;
                 return axios["delete"]("/gacha/".concat(this._gacha.gacha_id), {}).then(function (res) {
-                  _this2.deleteDialogState = 'success';
+                  _this2.deleteDialogState = "success";
                   window.location.href = "/gacha";
                 })["catch"](function (error) {
-                  _this2.deleteDialogState = 'failed'; // console.log(error.response.data.errors);
+                  _this2.deleteDialogState = "failed"; // console.log(error.response.data.errors);
                 });
 
               case 3:
@@ -3661,7 +3655,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context3.next = 3;
                 return axios.post("/api/gacha/".concat(this._gacha.gacha_id, "/auth"), request).then(function (res) {
                   _this3.showPasswordDialog = false;
-                  _this3.deleteDialogState = 'confirm';
+                  _this3.deleteDialogState = "confirm";
                   _this3.deleteDialog = true;
                   return true;
                 })["catch"](function (error) {
@@ -3763,7 +3757,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n    transform: scale(0.9);\n    transform-origin: left;\n}\n.logo[data-v-1f42fb90] {\n  user-select: none;\n  cursor: pointer;\n}\n.logo > a[data-v-1f42fb90] {\n  text-decoration: none;\n}\n.search-bar[data-v-1f42fb90] {\n    display: flex;\n    width: 100%;\n    height: 48px;\n    padding: 0 8px;\n    background: rgba(245, 240, 227, 0.9);\n    position: fixed;\n    top: -24px;\n    left: 0;\n    z-index: -1;\n    opacity: 0;\n    transition: all 0.1s ease-out;\n}\n.search-bar.show[data-v-1f42fb90] {\n    top: 0;\n    z-index: 9998;\n    opacity: 1;\n}\n.sidebar[data-v-1f42fb90] {\n    position: fixed;\n    width: 80px;\n    height: 100vh;\n    /* margin-top: 64px; */\n    padding: 16px 16px 16px 16px;\n    overflow: scroll;\n    transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n    width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n    user-select: none;\n    padding: 0 12px;\n    height: 48px;\n    width: 48px;\n    line-height: 48px;\n    font-size: 0.875rem;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: width 0.1s ease-out;\n    overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n    width: 100%;\n}\n.fab[data-v-1f42fb90] {\n    z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n    margin-top: 64px;\n    margin-left: 80px;\n    width: calc(100% - 80px);\n    transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 240px;\n    width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n    transform: scale(0.9);\n    transform-origin: left;\n}\n.logo[data-v-1f42fb90] {\n    user-select: none;\n    cursor: pointer;\n}\n.logo > a[data-v-1f42fb90] {\n    text-decoration: none;\n}\n.search-bar[data-v-1f42fb90] {\n    display: flex;\n    width: 100%;\n    height: 48px;\n    padding: 0 8px;\n    background: rgba(245, 240, 227, 0.9);\n    position: fixed;\n    top: -24px;\n    left: 0;\n    z-index: -1;\n    opacity: 0;\n    transition: all 0.1s ease-out;\n}\n.search-bar.show[data-v-1f42fb90] {\n    top: 0;\n    z-index: 9998;\n    opacity: 1;\n}\n.sidebar[data-v-1f42fb90] {\n    position: fixed;\n    width: 80px;\n    height: 100vh;\n    /* margin-top: 64px; */\n    padding: 16px 16px 16px 16px;\n    overflow: scroll;\n    transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n    width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n    user-select: none;\n    padding: 0 12px;\n    height: 48px;\n    width: 48px;\n    line-height: 48px;\n    font-size: 0.875rem;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: width 0.1s ease-out;\n    overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n    width: 100%;\n}\n.fab[data-v-1f42fb90] {\n    z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n    margin-top: 64px;\n    margin-left: 80px;\n    width: calc(100% - 80px);\n    transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 240px;\n    width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -3801,7 +3795,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n", ""]);
 
 // exports
 
@@ -3820,7 +3814,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n  visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n  animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n    transform: translateX(0px);\n}\n33% {\n    transform: translateX(10px);\n}\n66% {\n    transform: translateX(-8px);\n}\n100% {\n    transform: translateX(4px);\n}\n}\n", ""]);
+exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n    visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n    animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n        transform: translateX(0px);\n}\n33% {\n        transform: translateX(10px);\n}\n66% {\n        transform: translateX(-8px);\n}\n100% {\n        transform: translateX(4px);\n}\n}\n", ""]);
 
 // exports
 
@@ -3839,7 +3833,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n.v-list-item__title[data-v-b6f307d6] {\n    font-size: 0.9rem !important;\n}\n.topic-list-enter-active[data-v-b6f307d6], .topic-list-leave-active[data-v-b6f307d6] {\n    transition: all 0.2s ease-out;\n}\n.topic-list-enter[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateY(10px);\n}\n.topic-list-leave-to[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateX(100%);\n}\n.dialog-message[data-v-b6f307d6] {\n    text-align: center;\n    font-size: 1.25rem;\n    font-weight: bold;\n    color: #333;\n}\n.dialog-sub-message[data-v-b6f307d6] {\n    font-size:12px;\n    color: #757575;\n    font-weight:400;\n}\n", ""]);
+exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n.v-list-item__title[data-v-b6f307d6] {\n    font-size: 0.9rem !important;\n}\n.topic-list-enter-active[data-v-b6f307d6],\n.topic-list-leave-active[data-v-b6f307d6] {\n    transition: all 0.2s ease-out;\n}\n.topic-list-enter[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateY(10px);\n}\n.topic-list-leave-to[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateX(100%);\n}\n.dialog-message[data-v-b6f307d6] {\n    text-align: center;\n    font-size: 1.25rem;\n    font-weight: bold;\n    color: #333;\n}\n.dialog-sub-message[data-v-b6f307d6] {\n    font-size: 12px;\n    color: #757575;\n    font-weight: 400;\n}\n", ""]);
 
 // exports
 
@@ -6240,11 +6234,13 @@ var render = function() {
             staticClass: "mb-1",
             staticStyle: { "font-weight": "bold", "font-size": "1.1rem" }
           },
-          [_vm._v("このサイトについて")]
+          [_vm._v("\n            このサイトについて\n        ")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "text" }, [
-          _vm._v("このサイトは無料で使えるガチャシュミレーターです。")
+          _vm._v(
+            "\n            このサイトは無料で使えるガチャシュミレーターです。\n        "
+          )
         ])
       ]),
       _vm._v(" "),
@@ -6388,9 +6384,7 @@ var render = function() {
         [
           _c("div", { staticClass: "ma-3" }, [
             _vm._v(
-              "\n                " +
-                _vm._s(_vm.gacha.description) +
-                "\n            "
+              "\n            " + _vm._s(_vm.gacha.description) + "\n        "
             )
           ])
         ]
@@ -6566,7 +6560,7 @@ var render = function() {
           staticClass: "error--text mb-2",
           class: { hidden: _vm.isHiddenErrorMesssage }
         },
-        [_vm._v("パスワードが違います。")]
+        [_vm._v("\n        パスワードが違います。\n    ")]
       ),
       _vm._v(" "),
       _c(
@@ -6798,7 +6792,7 @@ var render = function() {
                                     _vm._v(" "),
                                     _c("div", { staticClass: "form-title" }, [
                                       _vm._v(
-                                        "\n                                    このガチャの説明\n                                "
+                                        "\n                                        このガチャの説明\n                                    "
                                       )
                                     ]),
                                     _vm._v(" "),
@@ -6894,7 +6888,7 @@ var render = function() {
                                                       },
                                                       [
                                                         _vm._v(
-                                                          "\n                                        サムネイル画像\n                                    "
+                                                          "\n                                                    サムネイル画像\n                                                "
                                                         )
                                                       ]
                                                     ),
@@ -6910,7 +6904,7 @@ var render = function() {
                                                       },
                                                       [
                                                         _vm._v(
-                                                          "\n                                        (960 x 600)\n                                    "
+                                                          "\n                                                    (960 x 600)\n                                                "
                                                         )
                                                       ]
                                                     )
@@ -7078,7 +7072,7 @@ var render = function() {
                                                         [_vm._v("mdi-plus")]
                                                       ),
                                                       _vm._v(
-                                                        "レア度追加\n                                "
+                                                        "レア度追加\n                                            "
                                                       )
                                                     ],
                                                     1
@@ -7371,7 +7365,13 @@ var render = function() {
                                         "font-size": "12px"
                                       }
                                     },
-                                    [_vm._v(_vm._s(_vm.topicsError))]
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(_vm.topicsError) +
+                                          "\n                                "
+                                      )
+                                    ]
                                   ),
                                   _vm._v(" "),
                                   _c(
@@ -7400,7 +7400,7 @@ var render = function() {
                                             [_vm._v("mdi-plus")]
                                           ),
                                           _vm._v(
-                                            "お題追加\n                                "
+                                            "お題追加\n                                    "
                                           )
                                         ],
                                         1
@@ -7425,7 +7425,7 @@ var render = function() {
                                     { staticClass: "form-description" },
                                     [
                                       _vm._v(
-                                        "\n                                ガチャの使用、編集、削除にパスワードをかけたい場合は、スイッチをONにしてください\n                            "
+                                        "\n                                    ガチャの使用、編集、削除にパスワードをかけたい場合は、スイッチをONにしてください\n                                "
                                       )
                                     ]
                                   ),
@@ -7549,11 +7549,11 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                パスワードはガチャを起動、編集および削除する際に必要になります。"
+                                        "\n                                    パスワードはガチャを起動、編集および削除する際に必要になります。"
                                       ),
                                       _c("br"),
                                       _vm._v(
-                                        "\n                                設定したパスワードは忘れないよう必ず保管してください。\n                            "
+                                        "\n                                    設定したパスワードは忘れないよう必ず保管してください。\n                                "
                                       )
                                     ]
                                   )
@@ -7586,7 +7586,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                            キャンセル\n                        "
+                                    "\n                                キャンセル\n                            "
                                   )
                                 ]
                               ),
@@ -7697,7 +7697,11 @@ var render = function() {
                               { staticClass: "dialog-message mt-4" },
                               [
                                 _vm.isEdit
-                                  ? [_vm._v("更新に成功しました")]
+                                  ? [
+                                      _vm._v(
+                                        "\n                                更新に成功しました\n                            "
+                                      )
+                                    ]
                                   : [_vm._v("作成に成功しました")],
                                 _vm._v(" "),
                                 _c("br"),
@@ -7705,7 +7709,11 @@ var render = function() {
                                 _c(
                                   "span",
                                   { staticClass: "dialog-sub-message" },
-                                  [_vm._v("ガチャ一覧ページに移動します")]
+                                  [
+                                    _vm._v(
+                                      "\n                                ガチャ一覧ページに移動します\n                            "
+                                    )
+                                  ]
                                 )
                               ],
                               2
@@ -7725,7 +7733,11 @@ var render = function() {
                                     staticClass: "mb-2 lock-icon",
                                     attrs: { color: "primary", size: "64" }
                                   },
-                                  [_vm._v("mdi-close-outline")]
+                                  [
+                                    _vm._v(
+                                      "\n                                mdi-close-outline\n                            "
+                                    )
+                                  ]
                                 )
                               ],
                               1
@@ -7736,7 +7748,11 @@ var render = function() {
                               { staticClass: "dialog-message mt-4" },
                               [
                                 _vm.isEdit
-                                  ? [_vm._v("更新に失敗しました")]
+                                  ? [
+                                      _vm._v(
+                                        "\n                                更新に失敗しました\n                            "
+                                      )
+                                    ]
                                   : [_vm._v("作成に失敗しました")],
                                 _vm._v(" "),
                                 _c("br"),
@@ -7814,14 +7830,20 @@ var render = function() {
                                     staticClass: "mb-2 lock-icon",
                                     attrs: { color: "primary", size: "64" }
                                   },
-                                  [_vm._v("mdi-delete-alert-outline")]
+                                  [
+                                    _vm._v(
+                                      "\n                                mdi-delete-alert-outline\n                            "
+                                    )
+                                  ]
                                 )
                               ],
                               1
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "dialog-message mt-4" }, [
-                              _vm._v("本当に削除しますか？"),
+                              _vm._v(
+                                "\n                            本当に削除しますか？"
+                              ),
                               _c("br"),
                               _vm._v(" "),
                               _c(
@@ -7925,14 +7947,20 @@ var render = function() {
                                     staticClass: "mb-2 lock-icon",
                                     attrs: { color: "accent", size: "64" }
                                   },
-                                  [_vm._v("mdi-check-outline")]
+                                  [
+                                    _vm._v(
+                                      "\n                                mdi-check-outline\n                            "
+                                    )
+                                  ]
                                 )
                               ],
                               1
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "dialog-message mt-4" }, [
-                              _vm._v("削除に成功しました"),
+                              _vm._v(
+                                "\n                            削除に成功しました"
+                              ),
                               _c("br"),
                               _vm._v(" "),
                               _c(
@@ -7956,14 +7984,20 @@ var render = function() {
                                     staticClass: "mb-2 lock-icon",
                                     attrs: { color: "primary", size: "64" }
                                   },
-                                  [_vm._v("mdi-close-outline")]
+                                  [
+                                    _vm._v(
+                                      "\n                                mdi-close-outline\n                            "
+                                    )
+                                  ]
                                 )
                               ],
                               1
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "dialog-message mt-4" }, [
-                              _vm._v("削除に失敗しました"),
+                              _vm._v(
+                                "\n                            削除に失敗しました"
+                              ),
                               _c("br"),
                               _vm._v(" "),
                               _c(

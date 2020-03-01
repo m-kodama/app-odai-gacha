@@ -2156,28 +2156,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2268,6 +2246,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2292,14 +2274,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2455,6 +2429,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     onSubmit: {
@@ -2496,7 +2474,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    this.$emit('reset-event', this.reset);
+    this.$emit("reset-event", this.reset);
   },
   methods: {
     onTap: function () {
@@ -2607,6 +2585,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2675,7 +2658,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.selectedGachaId = gachaId;
-      this.selectedType = 'machine';
+      this.selectedType = "machine";
       this.authType = 0;
       this.showPasswordDialog = true;
     },
@@ -2686,7 +2669,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.selectedGachaId = gachaId;
-      this.selectedType = 'edit';
+      this.selectedType = "edit";
       this.authType = 1;
       this.showPasswordDialog = true;
     },
@@ -2808,7 +2791,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n    transform: scale(0.9);\n    transform-origin: left;\n}\n.logo[data-v-1f42fb90] {\n  user-select: none;\n  cursor: pointer;\n}\n.logo > a[data-v-1f42fb90] {\n  text-decoration: none;\n}\n.search-bar[data-v-1f42fb90] {\n    display: flex;\n    width: 100%;\n    height: 48px;\n    padding: 0 8px;\n    background: rgba(245, 240, 227, 0.9);\n    position: fixed;\n    top: -24px;\n    left: 0;\n    z-index: -1;\n    opacity: 0;\n    transition: all 0.1s ease-out;\n}\n.search-bar.show[data-v-1f42fb90] {\n    top: 0;\n    z-index: 9998;\n    opacity: 1;\n}\n.sidebar[data-v-1f42fb90] {\n    position: fixed;\n    width: 80px;\n    height: 100vh;\n    /* margin-top: 64px; */\n    padding: 16px 16px 16px 16px;\n    overflow: scroll;\n    transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n    width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n    user-select: none;\n    padding: 0 12px;\n    height: 48px;\n    width: 48px;\n    line-height: 48px;\n    font-size: 0.875rem;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: width 0.1s ease-out;\n    overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n    width: 100%;\n}\n.fab[data-v-1f42fb90] {\n    z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n    margin-top: 64px;\n    margin-left: 80px;\n    width: calc(100% - 80px);\n    transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 240px;\n    width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n    transform: scale(0.9);\n    transform-origin: left;\n}\n.logo[data-v-1f42fb90] {\n    user-select: none;\n    cursor: pointer;\n}\n.logo > a[data-v-1f42fb90] {\n    text-decoration: none;\n}\n.search-bar[data-v-1f42fb90] {\n    display: flex;\n    width: 100%;\n    height: 48px;\n    padding: 0 8px;\n    background: rgba(245, 240, 227, 0.9);\n    position: fixed;\n    top: -24px;\n    left: 0;\n    z-index: -1;\n    opacity: 0;\n    transition: all 0.1s ease-out;\n}\n.search-bar.show[data-v-1f42fb90] {\n    top: 0;\n    z-index: 9998;\n    opacity: 1;\n}\n.sidebar[data-v-1f42fb90] {\n    position: fixed;\n    width: 80px;\n    height: 100vh;\n    /* margin-top: 64px; */\n    padding: 16px 16px 16px 16px;\n    overflow: scroll;\n    transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n    width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n    user-select: none;\n    padding: 0 12px;\n    height: 48px;\n    width: 48px;\n    line-height: 48px;\n    font-size: 0.875rem;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: width 0.1s ease-out;\n    overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n    width: 100%;\n}\n.fab[data-v-1f42fb90] {\n    z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n    margin-top: 64px;\n    margin-left: 80px;\n    width: calc(100% - 80px);\n    transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 240px;\n    width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -2846,7 +2829,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n", ""]);
 
 // exports
 
@@ -2865,7 +2848,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n  visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n  animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n    transform: translateX(0px);\n}\n33% {\n    transform: translateX(10px);\n}\n66% {\n    transform: translateX(-8px);\n}\n100% {\n    transform: translateX(4px);\n}\n}\n", ""]);
+exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n    visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n    animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n        transform: translateX(0px);\n}\n33% {\n        transform: translateX(10px);\n}\n66% {\n        transform: translateX(-8px);\n}\n100% {\n        transform: translateX(4px);\n}\n}\n", ""]);
 
 // exports
 
@@ -5285,11 +5268,13 @@ var render = function() {
             staticClass: "mb-1",
             staticStyle: { "font-weight": "bold", "font-size": "1.1rem" }
           },
-          [_vm._v("このサイトについて")]
+          [_vm._v("\n            このサイトについて\n        ")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "text" }, [
-          _vm._v("このサイトは無料で使えるガチャシュミレーターです。")
+          _vm._v(
+            "\n            このサイトは無料で使えるガチャシュミレーターです。\n        "
+          )
         ])
       ]),
       _vm._v(" "),
@@ -5433,9 +5418,7 @@ var render = function() {
         [
           _c("div", { staticClass: "ma-3" }, [
             _vm._v(
-              "\n                " +
-                _vm._s(_vm.gacha.description) +
-                "\n            "
+              "\n            " + _vm._s(_vm.gacha.description) + "\n        "
             )
           ])
         ]
@@ -5611,7 +5594,7 @@ var render = function() {
           staticClass: "error--text mb-2",
           class: { hidden: _vm.isHiddenErrorMesssage }
         },
-        [_vm._v("パスワードが違います。")]
+        [_vm._v("\n        パスワードが違います。\n    ")]
       ),
       _vm._v(" "),
       _c(
@@ -5769,7 +5752,13 @@ var render = function() {
                   "text-align": "center"
                 }
               },
-              [_vm._v(_vm._s(_vm.messsasge))]
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.messsasge) +
+                    "\n            "
+                )
+              ]
             )
           ]),
           _vm._v(" "),

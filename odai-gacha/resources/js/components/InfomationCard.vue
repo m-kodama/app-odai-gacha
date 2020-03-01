@@ -4,8 +4,12 @@
             <v-icon>mdi-close</v-icon>
         </v-btn>
         <div class="d-flex flex-column align-center mb-4">
-            <div style="font-weight: bold; font-size: 1.1rem;" class="mb-1">このサイトについて</div>
-            <div class="text">このサイトは無料で使えるガチャシュミレーターです。</div>
+            <div style="font-weight: bold; font-size: 1.1rem;" class="mb-1">
+                このサイトについて
+            </div>
+            <div class="text">
+                このサイトは無料で使えるガチャシュミレーターです。
+            </div>
         </div>
         <v-row align="start">
             <v-col cols="12" xs="12" sm="4" class="px-2 py-4">
@@ -38,22 +42,20 @@ import Feature from "../components/Feature";
 
 export default {
     components: {
-        Feature
+        Feature,
     },
     props: {
         onClose: {
             type: Function,
-            default: () => {}
-        }
+            default: () => {},
+        },
     },
-}
- 
+};
 </script>
 
 <style scoped>
 .infomation-card {
     width: 100%;
-
 }
 .text {
     color: #757575;

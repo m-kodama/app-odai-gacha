@@ -2,13 +2,15 @@
     <v-app>
         <v-content>
             <Header :onNavIconTapped="onNavIconTapped">
-                <div
-                    class="app-main-content"
-                    ref="mainContent"
-                    v-resize="onResize"
-                >
+                <div class="app-main-content" ref="mainContent" v-resize="onResize">
                     <div class="px-2 pb-4" v-if="showInfoCard">
-                        <InfomationCard :onClose="()=>{ showInfoCard=false }"/>
+                        <InfomationCard
+                            :onClose="
+                                () => {
+                                    showInfoCard = false;
+                                }
+                            "
+                        />
                     </div>
                     <div
                         :style="mainCardStyles"
@@ -16,16 +18,19 @@
                         v-for="gacha in gachas"
                         :key="gacha.gacha_id"
                     >
-                        <MainCard :gacha="gacha" :onGachaUseButtonTap="onGachaUseButtonTap" :onGachaEditButtonTap="onGachaEditButtonTap"/>
+                        <MainCard
+                            :gacha="gacha"
+                            :onGachaUseButtonTap="onGachaUseButtonTap"
+                            :onGachaEditButtonTap="onGachaEditButtonTap"
+                        />
                     </div>
                 </div>
-                <div class="mx-auto mt-2 mb-8" style="font-size: 0.8rem;color: #757575; text-align:center;">{{ messsasge }}</div>
+                <div class="mx-auto mt-2 mb-8" style="font-size: 0.8rem;color: #757575; text-align:center;">
+                    {{ messsasge }}
+                </div>
             </Header>
             <v-dialog v-model="showPasswordDialog" max-width="400" @click:outside="resetPasswordDialog">
-                <PasswordConfirmCard
-                    :onSubmit="onSubmit"
-                    @reset-event="setResetPasswordDialog($event)"
-                />
+                <PasswordConfirmCard :onSubmit="onSubmit" @reset-event="setResetPasswordDialog($event)" />
             </v-dialog>
         </v-content>
     </v-app>
@@ -45,7 +50,7 @@ export default {
         PasswordConfirmCard,
     },
     props: {
-        gachas: Array
+        gachas: Array,
     },
     data: function() {
         return {
@@ -63,14 +68,14 @@ export default {
     computed: {
         mainCardStyles() {
             return {
-                "--width": this.cardWidth
+                "--width": this.cardWidth,
             };
-        }
+        },
     },
     mounted() {
         this.onResize();
         if (this.gachas.length === 0) {
-            this.messsasge = "すみません、該当するガチャは見つかりませんでした。"
+            this.messsasge = "すみません、該当するガチャは見つかりませんでした。";
             return [];
         }
     },
@@ -94,39 +99,40 @@ export default {
         },
         onGachaUseButtonTap(gachaId, needPassword) {
             if (!needPassword) {
-                window.location.href = `/gacha/${gachaId}/machine`
-                return
+                window.location.href = `/gacha/${gachaId}/machine`;
+                return;
             }
             this.selectedGachaId = gachaId;
-            this.selectedType = 'machine';
+            this.selectedType = "machine";
             this.authType = 0;
             this.showPasswordDialog = true;
         },
         onGachaEditButtonTap(gachaId, needPassword) {
             if (!needPassword) {
-                window.location.href = `/gacha/${gachaId}/edit`
-                return
+                window.location.href = `/gacha/${gachaId}/edit`;
+                return;
             }
             this.selectedGachaId = gachaId;
-            this.selectedType = 'edit';
+            this.selectedType = "edit";
             this.authType = 1;
             this.showPasswordDialog = true;
         },
         onSubmit: async function(password) {
             const request = { password, type: this.authType };
-            return await axios.post(`/api/gacha/${this.selectedGachaId}/auth`, request)
-            .then((res) => {
-                window.location.href = `/gacha/${res.data}/${this.selectedType}`;
-                return true;
-            })
-            .catch((error) => {
-                return false;
-            })
+            return await axios
+                .post(`/api/gacha/${this.selectedGachaId}/auth`, request)
+                .then(res => {
+                    window.location.href = `/gacha/${res.data}/${this.selectedType}`;
+                    return true;
+                })
+                .catch(error => {
+                    return false;
+                });
         },
         setResetPasswordDialog(event) {
             this.resetPasswordDialog = event;
         },
-    }
+    },
 };
 </script>
 

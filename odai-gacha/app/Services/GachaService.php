@@ -236,14 +236,25 @@ class GachaService
 
     public function isAuthenticated(Gacha $gacha, string $type, Request $request)
     {
-        if (strcmp($type, self::AUTH_USE) == 0 && !$gacha->needUsePass) return true;
-        if (strcmp($type, self::AUTH_EDIT) == 0 && !$gacha->needEditPass) return true;
-        if (strcmp($type, self::AUTH_DELETE) == 0 && !$gacha->needDeletePass) return true;
+        if (strcmp($type, self::AUTH_USE) == 0 && !$gacha->needUsePass) {
+            return true;
+        }
+        if (strcmp($type, self::AUTH_EDIT) == 0 && !$gacha->needEditPass) {
+            return true;
+        }
+        if (strcmp($type, self::AUTH_DELETE) == 0 && !$gacha->needDeletePass) {
+            return true;
+        }
 
         $authedGacha = $request->session()->get('authedGacha', function() {
-            return false;
+            return null;
         });
-        if (in_array($gacha->gacha_id ,$authedGacha[$type])) return true;
+        if (empty($authedGacha)) {
+            return false;
+        }
+        if (in_array($gacha->gacha_id ,$authedGacha[$type])) {
+            return true;
+        }
         return false;
     }
 }

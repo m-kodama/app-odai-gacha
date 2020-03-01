@@ -2619,7 +2619,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     PasswordConfirmCard: _components_PasswordConfirmCard__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
-    _gachas: String
+    gachas: Array
   },
   data: function data() {
     return {
@@ -2635,16 +2635,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   computed: {
-    gachas: function gachas() {
-      var gacha = JSON.parse(this._gachas);
-
-      if (!gacha) {
-        this.messsasge = "すみません、該当するガチャは見つかりませんでした。";
-        return [];
-      }
-
-      return gacha;
-    },
     mainCardStyles: function mainCardStyles() {
       return {
         "--width": this.cardWidth
@@ -2653,6 +2643,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.onResize();
+
+    if (this.gachas.length === 0) {
+      this.messsasge = "すみません、該当するガチャは見つかりませんでした。";
+      return [];
+    }
   },
   methods: {
     onResize: function onResize() {

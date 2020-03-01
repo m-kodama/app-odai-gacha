@@ -45,7 +45,7 @@ export default {
         PasswordConfirmCard,
     },
     props: {
-        _gachas: String
+        gachas: Array
     },
     data: function() {
         return {
@@ -61,14 +61,6 @@ export default {
         };
     },
     computed: {
-        gachas: function() {
-            const gacha = JSON.parse(this._gachas);
-            if (!gacha) {
-                this.messsasge = "すみません、該当するガチャは見つかりませんでした。"
-                return [];
-            }
-            return gacha;
-        },
         mainCardStyles() {
             return {
                 "--width": this.cardWidth
@@ -77,6 +69,10 @@ export default {
     },
     mounted() {
         this.onResize();
+        if (this.gachas.length === 0) {
+            this.messsasge = "すみません、該当するガチャは見つかりませんでした。"
+            return [];
+        }
     },
     methods: {
         onResize() {

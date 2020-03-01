@@ -16,31 +16,31 @@ use App\Http\Requests\GachaRequest;
 
 class GachaController extends Controller
 {
-    protected $gachaService;
+    protected $gacha_service;
 
-    public function __construct(GachaService $gachaService)
+    public function __construct(GachaService $gacha_service)
     {
-        $this->gachaService = $gachaService;
+        $this->gacha_service = $gacha_service;
     }
 
     // ガチャ一覧
     public function index(Request $request)
     {
         $searchWord = $request->input('q', false);
-        $gachas = $this->gachaService->getGachaList($searchWord);
+        $gachas = $this->gacha_service->getGachaList($searchWord);
         return view('gacha/index', compact('gachas'));
     }
 
     public function getMachine(Request $request, $gachaId)
     {
-        $gacha = $this->gachaService->getGacha($gachaId);
+        $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
         }
-        if (!$this->gachaService->isAuthenticated($gacha, GachaService::AUTH_USE, $request)) {
+        if (!$this->gacha_service->isAuthenticated($gacha, GachaService::AUTH_USE, $request)) {
             abort(404);
         }
-        $odai = $this->gachaService->getGachaDetail($gachaId);
+        $odai = $this->gacha_service->getGachaDetail($gachaId);
         if (empty($odai)) {
             abort(404);
         }
@@ -48,7 +48,7 @@ class GachaController extends Controller
     }
 
     public function createGachaDetail(GachaRequest $request) {
-        $gachaId = $this->gachaService->createGacha($request);
+        $gachaId = $this->gacha_service->createGacha($request);
         if(empty($gachaId)) {
             return back()->withInput();
             abort(400);
@@ -57,14 +57,14 @@ class GachaController extends Controller
     }
 
     public function updateGacha(GachaRequest $request, $gachaId) {
-        $gacha = $this->gachaService->getGacha($gachaId);
+        $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
         }
-        if (!$this->gachaService->isAuthenticated($gacha, GachaService::AUTH_EDIT, $request)) {
+        if (!$this->gacha_service->isAuthenticated($gacha, GachaService::AUTH_EDIT, $request)) {
             abort(404);
         }
-        $updatedGachaId = $this->gachaService->updateGacha($request, $gacha);
+        $updatedGachaId = $this->gacha_service->updateGacha($request, $gacha);
         if(empty($updatedGachaId)) {
             return back()->withInput();
             abort(400);
@@ -73,14 +73,14 @@ class GachaController extends Controller
     }
 
     public function deleteGacha(Request $request, $gachaId) {
-        $gacha = $this->gachaService->getGacha($gachaId);
+        $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
         }
-        if (!$this->gachaService->isAuthenticated($gacha, GachaService::AUTH_DELETE, $request)) {
+        if (!$this->gacha_service->isAuthenticated($gacha, GachaService::AUTH_DELETE, $request)) {
             abort(404);
         }
-        if ($this->gachaService->deleteGacha($gacha)) {
+        if ($this->gacha_service->deleteGacha($gacha)) {
             return 'success';
         }
         return back()->withInput();
@@ -92,11 +92,11 @@ class GachaController extends Controller
     }
 
     public function edit(Request $request, $gachaId) {
-        $gacha = $this->gachaService->getGacha($gachaId);
+        $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
         }
-        if (!$this->gachaService->isAuthenticated($gacha, GachaService::AUTH_EDIT, $request)) {
+        if (!$this->gacha_service->isAuthenticated($gacha, GachaService::AUTH_EDIT, $request)) {
             abort(404);
         }
         $rarity = $gacha->rarity()->get();
@@ -105,11 +105,11 @@ class GachaController extends Controller
     }
 
     public function auth(Request $request, $gachaId) {
-        $gacha = $this->gachaService->getGacha($gachaId);
+        $gacha = $this->gacha_service->getGacha($gachaId);
         if (empty($gacha)) {
             abort(404);
         }
-        if ($this->gachaService->auth($request, $gacha)) {
+        if ($this->gacha_service->auth($request, $gacha)) {
             return $gachaId;
         }
         abort(400);

@@ -20,16 +20,16 @@ class GachaService
     const AUTH_EDIT = 'edit';
     const AUTH_DELETE = 'delete';
 
-    public function getGacha(string $gachaId)
+    public function getGacha(string $gacha_id)
     {
-        return Gacha::find($gachaId);
+        return Gacha::find($gacha_id);
     }
 
-    public function getGachaList(?string $searchWord)
+    public function getGachaList(?string $search_word)
     {
-        return $searchWord
-            ? Gacha::where('gacha_name', 'like', "%$searchWord%")
-                ->orWhere('description', 'like', "%$searchWord%")
+        return $search_word
+            ? Gacha::where('gacha_name', 'like', "%$search_word%")
+                ->orWhere('description', 'like', "%$search_word%")
                 ->list()
                 ->orderBy(Gacha::UPDATED_AT, 'desc')
                 ->get()
@@ -38,13 +38,13 @@ class GachaService
                 ->get();
     }
 
-    public function getGachaDetail(string $gachaId)
+    public function getGachaDetail(string $gacha_id)
     {
         $topics = DB::table('gacha_master')
             ->select(DB::raw('gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability'))
             ->join('topics', 'topics.gacha_id', '=', 'gacha_master.gacha_id')
             ->join('rarity', 'rarity.rarity_id', '=', 'topics.rarity_id')
-            ->where('gacha_master.gacha_id', $gachaId)
+            ->where('gacha_master.gacha_id', $gacha_id)
             ->orderBy('gacha_master.gacha_id', 'asc')
             ->orderBy('rarity', 'desc')
             ->get();
@@ -68,7 +68,7 @@ class GachaService
 
     public function createGacha(GachaRequest $request)
     {
-        $gachaId = null;
+        $gacha_id = null;
         DB::beginTransaction();
         try {
             // ガチャマスタ
@@ -116,18 +116,18 @@ class GachaService
                 ];
             }
             DB::table('topics')->insert($topic_params);
-            $gachaId = $gacha->gacha_id;
+            $gacha_id = $gacha->gacha_id;
         } catch (Exception $e) {
             DB::rollback();
             return null;
         }
         DB::commit();
-        return $gachaId;
+        return $gacha_id;
     }
 
     public function updateGacha(GachaRequest $request, Gacha $gacha)
     {
-        $gachaId = null;
+        $gacha_id = null;
         DB::beginTransaction();
         try {
             // ガチャマスタ
@@ -175,13 +175,13 @@ class GachaService
             foreach ($request['removedTopics'] as $topic) {
                 Topic::where('topic_id', '=', $topic['topicId'])->delete();
             }
-            $gachaId = $gacha->gacha_id;
+            $gacha_id = $gacha->gacha_id;
         } catch (Exception $e) {
             DB::rollback();
             return null;
         }
         DB::commit();
-        return $gachaId;
+        return $gacha_id;
     }
 
     public function deleteGacha(Gacha $gacha)
@@ -201,7 +201,7 @@ class GachaService
 
     public function auth(Request $request, Gacha $gacha)
     {
-        $authedGacha = $request->session()->get('authedGacha', function () {
+        $authed_gacha = $request->session()->get('authedGacha', function () {
             return array(
                 'use' => array(),
                 'edit' => array(),
@@ -227,8 +227,8 @@ class GachaService
             if (is_null($type)) {
                 return false;
             }
-            array_push($authedGacha[$type], $gacha->gacha_id);
-            $request->session()->put('authedGacha', $authedGacha);
+            array_push($authed_gacha[$type], $gacha->gacha_id);
+            $request->session()->put('authedGacha', $authed_gacha);
             return true;
         }
         return false;
@@ -246,13 +246,13 @@ class GachaService
             return true;
         }
 
-        $authedGacha = $request->session()->get('authedGacha', function () {
+        $authed_gacha = $request->session()->get('authedGacha', function () {
             return null;
         });
-        if (empty($authedGacha)) {
+        if (empty($authed_gacha)) {
             return false;
         }
-        if (in_array($gacha->gacha_id, $authedGacha[$type])) {
+        if (in_array($gacha->gacha_id, $authed_gacha[$type])) {
             return true;
         }
         return false;

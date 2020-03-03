@@ -14,7 +14,11 @@ class UpdateRarityTalbe extends Migration
     public function up()
     {
         Schema::table('rarity', function (Blueprint $table) {
-            $table->char('gacha_id')->foreign('gacha_id')->references('gacha_id')->on('gacha_master');
+            $table
+                ->char('gacha_id')
+                ->foreign('gacha_id')
+                ->references('gacha_id')
+                ->on('gacha_master');
         });
     }
 

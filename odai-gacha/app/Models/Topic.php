@@ -3,25 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Ulid\Ulid;
 
-class Topic extends Model {
+class Topic extends Model
+{
+    public $incrementing = false;
+    protected $fillable = ['topic_id', 'topic', 'gacha_id', 'rarity_id', 'created_at', 'updated_at'];
 
-  public $incrementing = false;
-  protected $fillable = [
-      'topic_id',
-      'topic',
-      'gacha_id',
-      'rarity_id',
-      'created_at',
-      'updated_at',
-  ];
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
 
-  //belongsTo設定
+        $this->attributes['topic_id'] = Ulid::generate();
+    }
+
+    //belongsTo設定
     public function rarity()
     {
         return $this->belongsTo('App\Models\Rarity', 'rarity_id');
     }
-    public function gacha() {
+    public function gacha()
+    {
         return $this->belongsTo('App\Models\Gacha', 'gacha_id');
     }
 }

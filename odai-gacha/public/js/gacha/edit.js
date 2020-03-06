@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -6258,7 +6258,7 @@ var render = function() {
               _c("Feature", {
                 attrs: {
                   icon: "mdi-currency-usd-off",
-                  title: "完全無料！！",
+                  title: "完全無料",
                   text:
                     "このサイトのコンテンツは全て無料で誰でも使用することが可能です。"
                 }
@@ -6277,7 +6277,7 @@ var render = function() {
               _c("Feature", {
                 attrs: {
                   icon: "mdi-battlenet",
-                  title: "ガチャ作成・使用",
+                  title: "ガチャの作成と使用",
                   text:
                     "独自のガチャを作成し、遊ぶことができます。公開し世界中に独自のガチャを共有しよう！"
                 }
@@ -61967,7 +61967,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!******************************************!*\
   !*** multi ./resources/js/gacha/edit.js ***!
   \******************************************/

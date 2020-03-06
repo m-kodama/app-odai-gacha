@@ -16,6 +16,7 @@
 - `git clone https://github.com/m-kodama/app-odai-gacha.git`
 - `cp .env.example .env`
 - `docker-compose up -d`
+
 [appコンテナ]
 - `docker-compose exec app bash`
 - `cd odai-gacha`
@@ -23,6 +24,7 @@
 - `php artisan migrate`
 - `php artisan db:seed`
 - `exit`
+
 [nodeコンテナ]
 - `docker-compose exec node ash`
 - `npm install`

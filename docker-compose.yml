@@ -37,5 +37,12 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  node:
+    image: node:12.14-alpine
+    tty: true
+    volumes:
+      - ./odai-gacha:/work
+    working_dir: /work
+
 volumes:
   mysql-data:

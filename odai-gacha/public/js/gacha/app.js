@@ -2005,8 +2005,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
-/* harmony import */ var _components_MainCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/MainCard */ "./resources/js/components/MainCard.vue");
 //
 //
 //
@@ -2019,13 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Header: _components_Header__WEBPACK_IMPORTED_MODULE_0__["default"],
-    MainCard: _components_MainCard__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
   props: {
     icon: String,
     title: String,
@@ -2274,6 +2266,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2829,7 +2823,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\npre[data-v-9343ad58] {\n    white-space: pre-wrap;\n}\n.slide-enter-active[data-v-9343ad58] {\n    transition: all 0.2s ease-out;\n}\n.slide-leave-active[data-v-9343ad58] {\n    transition: all 0.3s ease-out;\n}\n.slide-enter[data-v-9343ad58],\n.slide-leave-to[data-v-9343ad58] {\n    transform: translateY(20px);\n    opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -5402,27 +5396,27 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.showDetail,
-              expression: "showDetail"
-            }
-          ],
-          staticClass: "detail secondary"
-        },
-        [
-          _c("div", { staticClass: "ma-3" }, [
-            _vm._v(
-              "\n            " + _vm._s(_vm.gacha.description) + "\n        "
-            )
-          ])
-        ]
-      ),
+      _c("transition", { attrs: { name: "slide" } }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.showDetail,
+                expression: "showDetail"
+              }
+            ],
+            staticClass: "detail secondary"
+          },
+          [
+            _c("div", { staticClass: "ma-3" }, [
+              _c("pre", [_vm._v(_vm._s(_vm.gacha.description))])
+            ])
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "v-card-title",
@@ -59627,7 +59621,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kodama/Projects/php/app-odai-gacha/odai-gacha/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
+module.exports = __webpack_require__(/*! /work/resources/js/gacha/app.js */"./resources/js/gacha/app.js");
 
 
 /***/ })

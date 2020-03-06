@@ -16,13 +16,17 @@
 - `git clone https://github.com/m-kodama/app-odai-gacha.git`
 - `cp .env.example .env`
 - `docker-compose up -d`
+[appコンテナ]
 - `docker-compose exec app bash`
 - `cd odai-gacha`
 - `composer install`
 - `php artisan migrate`
 - `php artisan db:seed`
+- `exit`
+[nodeコンテナ]
+- `docker-compose exec node ash`
 - `npm install`
-- `npm run watch`
+- `npm run watch` or `npm run watch-with-fmt`
 
 <br>
 

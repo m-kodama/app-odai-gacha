@@ -11,14 +11,7 @@
 </template>
 
 <script>
-import Header from "../components/Header";
-import MainCard from "../components/MainCard";
-
 export default {
-    components: {
-        Header,
-        MainCard,
-    },
     props: {
         icon: String,
         title: String,

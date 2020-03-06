@@ -11,11 +11,13 @@
                 </v-row>
             </template>
         </v-img>
-        <div class="detail secondary" v-show="showDetail">
-            <div class="ma-3">
-                {{ gacha.description }}
+        <transition name="slide">
+            <div class="detail secondary" v-show="showDetail">
+                <div class="ma-3">
+                    <pre>{{ gacha.description }}</pre>
+                </div>
             </div>
-        </div>
+        </transition>
         <v-card-title>
             <div class="flex-grow-1">{{ gacha.gacha_name }}</div>
             <v-tooltip top>
@@ -111,5 +113,19 @@ export default {
     font-size: 0.85rem;
     color: #333333;
     overflow-y: scroll;
+}
+pre {
+    white-space: pre-wrap;
+}
+.slide-enter-active {
+    transition: all 0.2s ease-out;
+}
+.slide-leave-active {
+    transition: all 0.3s ease-out;
+}
+.slide-enter,
+.slide-leave-to {
+    transform: translateY(20px);
+    opacity: 0;
 }
 </style>

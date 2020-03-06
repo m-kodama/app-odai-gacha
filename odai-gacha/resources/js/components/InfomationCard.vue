@@ -15,14 +15,14 @@
             <v-col cols="12" xs="12" sm="4" class="px-2 py-4">
                 <Feature
                     icon="mdi-currency-usd-off"
-                    title="完全無料！！"
+                    title="完全無料"
                     text="このサイトのコンテンツは全て無料で誰でも使用することが可能です。"
                 />
             </v-col>
             <v-col cols="12" xs="12" sm="4" class="px-2 py-4">
                 <Feature
                     icon="mdi-battlenet"
-                    title="ガチャ作成・使用"
+                    title="ガチャの作成と使用"
                     text="独自のガチャを作成し、遊ぶことができます。公開し世界中に独自のガチャを共有しよう！"
                 />
             </v-col>

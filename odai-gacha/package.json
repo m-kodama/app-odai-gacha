@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "@prettier/plugin-php": "^0.13.0",
+        "glob": "^7.1.6",
         "onchange": "^6.1.0",
         "prettier": "^1.19.1",
         "vuetify": "^2.2.4"

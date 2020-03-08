@@ -16,27 +16,18 @@ const init = () => {
   // 初期配置
   const handle = document.getElementById('handle');
   const arrow = document.getElementById('arrow');
-  const eggNormal = document.getElementById('egg-normal');
-  const eggSilver = document.getElementById('egg-sliver');
-  const eggGold = document.getElementById('egg-gold');
-  const eggPlatinum = document.getElementById('egg-platinum');
+  const egg = document.getElementById('egg');
   // left
   gacha.style.right = gacha.clientWidth * -0.3 + 'px';
   handle.style.right = gacha.clientWidth * 0.1 + 'px';
   arrow.style.right = gacha.clientWidth * 0.24 + 'px';
   arrowText.style.right = gacha.clientWidth * 0.1 + 'px';
-  eggNormal.style.right = gacha.clientWidth * 0.4 + 'px';
-  eggSilver.style.right = eggNormal.style.right;
-  eggGold.style.right = eggNormal.style.right;
-  eggPlatinum.style.right = eggNormal.style.right;
+  egg.style.right = gacha.clientWidth * 0.4 + 'px';
   // top
   handle.style.top = gacha.clientHeight * 0.275 + 'px';
   arrow.style.top = gacha.clientHeight * 0.8 + 'px';
   arrowText.style.top = gacha.clientHeight * 0.93 + 'px';
-  eggNormal.style.top = gacha.clientHeight * 0.35 + 'px';
-  eggSilver.style.top = eggNormal.style.top;
-  eggGold.style.top = eggNormal.style.top;
-  eggPlatinum.style.top = eggNormal.style.top;
+  egg.style.top = gacha.clientHeight * 0.35 + 'px';
 
   // お題
   const odaiView = document.getElementById('odai');
@@ -94,8 +85,8 @@ const startGacha = () => {
     window.location.reload();
     return;
   }
-  const eggs = document.getElementsByClassName('egg');
-  egg = eggs[odai.rarity];
+  const egg = document.getElementById('egg');
+  egg.src =  `../../img/${odai.rarityImage}`;
 
   // アニメーション開始
   const arrow = document.getElementById('arrow');

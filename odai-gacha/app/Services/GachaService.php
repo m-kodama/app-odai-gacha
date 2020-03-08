@@ -41,9 +41,14 @@ class GachaService
     public function getGachaDetail(string $gacha_id)
     {
         $topics = DB::table('gacha_master')
-            ->select(DB::raw('gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability'))
+            ->select(
+                DB::raw(
+                    'gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability, rarity_images.rarity_image_path'
+                )
+            )
             ->join('topics', 'topics.gacha_id', '=', 'gacha_master.gacha_id')
             ->join('rarity', 'rarity.rarity_id', '=', 'topics.rarity_id')
+            ->join('rarity_images', 'rarity_images.rarity_image_id', '=', 'rarity.rarity_image_id')
             ->where('gacha_master.gacha_id', $gacha_id)
             ->orderBy('gacha_master.gacha_id', 'asc')
             ->orderBy('rarity', 'desc')
@@ -57,6 +62,7 @@ class GachaService
             if (!isset($odai[$topic->rarity]['texts'])) {
                 $odai[$topic->rarity]['rarity'] = $topic->rarity;
                 $odai[$topic->rarity]['prob'] = $topic->probability;
+                $odai[$topic->rarity]['rarityImage'] = $topic->rarity_image_path;
                 $odai[$topic->rarity]['texts'] = [];
             }
 

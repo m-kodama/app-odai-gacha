@@ -3308,16 +3308,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    console.log(this.rarityImages); // トピックの初期化
-
+    // トピックの初期化
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
 
     try {
       for (var _iterator = this.rarities[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var _rarity2 = _step.value;
-        this.$set(this.topics, _rarity2.id, []);
+        var _rarity3 = _step.value;
+        this.$set(this.topics, _rarity3.id, []);
       } // console.log(this.isEdit);
       // console.log(this._gacha);
       // console.log(this._rarity);
@@ -3350,6 +3349,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         needDeletePass: this._gacha.needDeletePass
       });
       this.rarities = [];
+      console.log(this._rarity);
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
@@ -3357,7 +3357,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       try {
         for (var _iterator2 = this._rarity[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var rarity = _step2.value;
-          this.rarities.push(this.createRarity(rarity.rarity_id, rarity.rarity_name, Math.floor(rarity.probability / 10), rarity.rarity_id));
+          this.rarities.push(this.createRarity(rarity.rarity_id, rarity.rarity_name, Math.floor(rarity.probability / 10), rarity.rarity_image_id));
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -3374,17 +3374,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      var mapIdToRarity = new Map(this._rarity.map(function (rarity) {
-        return [rarity.rarity_id, rarity.rarity];
+      var mapRarityIdToId = new Map(this.rarities.map(function (r) {
+        return [r.rarityId, r.id];
       }));
+      console.log(this.rarities);
+      console.log(mapRarityIdToId);
+      console.log(this._topics);
+      this.topics = {};
       var _iteratorNormalCompletion3 = true;
       var _didIteratorError3 = false;
       var _iteratorError3 = undefined;
 
       try {
-        for (var _iterator3 = this._topics[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var topic = _step3.value;
-          this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
+        for (var _iterator3 = this.rarities[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var _rarity = _step3.value;
+          this.$set(this.topics, _rarity.id, []);
         }
       } catch (err) {
         _didIteratorError3 = true;
@@ -3400,16 +3404,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       }
-    } else {
+
       var _iteratorNormalCompletion4 = true;
       var _didIteratorError4 = false;
       var _iteratorError4 = undefined;
 
       try {
-        for (var _iterator4 = this.rarities[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-          var _rarity = _step4.value;
-
-          this.topics[_rarity.id].push(this.Topic());
+        for (var _iterator4 = this._topics[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          var topic = _step4.value;
+          this.topics[mapRarityIdToId.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
         }
       } catch (err) {
         _didIteratorError4 = true;
@@ -3425,6 +3428,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       }
+    } else {
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = this.rarities[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var _rarity2 = _step5.value;
+
+          this.topics[_rarity2.id].push(this.Topic());
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+            _iterator5["return"]();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
     }
   },
   methods: {
@@ -3435,7 +3463,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var rarityImageId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       return {
         id: this.rarityCount++,
-        rarityId: null,
+        rarityId: rarityId,
         rarity: 0,
         rarityName: rarityName,
         probability: probability,
@@ -3503,13 +3531,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       for (var _i4 = 0, _Object$keys4 = Object.keys(this.topics); _i4 < _Object$keys4.length; _i4++) {
         var key = _Object$keys4[_i4];
-        var _iteratorNormalCompletion5 = true;
-        var _didIteratorError5 = false;
-        var _iteratorError5 = undefined;
+        var _iteratorNormalCompletion6 = true;
+        var _didIteratorError6 = false;
+        var _iteratorError6 = undefined;
 
         try {
-          for (var _iterator5 = this.topics[key][Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-            var topic = _step5.value;
+          for (var _iterator6 = this.topics[key][Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+            var topic = _step6.value;
 
             if (topic.value === null || topic.value.length < 1 || topic.value.length > 30) {
               this.topicsError = "お題は1〜30文字で入力してください";
@@ -3517,16 +3545,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
         } catch (err) {
-          _didIteratorError5 = true;
-          _iteratorError5 = err;
+          _didIteratorError6 = true;
+          _iteratorError6 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-              _iterator5["return"]();
+            if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+              _iterator6["return"]();
             }
           } finally {
-            if (_didIteratorError5) {
-              throw _iteratorError5;
+            if (_didIteratorError6) {
+              throw _iteratorError6;
             }
           }
         }
@@ -3540,7 +3568,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _this = this;
 
-        var sortedRarities, rarities, idRarityMap, topics, _i5, _Object$keys5, id, _topics, _iteratorNormalCompletion6, _didIteratorError6, _iteratorError6, _iterator6, _step6, topic, request, method;
+        var sortedRarities, rarities, idRarityMap, topics, _i5, _Object$keys5, id, _topics, _iteratorNormalCompletion7, _didIteratorError7, _iteratorError7, _iterator7, _step7, topic, request, method;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -3571,19 +3599,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 id = _Object$keys5[_i5];
                 _topics = this.topics[id];
-                _iteratorNormalCompletion6 = true;
-                _didIteratorError6 = false;
-                _iteratorError6 = undefined;
+                _iteratorNormalCompletion7 = true;
+                _didIteratorError7 = false;
+                _iteratorError7 = undefined;
                 _context.prev = 14;
-                _iterator6 = _topics[Symbol.iterator]();
+                _iterator7 = _topics[Symbol.iterator]();
 
               case 16:
-                if (_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done) {
+                if (_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done) {
                   _context.next = 24;
                   break;
                 }
 
-                topic = _step6.value;
+                topic = _step7.value;
 
                 if (topic.value) {
                   _context.next = 20;
@@ -3600,7 +3628,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
 
               case 21:
-                _iteratorNormalCompletion6 = true;
+                _iteratorNormalCompletion7 = true;
                 _context.next = 16;
                 break;
 
@@ -3611,26 +3639,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 26:
                 _context.prev = 26;
                 _context.t0 = _context["catch"](14);
-                _didIteratorError6 = true;
-                _iteratorError6 = _context.t0;
+                _didIteratorError7 = true;
+                _iteratorError7 = _context.t0;
 
               case 30:
                 _context.prev = 30;
                 _context.prev = 31;
 
-                if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
-                  _iterator6["return"]();
+                if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
+                  _iterator7["return"]();
                 }
 
               case 33:
                 _context.prev = 33;
 
-                if (!_didIteratorError6) {
+                if (!_didIteratorError7) {
                   _context.next = 36;
                   break;
                 }
 
-                throw _iteratorError6;
+                throw _iteratorError7;
 
               case 36:
                 return _context.finish(33);
@@ -3648,7 +3676,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   gacha: this.gacha,
                   rarity: rarities,
                   topics: topics,
-                  removedTopics: this.removedTopics
+                  removedTopics: this.removedTopics,
+                  removedRarities: this.removedRarities
                 };
                 console.log(request);
                 method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);

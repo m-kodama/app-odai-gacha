@@ -542,7 +542,6 @@ export default {
         },
     },
     mounted() {
-        console.log(this.rarityImages);
         // トピックの初期化
         for (const rarity of this.rarities) {
             this.$set(this.topics, rarity.id, []);
@@ -564,23 +563,31 @@ export default {
                 needDeletePass: this._gacha.needDeletePass,
             };
             this.rarities = [];
+            console.log(this._rarity);
             for (const rarity of this._rarity) {
                 this.rarities.push(
                     this.createRarity(
                         rarity.rarity_id,
                         rarity.rarity_name,
                         Math.floor(rarity.probability / 10),
-                        rarity.rarity_id,
+                        rarity.rarity_image_id,
                     ),
                 );
             }
-            const mapIdToRarity = new Map(
-                this._rarity.map(rarity => {
-                    return [rarity.rarity_id, rarity.rarity];
+            const mapRarityIdToId = new Map(
+                this.rarities.map(r => {
+                    return [r.rarityId, r.id];
                 }),
             );
+            console.log(this.rarities);
+            console.log(mapRarityIdToId);
+            console.log(this._topics);
+            this.topics = {};
+            for (const rarity of this.rarities) {
+                this.$set(this.topics, rarity.id, []);
+            }
             for (const topic of this._topics) {
-                this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
+                this.topics[mapRarityIdToId.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
             }
         } else {
             for (const rarity of this.rarities) {
@@ -592,7 +599,7 @@ export default {
         createRarity(rarityId = null, rarityName = "", probability = "", rarityImageId = null) {
             return {
                 id: this.rarityCount++,
-                rarityId: null,
+                rarityId: rarityId,
                 rarity: 0,
                 rarityName,
                 probability,
@@ -679,6 +686,7 @@ export default {
                 rarity: rarities,
                 topics: topics,
                 removedTopics: this.removedTopics,
+                removedRarities: this.removedRarities,
             };
             console.log(request);
             const method = this.isEdit

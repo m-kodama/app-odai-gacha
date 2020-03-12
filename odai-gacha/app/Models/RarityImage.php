@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
+
+use Ulid\Ulid;
 
 use Illuminate\Database\Eloquent\Model;
-use Ulid\Ulid;
 
 class RarityImage extends Model
 {

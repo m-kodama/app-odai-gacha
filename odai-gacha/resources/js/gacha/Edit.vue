@@ -77,68 +77,134 @@
                                     </div>
                                 </div>
                                 <!-- レア度 -->
-                                <v-tooltip top left>
-                                    <template v-slot:activator="{ on }">
-                                        <div class="mb-8" v-on="on">
-                                            <div class="form-title">レア度</div>
-                                            <div class="mb-4">
-                                                <template v-for="rarity in rarities">
-                                                    <div class="d-flex align-center mb-2" :key="rarity.rarity">
-                                                        <TextField
-                                                            class="flex-grow-1 mr-2"
-                                                            dense
-                                                            label="レア度の名前"
-                                                            disabled
-                                                            :value="rarity.rarityName"
-                                                        />
-                                                        <div class="mr-4" style="width:80px;">
-                                                            <TextField
-                                                                dense
-                                                                label="確率"
-                                                                suffix="%"
-                                                                type="number"
-                                                                disabled
-                                                                :value="rarity.probability"
-                                                                :clearable="false"
-                                                            />
-                                                        </div>
-                                                        <v-btn depressed color="#eeeeee" class="px-4" disabled>
-                                                            <v-icon color="grey darken-1">mdi-delete-forever</v-icon>
-                                                        </v-btn>
-                                                    </div>
-                                                </template>
-                                            </div>
-                                            <div class="d-flex justify-center">
-                                                <v-btn
-                                                    style="width: 50% !important; min-width: 120px; color: #333;"
-                                                    color="secondary"
-                                                    rounded
-                                                    depressed
-                                                    disabled
+                                <div class="mb-8">
+                                    <div class="form-title">レア度</div>
+                                    <div class="mb-4">
+                                        <template v-for="(rarity, index) in rarities">
+                                            <div class="d-flex align-center mb-2" :key="rarity.id">
+                                                <v-menu
+                                                    transition="scale-transition"
+                                                    origin="center center"
+                                                    :nudge-left="(48 * 4 + 8 * 2 - 40) / 2"
+                                                    :nudge-top="(48 * 3 + 8 * 2 - 40) / 2"
                                                 >
-                                                    <v-icon leff>mdi-plus</v-icon>レア度追加
+                                                    <template v-slot:activator="{ on }">
+                                                        <div
+                                                            class="square-button mr-2 d-flex align-center justify-center pa-1"
+                                                            v-ripple
+                                                            v-on="on"
+                                                        >
+                                                            <v-img
+                                                                :src="
+                                                                    `/img/${rarityImageMap.get(rarity.rarityImageId)}`
+                                                                "
+                                                                aspect-ratio="1"
+                                                                contain
+                                                                v-if="rarity.rarityImageId !== null"
+                                                            ></v-img>
+                                                        </div>
+                                                    </template>
+                                                    <v-card
+                                                        class="d-flex align-center justify-start flex-wrap pa-2"
+                                                        :width="48 * 4 + 8 * 2"
+                                                    >
+                                                        <v-hover
+                                                            v-slot:default="{ hover }"
+                                                            v-for="rarityImage in rarityImages"
+                                                            :key="rarityImage.rarity_image_id"
+                                                        >
+                                                            <div
+                                                                class="pa-1"
+                                                                :class="{
+                                                                    'rarity-image-selection-hover': hover,
+                                                                    'rarity-image-selection-selected':
+                                                                        rarityImage.rarity_image_id ===
+                                                                        rarity.rarityImageId,
+                                                                }"
+                                                                v-ripple
+                                                                @click="
+                                                                    updateRarityImage(
+                                                                        index,
+                                                                        rarityImage.rarity_image_id,
+                                                                    )
+                                                                "
+                                                                style="height: 48px; width: 48px; border-radius: 4px; cursor: pointer;"
+                                                            >
+                                                                <v-img
+                                                                    :src="`/img/${rarityImage.rarity_image_path}`"
+                                                                    aspect-ratio="1"
+                                                                    contain
+                                                                ></v-img>
+                                                            </div>
+                                                        </v-hover>
+                                                    </v-card>
+                                                </v-menu>
+                                                <TextField
+                                                    class="flex-grow-1 mr-2"
+                                                    dense
+                                                    label="レア度の名前"
+                                                    :value="rarity.rarityName"
+                                                    @change="
+                                                        value => {
+                                                            updateRarityName(index, value);
+                                                        }
+                                                    "
+                                                />
+                                                <div class="mr-4" style="width:80px;">
+                                                    <TextField
+                                                        dense
+                                                        label="確率"
+                                                        suffix="%"
+                                                        type="number"
+                                                        :value="rarity.probability"
+                                                        :clearable="false"
+                                                        :max="100"
+                                                        @change="
+                                                            value => {
+                                                                updateProbability(index, value);
+                                                            }
+                                                        "
+                                                    />
+                                                </div>
+                                                <v-btn
+                                                    depressed
+                                                    color="#eeeeee"
+                                                    class="px-4"
+                                                    @click="removeRarity(index)"
+                                                >
+                                                    <v-icon color="grey darken-1">mdi-delete-forever</v-icon>
                                                 </v-btn>
                                             </div>
-                                        </div>
-                                    </template>
-                                    <span>現在準備中です...</span>
-                                </v-tooltip>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex justify-center">
+                                        <v-btn
+                                            style="width: 50% !important; min-width: 120px; color: #333;"
+                                            color="secondary"
+                                            rounded
+                                            depressed
+                                            @click="addRarity()"
+                                        >
+                                            <v-icon leff>mdi-plus</v-icon>レア度追加
+                                        </v-btn>
+                                    </div>
+                                </div>
                                 <!-- お題 -->
                                 <div class="mb-8">
                                     <div class="form-title">お題</div>
                                     <v-tabs class="mb-4" height="40" v-model="tab" color="accent">
                                         <template v-for="rarity in rarities">
-                                            <v-tab :key="rarity.rarity">{{ rarity.rarityName }}</v-tab>
+                                            <v-tab :key="rarity.id">{{ rarity.rarityName }}</v-tab>
                                         </template>
                                     </v-tabs>
                                     <v-tabs-items
                                         v-model="tab"
                                         style="min-height: 60px; max-height: 500px; overflow-y: scroll;"
                                     >
-                                        <v-tab-item v-for="rarity in rarities" :key="rarity.rarity">
+                                        <v-tab-item v-for="rarity in rarities" :key="rarity.id">
                                             <transition-group name="topic-list" tag="div">
                                                 <div
-                                                    v-for="(topic, index) in topics[rarity.rarity]"
+                                                    v-for="(topic, index) in topics[rarity.id]"
                                                     class="d-flex align-center mb-2 topic-row"
                                                     :key="topic.id"
                                                 >
@@ -152,7 +218,7 @@
                                                                 onTopicUpdated(
                                                                     value,
                                                                     index,
-                                                                    rarity.rarity,
+                                                                    rarity.id,
                                                                     topic.id,
                                                                     topic.topicId,
                                                                 );
@@ -178,9 +244,9 @@
                                                             <v-list-item
                                                                 style="font-size:0.5rerm;"
                                                                 v-for="rarity in rarities"
-                                                                :key="rarity.rarity"
-                                                                @click="changeTopicRarity(index, rarity.rarity)"
-                                                                :disabled="rarity.rarity === tab"
+                                                                :key="rarity.id"
+                                                                @click="changeTopicRarity(index, rarity.id)"
+                                                                :disabled="rarity.id === tab"
                                                             >
                                                                 <v-list-item-title>{{
                                                                     rarity.rarityName
@@ -332,6 +398,7 @@ export default {
         _gacha: Object | Number,
         _rarity: Array | Number,
         _topics: Array | Number,
+        rarityImages: Array | Number,
     },
     data: function() {
         return {
@@ -355,30 +422,40 @@ export default {
             },
             rarities: [
                 {
+                    id: 0,
                     rarityId: null,
                     rarity: 0,
                     rarityName: "ノーマル",
                     probability: 50,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X01",
                 },
                 {
+                    id: 1,
                     rarityId: null,
                     rarity: 1,
                     rarityName: "シルバー",
                     probability: 35,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X02",
                 },
                 {
+                    id: 2,
                     rarityId: null,
                     rarity: 2,
                     rarityName: "ゴールド",
                     probability: 13,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X03",
                 },
                 {
+                    id: 3,
                     rarityId: null,
                     rarity: 3,
                     rarityName: "プラチナ",
                     probability: 2,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X04",
                 },
             ],
+            rarityCount: 4,
+            removedRarities: [],
             topics: {},
             removedTopics: [],
             topicCount: 0,
@@ -414,6 +491,10 @@ export default {
         },
         isEdit: function() {
             return !!this._gacha && !!this._rarity && !!this._topics;
+        },
+        rarityImageMap() {
+            const pair = this.rarityImages.map(obj => [obj.rarity_image_id, obj.rarity_image_path]);
+            return new Map(pair);
         },
     },
     watch: {
@@ -461,9 +542,10 @@ export default {
         },
     },
     mounted() {
-        // レア度の初期化
+        console.log(this.rarityImages);
+        // トピックの初期化
         for (const rarity of this.rarities) {
-            this.$set(this.topics, rarity.rarity, []);
+            this.$set(this.topics, rarity.id, []);
         }
         // console.log(this.isEdit);
         // console.log(this._gacha);
@@ -483,12 +565,14 @@ export default {
             };
             this.rarities = [];
             for (const rarity of this._rarity) {
-                this.rarities.push({
-                    rarityId: rarity.rarity_id,
-                    rarity: rarity.rarity,
-                    rarityName: rarity.rarity_name,
-                    probability: rarity.probability / 10,
-                });
+                this.rarities.push(
+                    this.createRarity(
+                        rarity.rarity_id,
+                        rarity.rarity_name,
+                        Math.floor(rarity.probability / 10),
+                        rarity.rarity_id,
+                    ),
+                );
             }
             const mapIdToRarity = new Map(
                 this._rarity.map(rarity => {
@@ -500,29 +584,64 @@ export default {
             }
         } else {
             for (const rarity of this.rarities) {
-                this.topics[rarity.rarity].push(this.Topic());
+                this.topics[rarity.id].push(this.Topic());
             }
         }
     },
     methods: {
+        createRarity(rarityId = null, rarityName = "", probability = "", rarityImageId = null) {
+            return {
+                id: this.rarityCount++,
+                rarityId: null,
+                rarity: 0,
+                rarityName,
+                probability,
+                rarityImageId,
+            };
+        },
+        addRarity() {
+            this.rarities.push(this.createRarity());
+        },
+        removeRarity(index) {
+            const removed = this.rarities.splice(index, 1)[0];
+            if (removed.rarityId !== null) {
+                this.removedRarities.push(removed);
+            }
+            delete this.topics[removed.id];
+        },
+        updateRarityName(index, rarityName) {
+            this.rarities[index].rarityName = rarityName;
+        },
+        updateRarityImage(index, rarityImageId) {
+            this.rarities[index].rarityImageId = rarityImageId;
+        },
+        updateProbability(index, probability) {
+            this.rarities[index].probability = probability;
+        },
         Topic(value = "", topicId = null) {
             return { value, id: this.topicCount++, topicId };
         },
         addTopic() {
-            this.topics[this.tab].push(this.Topic());
+            const rarityId = this.rarities[this.tab].id;
+            if (!this.topics[rarityId]) {
+                this.$set(this.topics, rarityId, []);
+            }
+            this.topics[rarityId].push(this.Topic());
         },
         removeTopic(index) {
-            const removed = this.topics[this.tab].splice(index, 1)[0];
+            const rarityId = this.rarities[this.tab].id;
+            const removed = this.topics[rarityId].splice(index, 1)[0];
             if (removed.topicId !== null) {
                 this.removedTopics.push(removed);
             }
         },
-        changeTopicRarity(index, rarity) {
-            const moveTopic = this.topics[this.tab].splice(index, 1)[0];
-            this.topics[rarity].push(moveTopic);
+        changeTopicRarity(index, id) {
+            const rarityId = this.rarities[this.tab].id;
+            const moveTopic = this.topics[rarityId].splice(index, 1)[0];
+            this.topics[id].push(moveTopic);
         },
-        onTopicUpdated(value, index, rarity, id, topicId) {
-            this.topics[rarity][index] = { value, id, topicId };
+        onTopicUpdated(value, index, rarityId, id, topicId) {
+            this.topics[rarityId][index] = { value, id, topicId };
             // 以下バリデーション
             for (const key of Object.keys(this.topics)) {
                 for (const topic of this.topics[key]) {
@@ -538,9 +657,12 @@ export default {
             this.dialogState = "loading";
             this.dialogAction = this.isEdit ? "edit" : "create";
             this.dialog = true;
+            const sortedRarities = this.rarities.sort((a, b) => b.probability - a.probability);
+            const rarities = sortedRarities.map((r, index) => ({ ...r, rarity: index }));
+            const idRarityMap = new Map(rarities.map(r => [`${r.id}`, r.rarity]));
             const topics = [];
-            for (const rarity of Object.keys(this.topics)) {
-                const _topics = this.topics[rarity];
+            for (const id of Object.keys(this.topics)) {
+                const _topics = this.topics[id];
                 for (const topic of _topics) {
                     if (!topic.value) {
                         continue;
@@ -548,17 +670,17 @@ export default {
                     topics.push({
                         topicId: topic.topicId,
                         topic: topic.value,
-                        rarity,
+                        rarity: idRarityMap.get(id),
                     });
                 }
             }
             const request = {
                 gacha: this.gacha,
-                rarity: this.rarities,
+                rarity: rarities,
                 topics: topics,
                 removedTopics: this.removedTopics,
             };
-            // console.log(request);
+            console.log(request);
             const method = this.isEdit
                 ? axios.put(`/gacha/${this._gacha.gacha_id}`, request)
                 : axios.post(`/gacha`, request);
@@ -674,5 +796,11 @@ export default {
 .topic-list-leave-to {
     opacity: 0;
     transform: translateX(100%);
+}
+.rarity-image-selection-hover {
+    background-color: #eeeeee;
+}
+.rarity-image-selection-selected {
+    opacity: 0.3;
 }
 </style>

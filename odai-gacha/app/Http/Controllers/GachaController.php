@@ -92,7 +92,8 @@ class GachaController extends Controller
 
     public function create()
     {
-        return view('gacha/edit');
+        $rarity_images = $this->gacha_service->getRarityImages();
+        return view('gacha/edit', compact('rarity_images'));
     }
 
     public function edit(Request $request, $gacha_id)
@@ -106,7 +107,8 @@ class GachaController extends Controller
         }
         $rarity = $gacha->rarity()->get();
         $topics = $gacha->topics()->get();
-        return view('gacha/edit', compact('gacha', 'rarity', 'topics'));
+        $rarity_images = $this->gacha_service->getRarityImages();
+        return view('gacha/edit', compact('gacha', 'rarity', 'topics', 'rarity_images'));
     }
 
     public function auth(Request $request, $gacha_id)

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Gacha;
 use App\Models\Topic;
 use App\Models\Rarity;
+use App\Models\RarityImage;
 use App\Http\Requests\GachaRequest;
 
 class GachaService
@@ -102,6 +103,7 @@ class GachaService
                     'rarity' => $rarity['rarity'],
                     'rarity_name' => $rarity['rarityName'],
                     'probability' => $rarity['probability'] * 10,
+                    'rarity_image_id' => $rarity['rarityImageId'],
                     'gacha_id' => $gacha->gacha_id,
                     'created_at' => $now,
                     'updated_at' => $now
@@ -159,6 +161,7 @@ class GachaService
                     'rarity' => $rarity['rarity'],
                     'rarity_name' => $rarity['rarityName'],
                     'probability' => $rarity['probability'] * 10,
+                    'rarity_image_id' => $rarity['rarityImageId'],
                     'gacha_id' => $gacha->gacha_id,
                     'updated_at' => $now
                 ];
@@ -262,6 +265,11 @@ class GachaService
             return true;
         }
         return false;
+    }
+
+    public function getRarityImages()
+    {
+        return RarityImage::all();
     }
 }
 

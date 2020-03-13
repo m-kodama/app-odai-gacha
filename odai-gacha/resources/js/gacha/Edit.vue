@@ -188,6 +188,7 @@
                                             <v-icon leff>mdi-plus</v-icon>レア度追加
                                         </v-btn>
                                     </div>
+                                    <PercentageSlider title="排出率の設定"></PercentageSlider>
                                 </div>
                                 <!-- お題 -->
                                 <div class="mb-8">
@@ -386,6 +387,7 @@ import Header from "../components/Header";
 import TextField from "../components/TextField";
 import PasswordConfirmCard from "../components/PasswordConfirmCard";
 import EditDialog from "../components/EditDialog";
+import PercentageSlider from "../components/PercentageSlider";
 
 export default {
     components: {
@@ -393,6 +395,7 @@ export default {
         TextField,
         PasswordConfirmCard,
         EditDialog,
+        PercentageSlider,
     },
     props: {
         _gacha: Object | Number,

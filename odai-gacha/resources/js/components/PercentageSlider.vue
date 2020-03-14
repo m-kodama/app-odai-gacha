@@ -1,5 +1,5 @@
 <template>
-    <v-card outlined class="pa-4">
+    <v-card outlined class="px-4 pt-4 pb-6">
         <div class="header">{{ title }}</div>
         <vue-slider
             ref="slider"
@@ -114,7 +114,7 @@ export default {
             return this.dots[index] - this.dots[index - 1];
         },
         onChange(value) {
-            console.log(value, this.dots);
+            // console.log(value, this.dots);
         },
     },
 };
@@ -146,8 +146,16 @@ export default {
     border-radius: 30px;
     border-top-color: #40bfc1;
 }
-.vue-slider-dot {
-    width: 25px !important;
-    height: 25px !important;
+</style>
+
+<style>
+.vue-slider-dot-handle {
+    width: 8px !important;
+    height: 40px !important;
+    cursor: col-resize !important;
+    border-radius: 4px !important;
+    border: none !important;
+    background-color: #40bfc1 !important;
+    transform: translate(0, -15px) !important;
 }
 </style>

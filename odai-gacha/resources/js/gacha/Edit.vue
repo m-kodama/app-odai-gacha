@@ -79,6 +79,19 @@
                                 <!-- レア度 -->
                                 <div class="mb-8">
                                     <div class="form-title">レア度</div>
+                                    <PercentageSlider
+                                        class="mb-2"
+                                        title="排出率"
+                                        :images="images"
+                                        :rarities="rarities"
+                                        @change="
+                                            rarities => {
+                                                rarities.forEach((rarity, index) => {
+                                                    updateProbability(index, rarity);
+                                                });
+                                            }
+                                        "
+                                    ></PercentageSlider>
                                     <div class="mb-4">
                                         <template v-for="(rarity, index) in rarities">
                                             <div class="d-flex align-center mb-2" :key="rarity.id">
@@ -150,21 +163,8 @@
                                                         }
                                                     "
                                                 />
-                                                <div class="mr-4" style="width:80px;">
-                                                    <TextField
-                                                        dense
-                                                        label="確率"
-                                                        suffix="%"
-                                                        type="number"
-                                                        :value="rarity.probability"
-                                                        :clearable="false"
-                                                        :max="100"
-                                                        @change="
-                                                            value => {
-                                                                updateProbability(index, value);
-                                                            }
-                                                        "
-                                                    />
+                                                <div class="percentage-box mr-4 d-flex align-center justify-end pa-2">
+                                                    <div>{{ rarity.probability }} %</div>
                                                 </div>
                                                 <v-btn
                                                     depressed
@@ -188,7 +188,6 @@
                                             <v-icon leff>mdi-plus</v-icon>レア度追加
                                         </v-btn>
                                     </div>
-                                    <PercentageSlider title="排出率の設定"></PercentageSlider>
                                 </div>
                                 <!-- お題 -->
                                 <div class="mb-8">
@@ -499,6 +498,9 @@ export default {
             const pair = this.rarityImages.map(obj => [obj.rarity_image_id, obj.rarity_image_path]);
             return new Map(pair);
         },
+        images() {
+            return this.rarities.map(r => this.rarityImageMap.get(r.rarityImageId));
+        },
     },
     watch: {
         "gacha.needUsePass": function(value, oldValue) {
@@ -610,7 +612,17 @@ export default {
             };
         },
         addRarity() {
-            this.rarities.push(this.createRarity());
+            let lastRarity;
+            let index = 0;
+            for (const rarity of this.rarities) {
+                if (rarity.probability > 0) {
+                    lastRarity = rarity;
+                    break;
+                }
+                index++;
+            }
+            this.updateProbability(index, lastRarity.probability - 1);
+            this.rarities.push(this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01"));
         },
         removeRarity(index) {
             const removed = this.rarities.splice(index, 1)[0];
@@ -792,6 +804,13 @@ export default {
     border-radius: 4px;
     cursor: pointer;
     border: solid 1px #aeaeae;
+}
+.percentage-box {
+    height: 40px;
+    width: 64px;
+    border-radius: 4px;
+    border: solid 1px #aeaeae;
+    color: #757575;
 }
 .v-list-item__title {
     font-size: 0.9rem !important;

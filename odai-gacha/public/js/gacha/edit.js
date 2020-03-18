@@ -2630,7 +2630,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2644,124 +2643,83 @@ __webpack_require__.r(__webpack_exports__);
     },
     images: {
       type: Array,
-      "default": function _default() {
-        return ["egg_06.png", "egg_08.png", "egg_12.png"];
-      }
+      required: true
     },
-    percentages: {
+    rarities: {
       type: Array,
-      "default": function _default() {
-        return [500, 350, 150];
-      }
+      required: true
     }
   },
   data: function data() {
     return {
       process: function process(dotsPos) {
-        var array = [];
+        console.log("dotsPos", dotsPos);
+        var colorStyle = {
+          backgroundColor: "#40BFC1"
+        };
 
-        if (dotsPos.length < 1) {
-          return array;
+        if (dotsPos.length === 0) {
+          return [0, 100, colorStyle];
         }
 
-        var color = "#40BFC1";
-        array[0] = [0, dotsPos[0], {
-          backgroundColor: color
-        }];
+        var process = [[0, dotsPos[0], colorStyle]];
 
-        for (var i = 1; i < dotsPos.length; i++) {
-          array[i] = [dotsPos[i - 1], dotsPos[i], {
-            backgroundColor: color
-          }];
+        for (var i = 1, n = dotsPos.length; i < n; i++) {
+          process.push([dotsPos[i - 1], dotsPos[i], colorStyle]);
         }
 
-        array[dotsPos.length] = [dotsPos[dotsPos.length - 1], 100, {
-          backgroundColor: color,
-          disabled: true
-        }];
-        return array;
+        process.push([dotsPos[dotsPos.length - 1], 100, colorStyle]);
+        return process;
       }
     };
   },
+  // watch: {
+  //     // この関数は question が変わるごとに実行されます。
+  //     dots: function(newValue, oldValue) {
+  //         if (oldValue && newValue.length !== oldValue.length) {
+  //             console.log(1, newValue);
+  //             this.$refs.slider.setValue(newValue);
+  //         }
+  //     },
+  // },
   computed: {
+    percentages: function percentages() {
+      return this.rarities.map(function (r) {
+        return r.probability;
+      });
+    },
     dots: {
       get: function get() {
-        var data = this.percentages.map(function (p) {
-          return Math.floor(p / 10);
-        }).slice(0, -1);
+        if (this.percentages.length === 0) {
+          return [];
+        }
+
         var dots = [];
-
-        if (data.length === 0) {
-          return dots;
-        }
-
         var total = 0;
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var percentage = _step.value;
-            total += percentage;
-            dots.push(total);
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        return dots;
+        var ret = this.percentages.slice(0, -1).map(function (p) {
+          return total += p;
+        });
+        console.log("dots.get", ret);
+        return ret;
       },
       set: function set(value) {
-        this.$emit("change", value);
+        console.log("value", value);
+        var dots = Array.isArray(value) ? value : [value];
+        var percentages = [dots[0]];
+
+        for (var i = 1, n = dots.length; i < n; i++) {
+          percentages.push(dots[i] - dots[i - 1]);
+        }
+
+        percentages.push(100 - dots[dots.length - 1]);
+        console.log("dots.set", percentages);
+        this.$emit("change", percentages);
       }
     }
   },
   methods: {
-    add: function add() {
-      this.images.push("item_" + this.images.length);
-      this.setDots();
-    },
-    remove: function remove() {
-      this.images.pop();
-      this.setDots();
-    },
-    setDots: function setDots() {
-      this.dots = [];
-
-      if (this.images.length > 1) {
-        var x = 100 / this.images.length;
-
-        for (var i = 0; i < this.images.length - 1; i++) {
-          this.dots.push(Math.floor(x * (i + 1)));
-        }
-
-        this.$refs.slider.setValue(this.dots);
-      }
-    },
     getPercentage: function getPercentage(index) {
-      if (this.images.length == 1) {
-        return 100;
-      } else if (index == 0) {
-        return Array.isArray(this.dots) ? this.dots[0] : this.dots;
-      } else if (index == this.images.length - 1) {
-        return 100 - (Array.isArray(this.dots) ? this.dots[index - 1] : this.dots);
-      }
-
-      return this.dots[index] - this.dots[index - 1];
-    },
-    onChange: function onChange(value) {// console.log(value, this.dots);
+      return this.percentages[index];
     }
   }
 });
@@ -3308,7 +3266,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -3432,6 +3389,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return [obj.rarity_image_id, obj.rarity_image_path];
       });
       return new Map(pair);
+    },
+    images: function images() {
+      var _this = this;
+
+      return this.rarities.map(function (r) {
+        return _this.rarityImageMap.get(r.rarityImageId);
+      });
     }
   },
   watch: {
@@ -3651,7 +3615,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     addRarity: function addRarity() {
-      this.rarities.push(this.createRarity());
+      var lastRarity;
+      var index = 0;
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = this.rarities[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var rarity = _step6.value;
+
+          if (rarity.probability > 0) {
+            lastRarity = rarity;
+            break;
+          }
+
+          index++;
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+            _iterator6["return"]();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
+
+      this.updateProbability(index, lastRarity.probability - 1);
+      this.rarities.push(this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01"));
     },
     removeRarity: function removeRarity(index) {
       var removed = this.rarities.splice(index, 1)[0];
@@ -3711,13 +3708,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       for (var _i4 = 0, _Object$keys4 = Object.keys(this.topics); _i4 < _Object$keys4.length; _i4++) {
         var key = _Object$keys4[_i4];
-        var _iteratorNormalCompletion6 = true;
-        var _didIteratorError6 = false;
-        var _iteratorError6 = undefined;
+        var _iteratorNormalCompletion7 = true;
+        var _didIteratorError7 = false;
+        var _iteratorError7 = undefined;
 
         try {
-          for (var _iterator6 = this.topics[key][Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-            var topic = _step6.value;
+          for (var _iterator7 = this.topics[key][Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+            var topic = _step7.value;
 
             if (topic.value === null || topic.value.length < 1 || topic.value.length > 30) {
               this.topicsError = "お題は1〜30文字で入力してください";
@@ -3725,16 +3722,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
         } catch (err) {
-          _didIteratorError6 = true;
-          _iteratorError6 = err;
+          _didIteratorError7 = true;
+          _iteratorError7 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
-              _iterator6["return"]();
+            if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
+              _iterator7["return"]();
             }
           } finally {
-            if (_didIteratorError6) {
-              throw _iteratorError6;
+            if (_didIteratorError7) {
+              throw _iteratorError7;
             }
           }
         }
@@ -3746,9 +3743,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this = this;
+        var _this2 = this;
 
-        var sortedRarities, rarities, idRarityMap, topics, _i5, _Object$keys5, id, _topics, _iteratorNormalCompletion7, _didIteratorError7, _iteratorError7, _iterator7, _step7, topic, request, method;
+        var sortedRarities, rarities, idRarityMap, topics, _i5, _Object$keys5, id, _topics, _iteratorNormalCompletion8, _didIteratorError8, _iteratorError8, _iterator8, _step8, topic, request, method;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -3779,19 +3776,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 id = _Object$keys5[_i5];
                 _topics = this.topics[id];
-                _iteratorNormalCompletion7 = true;
-                _didIteratorError7 = false;
-                _iteratorError7 = undefined;
+                _iteratorNormalCompletion8 = true;
+                _didIteratorError8 = false;
+                _iteratorError8 = undefined;
                 _context.prev = 14;
-                _iterator7 = _topics[Symbol.iterator]();
+                _iterator8 = _topics[Symbol.iterator]();
 
               case 16:
-                if (_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done) {
+                if (_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done) {
                   _context.next = 24;
                   break;
                 }
 
-                topic = _step7.value;
+                topic = _step8.value;
 
                 if (topic.value) {
                   _context.next = 20;
@@ -3808,7 +3805,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
 
               case 21:
-                _iteratorNormalCompletion7 = true;
+                _iteratorNormalCompletion8 = true;
                 _context.next = 16;
                 break;
 
@@ -3819,26 +3816,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 26:
                 _context.prev = 26;
                 _context.t0 = _context["catch"](14);
-                _didIteratorError7 = true;
-                _iteratorError7 = _context.t0;
+                _didIteratorError8 = true;
+                _iteratorError8 = _context.t0;
 
               case 30:
                 _context.prev = 30;
                 _context.prev = 31;
 
-                if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
-                  _iterator7["return"]();
+                if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
+                  _iterator8["return"]();
                 }
 
               case 33:
                 _context.prev = 33;
 
-                if (!_didIteratorError7) {
+                if (!_didIteratorError8) {
                   _context.next = 36;
                   break;
                 }
 
-                throw _iteratorError7;
+                throw _iteratorError8;
 
               case 36:
                 return _context.finish(33);
@@ -3863,9 +3860,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);
                 _context.next = 46;
                 return method.then(function (res) {
-                  _this.dialogState = "success";
+                  _this2.dialogState = "success";
                 })["catch"](function (error) {
-                  _this.dialogState = "failure"; // console.log(error.response.data.errors);
+                  _this2.dialogState = "failure"; // console.log(error.response.data.errors);
                 });
 
               case 46:
@@ -3906,7 +3903,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _deleteGacha = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this2 = this;
+        var _this3 = this;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -3917,9 +3914,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 this.dialog = true;
                 _context2.next = 5;
                 return axios["delete"]("/gacha/".concat(this._gacha.gacha_id), {}).then(function (res) {
-                  _this2.dialogState = "success";
+                  _this3.dialogState = "success";
                 })["catch"](function (error) {
-                  _this2.dialogState = "failure"; // console.log(error.response.data.errors);
+                  _this3.dialogState = "failure"; // console.log(error.response.data.errors);
                 });
 
               case 5:
@@ -3940,7 +3937,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onPasswordConfirm = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(password) {
-        var _this3 = this;
+        var _this4 = this;
 
         var request;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -3953,10 +3950,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
                 _context3.next = 3;
                 return axios.post("/api/gacha/".concat(this._gacha.gacha_id, "/auth"), request).then(function (res) {
-                  _this3.showPasswordDialog = false;
-                  _this3.dialogState = "confirm";
-                  _this3.dialogAction = "delete";
-                  _this3.dialog = true;
+                  _this4.showPasswordDialog = false;
+                  _this4.dialogState = "confirm";
+                  _this4.dialogAction = "delete";
+                  _this4.dialog = true;
                   return true;
                 })["catch"](function (error) {
                   return false;
@@ -4193,7 +4190,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n.v-list-item__title[data-v-b6f307d6] {\n    font-size: 0.9rem !important;\n}\n.topic-list-enter-active[data-v-b6f307d6],\n.topic-list-leave-active[data-v-b6f307d6] {\n    transition: all 0.2s ease-out;\n}\n.topic-list-enter[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateY(10px);\n}\n.topic-list-leave-to[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateX(100%);\n}\n.rarity-image-selection-hover[data-v-b6f307d6] {\n    background-color: #eeeeee;\n}\n.rarity-image-selection-selected[data-v-b6f307d6] {\n    opacity: 0.3;\n}\n", ""]);
+exports.push([module.i, "\n.app-main-content[data-v-b6f307d6] {\n    width: 100%;\n    padding: 16px;\n    display: flex;\n    justify-content: center;\n}\n.v-card[data-v-b6f307d6] {\n    width: 100%;\n    max-width: 960px;\n    padding: 16px;\n}\n.card-content[data-v-b6f307d6] {\n    padding: 32px;\n}\n.form-title[data-v-b6f307d6] {\n    font-size: 0.9rem;\n    font-weight: bold;\n    color: #333;\n    margin: 0 0 6px 4px;\n}\n.form-description[data-v-b6f307d6] {\n    font-size: 0.8rem;\n    color: #757575;\n    margin: 0 0 6px 4px;\n}\n.square-button[data-v-b6f307d6] {\n    height: 40px;\n    width: 40px;\n    border-radius: 4px;\n    cursor: pointer;\n    border: solid 1px #aeaeae;\n}\n.percentage-box[data-v-b6f307d6] {\n    height: 40px;\n    width: 64px;\n    border-radius: 4px;\n    border: solid 1px #aeaeae;\n    color: #757575;\n}\n.v-list-item__title[data-v-b6f307d6] {\n    font-size: 0.9rem !important;\n}\n.topic-list-enter-active[data-v-b6f307d6],\n.topic-list-leave-active[data-v-b6f307d6] {\n    transition: all 0.2s ease-out;\n}\n.topic-list-enter[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateY(10px);\n}\n.topic-list-leave-to[data-v-b6f307d6] {\n    opacity: 0;\n    transform: translateX(100%);\n}\n.rarity-image-selection-hover[data-v-b6f307d6] {\n    background-color: #eeeeee;\n}\n.rarity-image-selection-selected[data-v-b6f307d6] {\n    opacity: 0.3;\n}\n", ""]);
 
 // exports
 
@@ -7191,7 +7188,6 @@ var render = function() {
           min: 1,
           duration: 0.2
         },
-        on: { change: _vm.onChange },
         scopedSlots: _vm._u([
           {
             key: "process",
@@ -7549,6 +7545,22 @@ var render = function() {
                                   _vm._v("レア度")
                                 ]),
                                 _vm._v(" "),
+                                _c("PercentageSlider", {
+                                  staticClass: "mb-2",
+                                  attrs: {
+                                    title: "排出率",
+                                    images: _vm.images,
+                                    rarities: _vm.rarities
+                                  },
+                                  on: {
+                                    change: function(rarities) {
+                                      rarities.forEach(function(rarity, index) {
+                                        _vm.updateProbability(index, rarity)
+                                      })
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
                                 _c(
                                   "div",
                                   { staticClass: "mb-4" },
@@ -7751,31 +7763,17 @@ var render = function() {
                                             _c(
                                               "div",
                                               {
-                                                staticClass: "mr-4",
-                                                staticStyle: { width: "80px" }
+                                                staticClass:
+                                                  "percentage-box mr-4 d-flex align-center justify-end pa-2"
                                               },
                                               [
-                                                _c("TextField", {
-                                                  attrs: {
-                                                    dense: "",
-                                                    label: "確率",
-                                                    suffix: "%",
-                                                    type: "number",
-                                                    value: rarity.probability,
-                                                    clearable: false,
-                                                    max: 100
-                                                  },
-                                                  on: {
-                                                    change: function(value) {
-                                                      _vm.updateProbability(
-                                                        index,
-                                                        value
-                                                      )
-                                                    }
-                                                  }
-                                                })
-                                              ],
-                                              1
+                                                _c("div", [
+                                                  _vm._v(
+                                                    _vm._s(rarity.probability) +
+                                                      " %"
+                                                  )
+                                                ])
+                                              ]
                                             ),
                                             _vm._v(" "),
                                             _c(
@@ -7851,11 +7849,7 @@ var render = function() {
                                     )
                                   ],
                                   1
-                                ),
-                                _vm._v(" "),
-                                _c("PercentageSlider", {
-                                  attrs: { title: "排出率の設定" }
-                                })
+                                )
                               ],
                               1
                             ),

@@ -10,7 +10,6 @@
             :min-range="1"
             :min="1"
             :duration="0.2"
-            @change="onChange"
         >
             <template v-slot:process="{ start, end, style, index }">
                 <div class="vue-slider-process" :style="style">
@@ -39,82 +38,70 @@ export default {
         },
         images: {
             type: Array,
-            default: () => ["egg_06.png", "egg_08.png", "egg_12.png"],
+            required: true,
         },
-        percentages: {
+        rarities: {
             type: Array,
-            default: () => [500, 350, 150],
+            required: true,
         },
     },
     data: function() {
         return {
             process: dotsPos => {
-                const array = [];
-                if (dotsPos.length < 1) {
-                    return array;
+                console.log("dotsPos", dotsPos);
+                const colorStyle = { backgroundColor: "#40BFC1" };
+                if (dotsPos.length === 0) {
+                    return [0, 100, colorStyle];
                 }
-                const color = "#40BFC1";
-                array[0] = [0, dotsPos[0], { backgroundColor: color }];
-                for (var i = 1; i < dotsPos.length; i++) {
-                    array[i] = [dotsPos[i - 1], dotsPos[i], { backgroundColor: color }];
+                const process = [[0, dotsPos[0], colorStyle]];
+                for (let i = 1, n = dotsPos.length; i < n; i++) {
+                    process.push([dotsPos[i - 1], dotsPos[i], colorStyle]);
                 }
-                array[dotsPos.length] = [dotsPos[dotsPos.length - 1], 100, { backgroundColor: color, disabled: true }];
-                return array;
+                process.push([dotsPos[dotsPos.length - 1], 100, colorStyle]);
+                return process;
             },
         };
     },
+    // watch: {
+    //     // この関数は question が変わるごとに実行されます。
+    //     dots: function(newValue, oldValue) {
+    //         if (oldValue && newValue.length !== oldValue.length) {
+    //             console.log(1, newValue);
+    //             this.$refs.slider.setValue(newValue);
+    //         }
+    //     },
+    // },
     computed: {
+        percentages() {
+            return this.rarities.map(r => r.probability);
+        },
         dots: {
             get() {
-                const data = this.percentages.map(p => Math.floor(p / 10)).slice(0, -1);
+                if (this.percentages.length === 0) {
+                    return [];
+                }
                 const dots = [];
-                if (data.length === 0) {
-                    return dots;
-                }
                 let total = 0;
-                for (const percentage of data) {
-                    total += percentage;
-                    dots.push(total);
-                }
-                return dots;
+                const ret = this.percentages.slice(0, -1).map(p => (total += p));
+                console.log("dots.get", ret);
+                return ret;
             },
             set(value) {
-                this.$emit("change", value);
+                console.log("value", value);
+                const dots = Array.isArray(value) ? value : [value];
+                const percentages = [dots[0]];
+                for (let i = 1, n = dots.length; i < n; i++) {
+                    percentages.push(dots[i] - dots[i - 1]);
+                }
+                percentages.push(100 - dots[dots.length - 1]);
+                console.log("dots.set", percentages);
+                this.$emit("change", percentages);
             },
         },
     },
     methods: {
-        add: function() {
-            this.images.push("item_" + this.images.length);
-            this.setDots();
-        },
-        remove: function() {
-            this.images.pop();
-            this.setDots();
-        },
-        setDots: function() {
-            this.dots = [];
-            if (this.images.length > 1) {
-                var x = 100 / this.images.length;
-                for (var i = 0; i < this.images.length - 1; i++) {
-                    this.dots.push(Math.floor(x * (i + 1)));
-                }
-                this.$refs.slider.setValue(this.dots);
-            }
-        },
         getPercentage: function(index) {
-            if (this.images.length == 1) {
-                return 100;
-            } else if (index == 0) {
-                return Array.isArray(this.dots) ? this.dots[0] : this.dots;
-            } else if (index == this.images.length - 1) {
-                return 100 - (Array.isArray(this.dots) ? this.dots[index - 1] : this.dots);
-            }
-
-            return this.dots[index] - this.dots[index - 1];
-        },
-        onChange(value) {
-            // console.log(value, this.dots);
+            return this.percentages[index];
         },
     },
 };

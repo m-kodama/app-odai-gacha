@@ -2630,6 +2630,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2651,15 +2652,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
+    var _this = this;
+
     return {
       process: function process(dotsPos) {
-        console.log("dotsPos", dotsPos);
         var colorStyle = {
           backgroundColor: "#40BFC1"
         };
 
-        if (dotsPos.length === 0) {
-          return [0, 100, colorStyle];
+        if (_this.percentages.length === 1 && dotsPos.length <= 1 && dotsPos[0] === 100) {
+          return [[0, 100, colorStyle], [100, 100, {
+            display: "none"
+          }]];
         }
 
         var process = [[0, dotsPos[0], colorStyle]];
@@ -2673,15 +2677,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  // watch: {
-  //     // この関数は question が変わるごとに実行されます。
-  //     dots: function(newValue, oldValue) {
-  //         if (oldValue && newValue.length !== oldValue.length) {
-  //             console.log(1, newValue);
-  //             this.$refs.slider.setValue(newValue);
-  //         }
-  //     },
-  // },
   computed: {
     percentages: function percentages() {
       return this.rarities.map(function (r) {
@@ -2690,20 +2685,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     dots: {
       get: function get() {
-        if (this.percentages.length === 0) {
-          return [];
+        if (this.percentages.length <= 1) {
+          return [100];
         }
 
-        var dots = [];
         var total = 0;
         var ret = this.percentages.slice(0, -1).map(function (p) {
           return total += p;
         });
-        console.log("dots.get", ret);
         return ret;
       },
       set: function set(value) {
-        console.log("value", value);
         var dots = Array.isArray(value) ? value : [value];
         var percentages = [dots[0]];
 
@@ -2712,12 +2704,33 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         percentages.push(100 - dots[dots.length - 1]);
-        console.log("dots.set", percentages);
         this.$emit("change", percentages);
       }
+    },
+    dotOptions: function dotOptions() {
+      var option = {
+        disabled: false
+      };
+      var length = this.dots.length;
+      var options = Array(length).fill(option);
+
+      if (this.percentages.length === 1 && this.dots[length - 1] === 100) {
+        return options[length - 1] = {
+          disabled: true
+        };
+      }
+
+      return options;
     }
   },
   methods: {
+    getImagePath: function getImagePath(index) {
+      if (index < this.images.length) {
+        return "/img/".concat(this.images[index]);
+      }
+
+      return "";
+    },
     getPercentage: function getPercentage(index) {
       return this.percentages[index];
     }
@@ -3615,7 +3628,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     addRarity: function addRarity() {
-      var lastRarity;
+      var targetRarity;
       var index = 0;
       var _iteratorNormalCompletion6 = true;
       var _didIteratorError6 = false;
@@ -3626,7 +3639,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var rarity = _step6.value;
 
           if (rarity.probability > 0) {
-            lastRarity = rarity;
+            targetRarity = rarity;
             break;
           }
 
@@ -3647,16 +3660,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      this.updateProbability(index, lastRarity.probability - 1);
+      this.updateProbability(index, targetRarity.probability - 1);
       this.rarities.push(this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01"));
     },
     removeRarity: function removeRarity(index) {
+      if (this.rarities.length <= 1) {
+        return;
+      }
+
       var removed = this.rarities.splice(index, 1)[0];
 
       if (removed.rarityId !== null) {
         this.removedRarities.push(removed);
       }
 
+      var length = this.rarities.length;
+      var targetIndex = index < length ? index : length - 1;
+      this.updateProbability(targetIndex, this.rarities[targetIndex].probability + removed.probability);
       delete this.topics[removed.id];
     },
     updateRarityName: function updateRarityName(index, rarityName) {
@@ -7186,7 +7206,8 @@ var render = function() {
           "enable-cross": false,
           "min-range": 1,
           min: 1,
-          duration: 0.2
+          duration: 0.2,
+          "dot-options": _vm.dotOptions
         },
         scopedSlots: _vm._u([
           {
@@ -7211,7 +7232,7 @@ var render = function() {
                       _c("v-img", {
                         staticClass: "image",
                         attrs: {
-                          src: "/img/" + _vm.images[index],
+                          src: _vm.getImagePath(index),
                           "aspect-ratio": "1",
                           contain: ""
                         }

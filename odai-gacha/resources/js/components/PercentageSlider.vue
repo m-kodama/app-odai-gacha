@@ -10,11 +10,12 @@
             :min-range="1"
             :min="1"
             :duration="0.2"
+            :dot-options="dotOptions"
         >
             <template v-slot:process="{ start, end, style, index }">
                 <div class="vue-slider-process" :style="style">
                     <div :class="['merge-tooltip', 'vue-slider-dot-tooltip-inner', 'vue-slider-dot-tooltip-inner-top']">
-                        <v-img :src="`/img/${images[index]}`" aspect-ratio="1" contain class="image"></v-img>
+                        <v-img :src="getImagePath(index)" aspect-ratio="1" contain class="image"></v-img>
                         {{ getPercentage(index) }}%
                     </div>
                 </div>
@@ -48,10 +49,12 @@ export default {
     data: function() {
         return {
             process: dotsPos => {
-                console.log("dotsPos", dotsPos);
                 const colorStyle = { backgroundColor: "#40BFC1" };
-                if (dotsPos.length === 0) {
-                    return [0, 100, colorStyle];
+                if (this.percentages.length === 1 && dotsPos.length <= 1 && dotsPos[0] === 100) {
+                    return [
+                        [0, 100, colorStyle],
+                        [100, 100, { display: "none" }],
+                    ];
                 }
                 const process = [[0, dotsPos[0], colorStyle]];
                 for (let i = 1, n = dotsPos.length; i < n; i++) {
@@ -62,44 +65,46 @@ export default {
             },
         };
     },
-    // watch: {
-    //     // この関数は question が変わるごとに実行されます。
-    //     dots: function(newValue, oldValue) {
-    //         if (oldValue && newValue.length !== oldValue.length) {
-    //             console.log(1, newValue);
-    //             this.$refs.slider.setValue(newValue);
-    //         }
-    //     },
-    // },
     computed: {
         percentages() {
             return this.rarities.map(r => r.probability);
         },
         dots: {
             get() {
-                if (this.percentages.length === 0) {
-                    return [];
+                if (this.percentages.length <= 1) {
+                    return [100];
                 }
-                const dots = [];
                 let total = 0;
                 const ret = this.percentages.slice(0, -1).map(p => (total += p));
-                console.log("dots.get", ret);
                 return ret;
             },
             set(value) {
-                console.log("value", value);
                 const dots = Array.isArray(value) ? value : [value];
                 const percentages = [dots[0]];
                 for (let i = 1, n = dots.length; i < n; i++) {
                     percentages.push(dots[i] - dots[i - 1]);
                 }
                 percentages.push(100 - dots[dots.length - 1]);
-                console.log("dots.set", percentages);
                 this.$emit("change", percentages);
             },
         },
+        dotOptions() {
+            const option = { disabled: false };
+            const length = this.dots.length;
+            const options = Array(length).fill(option);
+            if (this.percentages.length === 1 && this.dots[length - 1] === 100) {
+                return (options[length - 1] = { disabled: true });
+            }
+            return options;
+        },
     },
     methods: {
+        getImagePath: function(index) {
+            if (index < this.images.length) {
+                return `/img/${this.images[index]}`;
+            }
+            return "";
+        },
         getPercentage: function(index) {
             return this.percentages[index];
         },

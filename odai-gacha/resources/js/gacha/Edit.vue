@@ -612,23 +612,30 @@ export default {
             };
         },
         addRarity() {
-            let lastRarity;
+            let targetRarity;
             let index = 0;
             for (const rarity of this.rarities) {
                 if (rarity.probability > 0) {
-                    lastRarity = rarity;
+                    targetRarity = rarity;
                     break;
                 }
                 index++;
             }
-            this.updateProbability(index, lastRarity.probability - 1);
+            this.updateProbability(index, targetRarity.probability - 1);
             this.rarities.push(this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01"));
         },
         removeRarity(index) {
+            if (this.rarities.length <= 1) {
+                return;
+            }
             const removed = this.rarities.splice(index, 1)[0];
             if (removed.rarityId !== null) {
                 this.removedRarities.push(removed);
             }
+            const length = this.rarities.length;
+            const targetIndex = index < length ? index : length - 1;
+            this.updateProbability(targetIndex, this.rarities[targetIndex].probability + removed.probability);
+
             delete this.topics[removed.id];
         },
         updateRarityName(index, rarityName) {

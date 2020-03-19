@@ -54,7 +54,7 @@
                                         <v-tooltip top>
                                             <template v-slot:activator="{ on }">
                                                 <div
-                                                    style="border-radius: 4px; background:rgba(0,0,0,.12); height: 100%; width:100%; user-select:none;"
+                                                    style="border-radius: 4px; background:rgba(0,0,0,.12); height: 283px; width:100%; user-select:none;"
                                                     class="d-flex flex-column justify-center align-center"
                                                     v-on="on"
                                                 >
@@ -92,7 +92,7 @@
                                             }
                                         "
                                     ></PercentageSlider>
-                                    <div class="mb-4">
+                                    <div class="mb-4" style="max-height: 500px; overflow-y: scroll;">
                                         <template v-for="(rarity, index) in rarities">
                                             <div class="d-flex align-center mb-2" :key="rarity.id">
                                                 <v-menu
@@ -839,5 +839,11 @@ export default {
 }
 .rarity-image-selection-selected {
     opacity: 0.3;
+}
+</style>
+
+<style>
+.v-text-field__details {
+    height: 18px !important;
 }
 </style>

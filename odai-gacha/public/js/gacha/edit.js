@@ -2690,10 +2690,9 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         var total = 0;
-        var ret = this.percentages.slice(0, -1).map(function (p) {
+        return this.percentages.slice(0, -1).map(function (p) {
           return total += p;
         });
-        return ret;
       },
       set: function set(value) {
         var dots = Array.isArray(value) ? value : [value];
@@ -3536,10 +3535,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var mapRarityIdToId = new Map(this.rarities.map(function (r) {
         return [r.rarityId, r.id];
-      }));
-      console.log(this.rarities);
-      console.log(mapRarityIdToId);
-      console.log(this._topics);
+      })); // console.log(this.rarities);
+      // console.log(mapRarityIdToId);
+      // console.log(this._topics);
+
       this.topics = {};
       var _iteratorNormalCompletion3 = true;
       var _didIteratorError3 = false;
@@ -3664,9 +3663,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.updateProbability(index, targetRarity.probability - 1);
-      this.rarities.push(this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01"));
+      var newRarity = this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01");
+      this.rarities.push(newRarity);
+      this.addTopic(newRarity.id);
     },
     removeRarity: function removeRarity(index) {
+      var _this2 = this;
+
       if (this.rarities.length <= 1) {
         return;
       }
@@ -3681,7 +3684,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var targetIndex = index < length ? index : length - 1;
       this.updateProbability(targetIndex, this.rarities[targetIndex].probability + removed.probability);
       this.topics[removed.id].forEach(function (topic, index) {
-        removeTopic(index, removed.id);
+        _this2.removeTopic(index, removed.id);
       });
       delete this.topics[removed.id];
     },
@@ -3734,7 +3737,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     addTopic: function addTopic() {
-      var rarityId = this.rarities[this.tab].id;
+      var _rarityId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var rarityId = _rarityId === null ? this.rarities[this.tab].id : _rarityId;
 
       if (!this.topics[rarityId]) {
         this.$set(this.topics, rarityId, []);
@@ -3801,7 +3806,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this2 = this;
+        var _this3 = this;
 
         var sortedRarities, rarities, idRarityMap, topics, _i5, _Object$keys5, id, _topics, _iteratorNormalCompletion9, _didIteratorError9, _iteratorError9, _iterator9, _step9, topic, request, method;
 
@@ -3913,20 +3918,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   topics: topics,
                   removedTopics: this.removedTopics,
                   removedRarities: this.removedRarities
-                };
-                console.log(request);
+                }; // console.log(request);
+
                 method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);
-                _context.next = 46;
+                _context.next = 45;
                 return method.then(function (res) {
-                  _this2.dialogState = "success";
+                  _this3.dialogState = "success";
                 })["catch"](function (error) {
-                  _this2.dialogState = "failure"; // console.log(error.response.data.errors);
+                  _this3.dialogState = "failure"; // console.log(error.response.data.errors);
                 });
 
-              case 46:
+              case 45:
                 return _context.abrupt("return", _context.sent);
 
-              case 47:
+              case 46:
               case "end":
                 return _context.stop();
             }
@@ -3961,7 +3966,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _deleteGacha = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this3 = this;
+        var _this4 = this;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -3972,9 +3977,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 this.dialog = true;
                 _context2.next = 5;
                 return axios["delete"]("/gacha/".concat(this._gacha.gacha_id), {}).then(function (res) {
-                  _this3.dialogState = "success";
+                  _this4.dialogState = "success";
                 })["catch"](function (error) {
-                  _this3.dialogState = "failure"; // console.log(error.response.data.errors);
+                  _this4.dialogState = "failure"; // console.log(error.response.data.errors);
                 });
 
               case 5:
@@ -3995,7 +4000,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onPasswordConfirm = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(password) {
-        var _this4 = this;
+        var _this5 = this;
 
         var request;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -4008,10 +4013,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
                 _context3.next = 3;
                 return axios.post("/api/gacha/".concat(this._gacha.gacha_id, "/auth"), request).then(function (res) {
-                  _this4.showPasswordDialog = false;
-                  _this4.dialogState = "confirm";
-                  _this4.dialogAction = "delete";
-                  _this4.dialog = true;
+                  _this5.showPasswordDialog = false;
+                  _this5.dialogState = "confirm";
+                  _this5.dialogAction = "delete";
+                  _this5.dialog = true;
                   return true;
                 })["catch"](function (error) {
                   return false;

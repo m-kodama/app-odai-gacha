@@ -167,9 +167,6 @@ class GachaService
                 ];
                 DB::table('rarity')->updateOrInsert(['rarity_id' => $rarity_id], $params);
             }
-            foreach ($request['removedRarities'] as $rarity) {
-                Rarity::where('rarity_id', '=', $rarity['rarityId'])->delete();
-            }
             // トピック
             foreach ($request['topics'] as $topic) {
                 $topic_id = $topic['topicId'] ?? Ulid::generate();
@@ -186,6 +183,9 @@ class GachaService
             }
             foreach ($request['removedTopics'] as $topic) {
                 Topic::where('topic_id', '=', $topic['topicId'])->delete();
+            }
+            foreach ($request['removedRarities'] as $rarity) {
+                Rarity::where('rarity_id', '=', $rarity['rarityId'])->delete();
             }
             $gacha_id = $gacha->gacha_id;
         } catch (Exception $e) {

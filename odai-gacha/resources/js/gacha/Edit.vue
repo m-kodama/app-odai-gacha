@@ -586,9 +586,9 @@ export default {
                     return [r.rarityId, r.id];
                 }),
             );
-            console.log(this.rarities);
-            console.log(mapRarityIdToId);
-            console.log(this._topics);
+            // console.log(this.rarities);
+            // console.log(mapRarityIdToId);
+            // console.log(this._topics);
             this.topics = {};
             for (const rarity of this.rarities) {
                 this.$set(this.topics, rarity.id, []);
@@ -624,7 +624,9 @@ export default {
                 index++;
             }
             this.updateProbability(index, targetRarity.probability - 1);
-            this.rarities.push(this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01"));
+            const newRarity = this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01");
+            this.rarities.push(newRarity);
+            this.addTopic(newRarity.id);
         },
         removeRarity(index) {
             if (this.rarities.length <= 1) {
@@ -639,7 +641,7 @@ export default {
             this.updateProbability(targetIndex, this.rarities[targetIndex].probability + removed.probability);
 
             this.topics[removed.id].forEach((topic, index) => {
-                removeTopic(index, removed.id);
+                this.removeTopic(index, removed.id);
             });
             delete this.topics[removed.id];
         },
@@ -663,8 +665,8 @@ export default {
         Topic(value = "", topicId = null) {
             return { value, id: this.topicCount++, topicId };
         },
-        addTopic() {
-            const rarityId = this.rarities[this.tab].id;
+        addTopic(_rarityId = null) {
+            const rarityId = _rarityId === null ? this.rarities[this.tab].id : _rarityId;
             if (!this.topics[rarityId]) {
                 this.$set(this.topics, rarityId, []);
             }
@@ -723,7 +725,7 @@ export default {
                 removedTopics: this.removedTopics,
                 removedRarities: this.removedRarities,
             };
-            console.log(request);
+            // console.log(request);
             const method = this.isEdit
                 ? axios.put(`/gacha/${this._gacha.gacha_id}`, request)
                 : axios.post(`/gacha`, request);

@@ -75,8 +75,7 @@ export default {
                     return [100];
                 }
                 let total = 0;
-                const ret = this.percentages.slice(0, -1).map(p => (total += p));
-                return ret;
+                return this.percentages.slice(0, -1).map(p => (total += p));
             },
             set(value) {
                 const dots = Array.isArray(value) ? value : [value];

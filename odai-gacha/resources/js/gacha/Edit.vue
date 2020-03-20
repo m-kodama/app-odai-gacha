@@ -154,6 +154,7 @@
                                                             updateRarityName(index, value);
                                                         }
                                                     "
+                                                    :rules="rules.rarity"
                                                 />
                                                 <div class="percentage-box mr-4 d-flex align-center justify-end pa-2">
                                                     <div>{{ rarity.probability }} %</div>
@@ -169,6 +170,9 @@
                                             </div>
                                         </template>
                                     </div>
+                                    <div class="mb-2 error--text" style="height:18px; font-size:12px;">
+                                        {{ raritiesError }}
+                                    </div>
                                     <div class="d-flex justify-center">
                                         <v-btn
                                             style="width: 50% !important; min-width: 120px; color: #333;"
@@ -176,6 +180,7 @@
                                             rounded
                                             depressed
                                             @click="addRarity()"
+                                            :disabled="rarities.length >= 12"
                                         >
                                             <v-icon leff>mdi-plus</v-icon>レア度追加
                                         </v-btn>
@@ -207,7 +212,7 @@
                                                         :value="topic.value"
                                                         @change="
                                                             value => {
-                                                                onTopicUpdated(
+                                                                updateTopic(
                                                                     value,
                                                                     index,
                                                                     rarity.id,
@@ -468,7 +473,12 @@ export default {
                     v => !!v || "お題には1文字以上入力してください",
                     v => v === null || v.length <= 30 || "お題は30文字以内で入力してください",
                 ],
+                rarity: [
+                    v => !!v || "レア度には1文字以上入力してください",
+                    v => v === null || v.length <= 20 || "レア度は20文字以内で入力してください",
+                ],
             },
+            raritiesError: "",
             topicsError: "",
         };
     },
@@ -628,10 +638,21 @@ export default {
             const targetIndex = index < length ? index : length - 1;
             this.updateProbability(targetIndex, this.rarities[targetIndex].probability + removed.probability);
 
+            this.topics[removed.id].forEach((topic, index) => {
+                removeTopic(index, removed.id);
+            });
             delete this.topics[removed.id];
         },
         updateRarityName(index, rarityName) {
             this.rarities[index].rarityName = rarityName;
+            // 以下バリデーション
+            for (const rarity of this.rarities) {
+                if (rarity.rarityName === null || rarity.rarityName.length < 1 || rarity.rarityName.length > 20) {
+                    this.raritiesError = "レア度は1〜20文字で入力してください";
+                    return;
+                }
+            }
+            this.raritiesError = "";
         },
         updateRarityImage(index, rarityImageId) {
             this.rarities[index].rarityImageId = rarityImageId;
@@ -649,8 +670,8 @@ export default {
             }
             this.topics[rarityId].push(this.Topic());
         },
-        removeTopic(index) {
-            const rarityId = this.rarities[this.tab].id;
+        removeTopic(index, _rarityId = null) {
+            const rarityId = _rarityId === null ? this.rarities[this.tab].id : _rarityId;
             const removed = this.topics[rarityId].splice(index, 1)[0];
             if (removed.topicId !== null) {
                 this.removedTopics.push(removed);
@@ -661,7 +682,7 @@ export default {
             const moveTopic = this.topics[rarityId].splice(index, 1)[0];
             this.topics[id].push(moveTopic);
         },
-        onTopicUpdated(value, index, rarityId, id, topicId) {
+        updateTopic(value, index, rarityId, id, topicId) {
             this.topics[rarityId][index] = { value, id, topicId };
             // 以下バリデーション
             for (const key of Object.keys(this.topics)) {

@@ -3271,14 +3271,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -7516,94 +7508,65 @@ var render = function() {
                                 },
                                 [
                                   _c(
-                                    "v-tooltip",
+                                    "div",
                                     {
-                                      attrs: { top: "" },
-                                      scopedSlots: _vm._u([
-                                        {
-                                          key: "activator",
-                                          fn: function(ref) {
-                                            var on = ref.on
-                                            return [
-                                              _c(
-                                                "div",
-                                                _vm._g(
-                                                  {
-                                                    staticClass:
-                                                      "d-flex flex-column justify-center align-center",
-                                                    staticStyle: {
-                                                      "border-radius": "4px",
-                                                      background:
-                                                        "rgba(0,0,0,.12)",
-                                                      height: "283px",
-                                                      width: "100%",
-                                                      "user-select": "none"
-                                                    }
-                                                  },
-                                                  on
-                                                ),
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass: "mb-3",
-                                                      attrs: {
-                                                        color:
-                                                          "rgba(0,0,0,.26)",
-                                                        large: ""
-                                                      }
-                                                    },
-                                                    [_vm._v("mdi-cloud-upload")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass: "mb-1",
-                                                      staticStyle: {
-                                                        color:
-                                                          "rgba(0,0,0,.26)",
-                                                        "font-size": "0.9rem",
-                                                        "font-weight": "bold"
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                                                    サムネイル画像\n                                                "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticStyle: {
-                                                        color:
-                                                          "rgba(0,0,0,.26)",
-                                                        "font-size": "0.7rem"
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                                                    (960 x 600)\n                                                "
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ]
-                                          }
-                                        }
-                                      ])
+                                      staticClass:
+                                        "d-flex flex-column justify-center align-center secondary",
+                                      staticStyle: {
+                                        "border-radius": "4px",
+                                        height: "284px",
+                                        width: "100%",
+                                        "user-select": "none"
+                                      }
                                     },
                                     [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "mb-3",
+                                          attrs: {
+                                            color: "rgba(0,0,0,.26)",
+                                            large: ""
+                                          }
+                                        },
+                                        [_vm._v("mdi-cloud-upload")]
+                                      ),
                                       _vm._v(" "),
-                                      _c("span", [_vm._v("現在準備中です...")])
-                                    ]
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "mb-1",
+                                          staticStyle: {
+                                            color: "rgba(0,0,0,.26)",
+                                            "font-size": "0.9rem",
+                                            "font-weight": "bold"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            サムネイル画像\n                                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticStyle: {
+                                            color: "rgba(0,0,0,.26)",
+                                            "font-size": "0.7rem"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            (960 x 600)\n                                        "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
                                   )
-                                ],
-                                1
+                                ]
                               )
                             ]),
                             _vm._v(" "),

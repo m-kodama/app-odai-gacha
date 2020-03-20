@@ -51,29 +51,21 @@
                                         ></v-textarea>
                                     </div>
                                     <div style="width: 200px; padding-top:27px;" class="ml-4">
-                                        <v-tooltip top>
-                                            <template v-slot:activator="{ on }">
-                                                <div
-                                                    style="border-radius: 4px; background:rgba(0,0,0,.12); height: 283px; width:100%; user-select:none;"
-                                                    class="d-flex flex-column justify-center align-center"
-                                                    v-on="on"
-                                                >
-                                                    <v-icon color="rgba(0,0,0,.26)" large class="mb-3"
-                                                        >mdi-cloud-upload</v-icon
-                                                    >
-                                                    <div
-                                                        style="color: rgba(0,0,0,.26); font-size:0.9rem; font-weight: bold;"
-                                                        class="mb-1"
-                                                    >
-                                                        サムネイル画像
-                                                    </div>
-                                                    <div style="color: rgba(0,0,0,.26); font-size:0.7rem;">
-                                                        (960 x 600)
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <span>現在準備中です...</span>
-                                        </v-tooltip>
+                                        <div
+                                            style="border-radius: 4px; height: 284px; width:100%; user-select:none;"
+                                            class="d-flex flex-column justify-center align-center secondary"
+                                        >
+                                            <v-icon color="rgba(0,0,0,.26)" large class="mb-3">mdi-cloud-upload</v-icon>
+                                            <div
+                                                style="color: rgba(0,0,0,.26); font-size:0.9rem; font-weight: bold;"
+                                                class="mb-1"
+                                            >
+                                                サムネイル画像
+                                            </div>
+                                            <div style="color: rgba(0,0,0,.26); font-size:0.7rem;">
+                                                (960 x 600)
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- レア度 -->

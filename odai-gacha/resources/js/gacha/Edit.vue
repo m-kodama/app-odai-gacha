@@ -51,21 +51,42 @@
                                         ></v-textarea>
                                     </div>
                                     <div style="width: 200px; padding-top:27px;" class="ml-4">
-                                        <div
-                                            style="border-radius: 4px; height: 284px; width:100%; user-select:none;"
+                                        <label
+                                            for="thumbnail-form"
+                                            style="border-radius: 4px; height: 284px; width:100%; user-select:none; cursor:pointer; overflow: hidden;"
                                             class="d-flex flex-column justify-center align-center secondary"
                                         >
-                                            <v-icon color="rgba(0,0,0,.26)" large class="mb-3">mdi-cloud-upload</v-icon>
-                                            <div
-                                                style="color: rgba(0,0,0,.26); font-size:0.9rem; font-weight: bold;"
-                                                class="mb-1"
-                                            >
-                                                サムネイル画像
-                                            </div>
-                                            <div style="color: rgba(0,0,0,.26); font-size:0.7rem;">
-                                                (960 x 600)
-                                            </div>
-                                        </div>
+                                            <input
+                                                type="file"
+                                                name="image"
+                                                accept="image/*"
+                                                class="form-control-file"
+                                                id="thumbnail-form"
+                                                style="display:none;"
+                                                @change="updateGachaImage"
+                                            />
+                                            <template v-if="preview !== null">
+                                                <img
+                                                    :src="preview"
+                                                    alt="preview"
+                                                    style="width:100%;height:100%;object-fit: cover;"
+                                                />
+                                            </template>
+                                            <template v-else>
+                                                <v-icon color="rgba(0,0,0,.26)" large class="mb-3"
+                                                    >mdi-cloud-upload</v-icon
+                                                >
+                                                <div
+                                                    style="color: rgba(0,0,0,.26); font-size:0.9rem; font-weight: bold;"
+                                                    class="mb-1"
+                                                >
+                                                    サムネイル画像
+                                                </div>
+                                                <div style="color: rgba(0,0,0,.26); font-size:0.7rem;">
+                                                    (960 x 600)
+                                                </div>
+                                            </template>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- レア度 -->
@@ -409,6 +430,7 @@ export default {
             dialogAction: "none", // "create" || "edit" || "delete" || "none"
             showPasswordDialog: false,
             resetPasswordDialog: () => {},
+            preview: null,
             gacha: {
                 gachaId: null,
                 gachaName: null,
@@ -603,6 +625,21 @@ export default {
         }
     },
     methods: {
+        updateGachaImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.addEventListener(
+                "load",
+                () => {
+                    this.preview = reader.result;
+                },
+                false,
+            );
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        },
         createRarity(rarityId = null, rarityName = "", probability = "", rarityImageId = null) {
             return {
                 id: this.rarityCount++,

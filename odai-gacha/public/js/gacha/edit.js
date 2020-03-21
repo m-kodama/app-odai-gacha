@@ -3275,6 +3275,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3306,6 +3327,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // "create" || "edit" || "delete" || "none"
       showPasswordDialog: false,
       resetPasswordDialog: function resetPasswordDialog() {},
+      preview: null,
       gacha: {
         gachaId: null,
         gachaName: null,
@@ -3615,6 +3637,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
+    updateGachaImage: function updateGachaImage(event) {
+      var _this2 = this;
+
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      reader.addEventListener("load", function () {
+        _this2.preview = reader.result;
+      }, false);
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    },
     createRarity: function createRarity() {
       var rarityId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var rarityName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
@@ -3668,7 +3703,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addTopic(newRarity.id);
     },
     removeRarity: function removeRarity(index) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.rarities.length <= 1) {
         return;
@@ -3684,7 +3719,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var targetIndex = index < length ? index : length - 1;
       this.updateProbability(targetIndex, this.rarities[targetIndex].probability + removed.probability);
       this.topics[removed.id].forEach(function (topic, index) {
-        _this2.removeTopic(index, removed.id);
+        _this3.removeTopic(index, removed.id);
       });
       delete this.topics[removed.id];
     },
@@ -3806,7 +3841,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this3 = this;
+        var _this4 = this;
 
         var sortedRarities, rarities, idRarityMap, topics, _i5, _Object$keys5, id, _topics, _iteratorNormalCompletion9, _didIteratorError9, _iteratorError9, _iterator9, _step9, topic, request, method;
 
@@ -3923,9 +3958,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 method = this.isEdit ? axios.put("/gacha/".concat(this._gacha.gacha_id), request) : axios.post("/gacha", request);
                 _context.next = 45;
                 return method.then(function (res) {
-                  _this3.dialogState = "success";
+                  _this4.dialogState = "success";
                 })["catch"](function (error) {
-                  _this3.dialogState = "failure"; // console.log(error.response.data.errors);
+                  _this4.dialogState = "failure"; // console.log(error.response.data.errors);
                 });
 
               case 45:
@@ -3966,7 +4001,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _deleteGacha = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this4 = this;
+        var _this5 = this;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -3977,9 +4012,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 this.dialog = true;
                 _context2.next = 5;
                 return axios["delete"]("/gacha/".concat(this._gacha.gacha_id), {}).then(function (res) {
-                  _this4.dialogState = "success";
+                  _this5.dialogState = "success";
                 })["catch"](function (error) {
-                  _this4.dialogState = "failure"; // console.log(error.response.data.errors);
+                  _this5.dialogState = "failure"; // console.log(error.response.data.errors);
                 });
 
               case 5:
@@ -4000,7 +4035,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _onPasswordConfirm = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(password) {
-        var _this5 = this;
+        var _this6 = this;
 
         var request;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -4013,10 +4048,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
                 _context3.next = 3;
                 return axios.post("/api/gacha/".concat(this._gacha.gacha_id, "/auth"), request).then(function (res) {
-                  _this5.showPasswordDialog = false;
-                  _this5.dialogState = "confirm";
-                  _this5.dialogAction = "delete";
-                  _this5.dialog = true;
+                  _this6.showPasswordDialog = false;
+                  _this6.dialogState = "confirm";
+                  _this6.dialogAction = "delete";
+                  _this6.dialog = true;
                   return true;
                 })["catch"](function (error) {
                   return false;
@@ -7559,7 +7594,7 @@ var render = function() {
                                 },
                                 [
                                   _c(
-                                    "div",
+                                    "label",
                                     {
                                       staticClass:
                                         "d-flex flex-column justify-center align-center secondary",
@@ -7567,55 +7602,86 @@ var render = function() {
                                         "border-radius": "4px",
                                         height: "284px",
                                         width: "100%",
-                                        "user-select": "none"
-                                      }
+                                        "user-select": "none",
+                                        cursor: "pointer",
+                                        overflow: "hidden"
+                                      },
+                                      attrs: { for: "thumbnail-form" }
                                     },
                                     [
-                                      _c(
-                                        "v-icon",
-                                        {
-                                          staticClass: "mb-3",
-                                          attrs: {
-                                            color: "rgba(0,0,0,.26)",
-                                            large: ""
-                                          }
+                                      _c("input", {
+                                        staticClass: "form-control-file",
+                                        staticStyle: { display: "none" },
+                                        attrs: {
+                                          type: "file",
+                                          name: "image",
+                                          accept: "image/*",
+                                          id: "thumbnail-form"
                                         },
-                                        [_vm._v("mdi-cloud-upload")]
-                                      ),
+                                        on: { change: _vm.updateGachaImage }
+                                      }),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "mb-1",
-                                          staticStyle: {
-                                            color: "rgba(0,0,0,.26)",
-                                            "font-size": "0.9rem",
-                                            "font-weight": "bold"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                            サムネイル画像\n                                        "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticStyle: {
-                                            color: "rgba(0,0,0,.26)",
-                                            "font-size": "0.7rem"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                            (960 x 600)\n                                        "
-                                          )
-                                        ]
-                                      )
+                                      _vm.preview !== null
+                                        ? [
+                                            _c("img", {
+                                              staticStyle: {
+                                                width: "100%",
+                                                height: "100%",
+                                                "object-fit": "cover"
+                                              },
+                                              attrs: {
+                                                src: _vm.preview,
+                                                alt: "preview"
+                                              }
+                                            })
+                                          ]
+                                        : [
+                                            _c(
+                                              "v-icon",
+                                              {
+                                                staticClass: "mb-3",
+                                                attrs: {
+                                                  color: "rgba(0,0,0,.26)",
+                                                  large: ""
+                                                }
+                                              },
+                                              [_vm._v("mdi-cloud-upload")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "mb-1",
+                                                staticStyle: {
+                                                  color: "rgba(0,0,0,.26)",
+                                                  "font-size": "0.9rem",
+                                                  "font-weight": "bold"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                サムネイル画像\n                                            "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticStyle: {
+                                                  color: "rgba(0,0,0,.26)",
+                                                  "font-size": "0.7rem"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                (960 x 600)\n                                            "
+                                                )
+                                              ]
+                                            )
+                                          ]
                                     ],
-                                    1
+                                    2
                                   )
                                 ]
                               )

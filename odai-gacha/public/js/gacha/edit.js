@@ -8353,7 +8353,11 @@ var render = function() {
                                           rounded: "",
                                           depressed: ""
                                         },
-                                        on: { click: _vm.addTopic }
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.addTopic(null)
+                                          }
+                                        }
                                       },
                                       [
                                         _c("v-icon", { attrs: { leff: "" } }, [

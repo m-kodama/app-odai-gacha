@@ -301,7 +301,7 @@
                                             color="secondary"
                                             rounded
                                             depressed
-                                            @click="addTopic"
+                                            @click="addTopic(null)"
                                         >
                                             <v-icon leff>mdi-plus</v-icon>お題追加
                                         </v-btn>

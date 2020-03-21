@@ -1,16 +1,21 @@
 <template>
     <v-card outlined style="height:100%;">
-        <v-img
-            :src="`https://picsum.photos/seed/${gacha.gacha_id}/510/300`"
-            lazy-src="../img/default_image.png"
-            height="200px"
-        >
-            <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                </v-row>
-            </template>
-        </v-img>
+        <template v-if="gacha.image_path !== null">
+            <img :src="gacha.image_path" alt="preview" style="width:100%; height:200px; object-fit: cover;" />
+        </template>
+        <template v-else>
+            <v-img
+                :src="`https://picsum.photos/seed/${gacha.gacha_id}/510/300`"
+                lazy-src="../img/default_image.png"
+                height="200px"
+            >
+                <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                </template>
+            </v-img>
+        </template>
         <transition name="slide">
             <div class="detail secondary" v-show="showDetail">
                 <div class="ma-3">

@@ -26,7 +26,8 @@ const GACHA = {
         if (rval < accum) {
           const odai = new Odai(
             config[groupIndex].texts[textIndex],
-            config[groupIndex].rarity
+            config[groupIndex].rarity,
+            config[groupIndex].rarityImage
           );
           config[groupIndex].texts.splice(textIndex, 1);
           return odai;
@@ -40,8 +41,9 @@ const GACHA = {
 };
 
 class Odai {
-  constructor(text, rarity) {
+  constructor(text, rarity, rarityImage) {
     this.text = text;
     this.rarity = rarity;
+    this.rarityImage = rarityImage;
   }
 }

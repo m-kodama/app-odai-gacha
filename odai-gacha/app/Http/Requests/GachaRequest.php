@@ -48,6 +48,11 @@ class GachaRequest extends FormRequest
                     }
                 }
             ],
+            'rarity' => 'required|array|min:1|max:12',
+            'rarity.*.rarity' => 'required|integer',
+            'rarity.*.rarityName' => 'required|string|max:20',
+            'rarity.*.probability' => 'integer|',
+            'rarity.*.rarityImageId' => 'required|string',
             'topics' => 'required|array|min:1|max:200',
             'topics.*.topic' => 'required|string|max:30',
             'topics.*.rarity' => 'required'

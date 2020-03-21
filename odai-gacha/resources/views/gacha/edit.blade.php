@@ -15,6 +15,7 @@
       :_gacha="{{ $gacha ?? 0}}"
       :_rarity="{{ $rarity ?? 0}}"
       :_topics="{{ $topics ?? 0}}"
+      :rarity-images="{{ $rarity_images ?? 0}}"
     >
     </Edit>
   </div>

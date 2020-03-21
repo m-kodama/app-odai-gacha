@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Gacha;
 use App\Models\Topic;
 use App\Models\Rarity;
+use App\Models\RarityImage;
 use App\Http\Requests\GachaRequest;
 
 class GachaService
@@ -41,9 +42,14 @@ class GachaService
     public function getGachaDetail(string $gacha_id)
     {
         $topics = DB::table('gacha_master')
-            ->select(DB::raw('gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability'))
+            ->select(
+                DB::raw(
+                    'gacha_master.gacha_name, topics.topic, rarity.rarity, rarity.probability, rarity_images.rarity_image_path'
+                )
+            )
             ->join('topics', 'topics.gacha_id', '=', 'gacha_master.gacha_id')
             ->join('rarity', 'rarity.rarity_id', '=', 'topics.rarity_id')
+            ->join('rarity_images', 'rarity_images.rarity_image_id', '=', 'rarity.rarity_image_id')
             ->where('gacha_master.gacha_id', $gacha_id)
             ->orderBy('gacha_master.gacha_id', 'asc')
             ->orderBy('rarity', 'desc')
@@ -57,6 +63,7 @@ class GachaService
             if (!isset($odai[$topic->rarity]['texts'])) {
                 $odai[$topic->rarity]['rarity'] = $topic->rarity;
                 $odai[$topic->rarity]['prob'] = $topic->probability;
+                $odai[$topic->rarity]['rarityImage'] = $topic->rarity_image_path;
                 $odai[$topic->rarity]['texts'] = [];
             }
 
@@ -74,6 +81,7 @@ class GachaService
             // ガチャマスタ
             $gacha = new Gacha();
             $gacha->gacha_name = $request['gacha']['gachaName'];
+            $gacha->image_path = $request['gacha']['imagePath'];
             $gacha->description = $request['gacha']['description'];
             $gacha->needUsePass = $request['gacha']['needUsePass'];
             $gacha->needEditPass = $request['gacha']['needEditPass'];
@@ -96,6 +104,7 @@ class GachaService
                     'rarity' => $rarity['rarity'],
                     'rarity_name' => $rarity['rarityName'],
                     'probability' => $rarity['probability'] * 10,
+                    'rarity_image_id' => $rarity['rarityImageId'],
                     'gacha_id' => $gacha->gacha_id,
                     'created_at' => $now,
                     'updated_at' => $now
@@ -132,6 +141,7 @@ class GachaService
         try {
             // ガチャマスタ
             $gacha->gacha_name = $request['gacha']['gachaName'];
+            $gacha->image_path = $request['gacha']['imagePath'];
             $gacha->description = $request['gacha']['description'];
             $gacha->needUsePass = $request['gacha']['needUsePass'];
             $gacha->needEditPass = $request['gacha']['needEditPass'];
@@ -153,6 +163,7 @@ class GachaService
                     'rarity' => $rarity['rarity'],
                     'rarity_name' => $rarity['rarityName'],
                     'probability' => $rarity['probability'] * 10,
+                    'rarity_image_id' => $rarity['rarityImageId'],
                     'gacha_id' => $gacha->gacha_id,
                     'updated_at' => $now
                 ];
@@ -174,6 +185,9 @@ class GachaService
             }
             foreach ($request['removedTopics'] as $topic) {
                 Topic::where('topic_id', '=', $topic['topicId'])->delete();
+            }
+            foreach ($request['removedRarities'] as $rarity) {
+                Rarity::where('rarity_id', '=', $rarity['rarityId'])->delete();
             }
             $gacha_id = $gacha->gacha_id;
         } catch (Exception $e) {
@@ -256,6 +270,11 @@ class GachaService
             return true;
         }
         return false;
+    }
+
+    public function getRarityImages()
+    {
+        return RarityImage::all();
     }
 }
 

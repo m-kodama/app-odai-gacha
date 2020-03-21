@@ -50,95 +50,187 @@
                                             :counter="500"
                                         ></v-textarea>
                                     </div>
-                                    <div style="width: 200px; padding-top:27px;" class="ml-4">
-                                        <v-tooltip top>
-                                            <template v-slot:activator="{ on }">
-                                                <div
-                                                    style="border-radius: 4px; background:rgba(0,0,0,.12); height: 100%; width:100%; user-select:none;"
-                                                    class="d-flex flex-column justify-center align-center"
-                                                    v-on="on"
+                                    <div style="width: 200px; padding-top:27px; position: relative;" class="ml-4">
+                                        <v-btn
+                                            v-if="gacha.imagePath !== null"
+                                            icon
+                                            @click="deleteGachaImage"
+                                            style="position: absolute; top: 31px; right: 4px; z-index:2;"
+                                        >
+                                            <v-icon>mdi-close</v-icon>
+                                        </v-btn>
+                                        <label
+                                            for="thumbnail-form"
+                                            style="border-radius: 4px; height: 284px; width:100%; user-select:none; cursor:pointer; overflow: hidden;"
+                                            class="d-flex flex-column justify-center align-center secondary"
+                                        >
+                                            <input
+                                                type="file"
+                                                name="image"
+                                                accept="image/*"
+                                                class="form-control-file"
+                                                id="thumbnail-form"
+                                                style="display:none;"
+                                                @change="updateGachaImage"
+                                            />
+                                            <template v-if="gacha.imagePath !== null">
+                                                <img
+                                                    :src="gacha.imagePath"
+                                                    alt="preview"
+                                                    style="width:100%;height:100%;object-fit: cover;"
+                                                />
+                                            </template>
+                                            <template v-else>
+                                                <v-icon color="rgba(0,0,0,.26)" large class="mb-3"
+                                                    >mdi-cloud-upload</v-icon
                                                 >
-                                                    <v-icon color="rgba(0,0,0,.26)" large class="mb-3"
-                                                        >mdi-cloud-upload</v-icon
-                                                    >
-                                                    <div
-                                                        style="color: rgba(0,0,0,.26); font-size:0.9rem; font-weight: bold;"
-                                                        class="mb-1"
-                                                    >
-                                                        サムネイル画像
-                                                    </div>
-                                                    <div style="color: rgba(0,0,0,.26); font-size:0.7rem;">
-                                                        (960 x 600)
-                                                    </div>
+                                                <div
+                                                    style="color: rgba(0,0,0,.26); font-size:0.9rem; font-weight: bold;"
+                                                    class="mb-1"
+                                                >
+                                                    サムネイル画像
+                                                </div>
+                                                <div style="color: rgba(0,0,0,.26); font-size:0.7rem;">
+                                                    (960 x 600)
                                                 </div>
                                             </template>
-                                            <span>現在準備中です...</span>
-                                        </v-tooltip>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- レア度 -->
-                                <v-tooltip top left>
-                                    <template v-slot:activator="{ on }">
-                                        <div class="mb-8" v-on="on">
-                                            <div class="form-title">レア度</div>
-                                            <div class="mb-4">
-                                                <template v-for="rarity in rarities">
-                                                    <div class="d-flex align-center mb-2" :key="rarity.rarity">
-                                                        <TextField
-                                                            class="flex-grow-1 mr-2"
-                                                            dense
-                                                            label="レア度の名前"
-                                                            disabled
-                                                            :value="rarity.rarityName"
-                                                        />
-                                                        <div class="mr-4" style="width:80px;">
-                                                            <TextField
-                                                                dense
-                                                                label="確率"
-                                                                suffix="%"
-                                                                type="number"
-                                                                disabled
-                                                                :value="rarity.probability"
-                                                                :clearable="false"
-                                                            />
-                                                        </div>
-                                                        <v-btn depressed color="#eeeeee" class="px-4" disabled>
-                                                            <v-icon color="grey darken-1">mdi-delete-forever</v-icon>
-                                                        </v-btn>
-                                                    </div>
-                                                </template>
-                                            </div>
-                                            <div class="d-flex justify-center">
-                                                <v-btn
-                                                    style="width: 50% !important; min-width: 120px; color: #333;"
-                                                    color="secondary"
-                                                    rounded
-                                                    depressed
-                                                    disabled
+                                <div class="mb-8">
+                                    <div class="form-title">レア度</div>
+                                    <PercentageSlider
+                                        class="mb-2"
+                                        title="排出率"
+                                        :images="images"
+                                        :rarities="rarities"
+                                        @change="
+                                            rarities => {
+                                                rarities.forEach((rarity, index) => {
+                                                    updateProbability(index, rarity);
+                                                });
+                                            }
+                                        "
+                                    ></PercentageSlider>
+                                    <div class="mb-4" style="max-height: 500px; overflow-y: scroll;">
+                                        <template v-for="(rarity, index) in rarities">
+                                            <div class="d-flex align-center mb-2" :key="rarity.id">
+                                                <v-menu
+                                                    transition="scale-transition"
+                                                    origin="center center"
+                                                    :nudge-left="(48 * 4 + 8 * 2 - 40) / 2"
+                                                    :nudge-top="(48 * 3 + 8 * 2 - 40) / 2"
                                                 >
-                                                    <v-icon leff>mdi-plus</v-icon>レア度追加
+                                                    <template v-slot:activator="{ on }">
+                                                        <div
+                                                            class="square-button mr-2 d-flex align-center justify-center pa-1"
+                                                            v-ripple
+                                                            v-on="on"
+                                                        >
+                                                            <v-img
+                                                                :src="
+                                                                    `/img/${rarityImageMap.get(rarity.rarityImageId)}`
+                                                                "
+                                                                aspect-ratio="1"
+                                                                contain
+                                                                v-if="rarity.rarityImageId !== null"
+                                                            ></v-img>
+                                                        </div>
+                                                    </template>
+                                                    <v-card
+                                                        class="d-flex align-center justify-start flex-wrap pa-2"
+                                                        :width="48 * 4 + 8 * 2"
+                                                    >
+                                                        <v-hover
+                                                            v-slot:default="{ hover }"
+                                                            v-for="rarityImage in rarityImages"
+                                                            :key="rarityImage.rarity_image_id"
+                                                        >
+                                                            <div
+                                                                class="pa-1"
+                                                                :class="{
+                                                                    'rarity-image-selection-hover': hover,
+                                                                    'rarity-image-selection-selected':
+                                                                        rarityImage.rarity_image_id ===
+                                                                        rarity.rarityImageId,
+                                                                }"
+                                                                v-ripple
+                                                                @click="
+                                                                    updateRarityImage(
+                                                                        index,
+                                                                        rarityImage.rarity_image_id,
+                                                                    )
+                                                                "
+                                                                style="height: 48px; width: 48px; border-radius: 4px; cursor: pointer;"
+                                                            >
+                                                                <v-img
+                                                                    :src="`/img/${rarityImage.rarity_image_path}`"
+                                                                    aspect-ratio="1"
+                                                                    contain
+                                                                ></v-img>
+                                                            </div>
+                                                        </v-hover>
+                                                    </v-card>
+                                                </v-menu>
+                                                <TextField
+                                                    class="flex-grow-1 mr-2"
+                                                    dense
+                                                    label="レア度の名前"
+                                                    :value="rarity.rarityName"
+                                                    @change="
+                                                        value => {
+                                                            updateRarityName(index, value);
+                                                        }
+                                                    "
+                                                    :rules="rules.rarity"
+                                                />
+                                                <div class="percentage-box mr-4 d-flex align-center justify-end pa-2">
+                                                    <div>{{ rarity.probability }} %</div>
+                                                </div>
+                                                <v-btn
+                                                    depressed
+                                                    color="#eeeeee"
+                                                    class="px-4"
+                                                    @click="removeRarity(index)"
+                                                >
+                                                    <v-icon color="grey darken-1">mdi-delete-forever</v-icon>
                                                 </v-btn>
                                             </div>
-                                        </div>
-                                    </template>
-                                    <span>現在準備中です...</span>
-                                </v-tooltip>
+                                        </template>
+                                    </div>
+                                    <div class="mb-2 error--text" style="height:18px; font-size:12px;">
+                                        {{ raritiesError }}
+                                    </div>
+                                    <div class="d-flex justify-center">
+                                        <v-btn
+                                            style="width: 50% !important; min-width: 120px; color: #333;"
+                                            color="secondary"
+                                            rounded
+                                            depressed
+                                            @click="addRarity()"
+                                            :disabled="rarities.length >= 12"
+                                        >
+                                            <v-icon leff>mdi-plus</v-icon>レア度追加
+                                        </v-btn>
+                                    </div>
+                                </div>
                                 <!-- お題 -->
                                 <div class="mb-8">
                                     <div class="form-title">お題</div>
                                     <v-tabs class="mb-4" height="40" v-model="tab" color="accent">
                                         <template v-for="rarity in rarities">
-                                            <v-tab :key="rarity.rarity">{{ rarity.rarityName }}</v-tab>
+                                            <v-tab :key="rarity.id">{{ rarity.rarityName }}</v-tab>
                                         </template>
                                     </v-tabs>
                                     <v-tabs-items
                                         v-model="tab"
                                         style="min-height: 60px; max-height: 500px; overflow-y: scroll;"
                                     >
-                                        <v-tab-item v-for="rarity in rarities" :key="rarity.rarity">
+                                        <v-tab-item v-for="rarity in rarities" :key="rarity.id">
                                             <transition-group name="topic-list" tag="div">
                                                 <div
-                                                    v-for="(topic, index) in topics[rarity.rarity]"
+                                                    v-for="(topic, index) in topics[rarity.id]"
                                                     class="d-flex align-center mb-2 topic-row"
                                                     :key="topic.id"
                                                 >
@@ -149,10 +241,10 @@
                                                         :value="topic.value"
                                                         @change="
                                                             value => {
-                                                                onTopicUpdated(
+                                                                updateTopic(
                                                                     value,
                                                                     index,
-                                                                    rarity.rarity,
+                                                                    rarity.id,
                                                                     topic.id,
                                                                     topic.topicId,
                                                                 );
@@ -178,9 +270,9 @@
                                                             <v-list-item
                                                                 style="font-size:0.5rerm;"
                                                                 v-for="rarity in rarities"
-                                                                :key="rarity.rarity"
-                                                                @click="changeTopicRarity(index, rarity.rarity)"
-                                                                :disabled="rarity.rarity === tab"
+                                                                :key="rarity.id"
+                                                                @click="changeTopicRarity(index, rarity.id)"
+                                                                :disabled="rarity.id === tab"
                                                             >
                                                                 <v-list-item-title>{{
                                                                     rarity.rarityName
@@ -209,7 +301,7 @@
                                             color="secondary"
                                             rounded
                                             depressed
-                                            @click="addTopic"
+                                            @click="addTopic(null)"
                                         >
                                             <v-icon leff>mdi-plus</v-icon>お題追加
                                         </v-btn>
@@ -295,135 +387,18 @@
                         </v-form>
                     </v-card>
                 </div>
-                <v-dialog v-model="dialog" persistent max-width="380">
-                    <v-card
-                        style="height: 350px; padding: 32px;"
-                        class="d-flex flex-column align-center justify-center"
-                    >
-                        <template v-if="dialogState === 'loading'">
-                            <div class="mb-10">
-                                <v-progress-circular
-                                    :size="64"
-                                    :width="7"
-                                    color="accent"
-                                    indeterminate
-                                ></v-progress-circular>
-                            </div>
-                            <div class="dialog-message mt-6">
-                                <template v-if="isEdit">更新中...</template>
-                                <template v-else>作成中...</template>
-                            </div>
-                        </template>
-                        <template v-if="dialogState === 'success'">
-                            <div class="mb-10">
-                                <v-icon color="accent" size="64" class="mb-2 lock-icon">mdi-check-outline</v-icon>
-                            </div>
-                            <div class="dialog-message mt-4">
-                                <template v-if="isEdit">
-                                    更新に成功しました
-                                </template>
-                                <template v-else>作成に成功しました</template>
-                                <br />
-                                <span class="dialog-sub-message">
-                                    ガチャ一覧ページに移動します
-                                </span>
-                            </div>
-                        </template>
-                        <template v-if="dialogState === 'failed'">
-                            <div class="mb-10">
-                                <v-icon color="primary" size="64" class="mb-2 lock-icon">
-                                    mdi-close-outline
-                                </v-icon>
-                            </div>
-                            <div class="dialog-message mt-4">
-                                <template v-if="isEdit">
-                                    更新に失敗しました
-                                </template>
-                                <template v-else>作成に失敗しました</template>
-                                <br />
-                                <span class="dialog-sub-message">通信状況を確認してください</span>
-                            </div>
-                            <v-btn class="mt-3" color="#eeeeee" rounded depressed @click="dialog = false" dense>
-                                閉じる
-                            </v-btn>
-                        </template>
-                    </v-card>
-                </v-dialog>
-                <v-dialog v-model="deleteDialog" persistent max-width="380">
-                    <v-card
-                        style="height: 350px; padding: 32px;"
-                        class="d-flex flex-column align-center justify-center"
-                    >
-                        <template v-if="deleteDialogState === 'confirm'">
-                            <div class="mb-10">
-                                <v-icon color="primary" size="64" class="mb-2 lock-icon">
-                                    mdi-delete-alert-outline
-                                </v-icon>
-                            </div>
-                            <div class="dialog-message mt-4">
-                                本当に削除しますか？<br />
-                                <span class="dialog-sub-message">削除したガチャは元に戻すことができません</span>
-                            </div>
-                            <div class="d-flex align-center justify-center mt-3">
-                                <v-btn
-                                    color="#eeeeee"
-                                    depressed
-                                    @click="deleteDialog = false"
-                                    dense
-                                    style="width:120px !important;"
-                                >
-                                    キャンセル
-                                </v-btn>
-                                <div style="width:16px;"></div>
-                                <v-btn
-                                    color="primary"
-                                    depressed
-                                    @click="deleteGacha"
-                                    dense
-                                    style="width:120px !important;"
-                                >
-                                    削除
-                                </v-btn>
-                            </div>
-                        </template>
-                        <template v-if="deleteDialogState === 'loading'">
-                            <div class="mb-10">
-                                <v-progress-circular
-                                    :size="64"
-                                    :width="7"
-                                    color="accent"
-                                    indeterminate
-                                ></v-progress-circular>
-                            </div>
-                            <div class="dialog-message mt-6">削除中...</div>
-                        </template>
-                        <template v-if="deleteDialogState === 'success'">
-                            <div class="mb-10">
-                                <v-icon color="accent" size="64" class="mb-2 lock-icon">
-                                    mdi-check-outline
-                                </v-icon>
-                            </div>
-                            <div class="dialog-message mt-4">
-                                削除に成功しました<br />
-                                <span class="dialog-sub-message">ガチャ一覧ページに移動します</span>
-                            </div>
-                        </template>
-                        <template v-if="deleteDialogState === 'failed'">
-                            <div class="mb-10">
-                                <v-icon color="primary" size="64" class="mb-2 lock-icon">
-                                    mdi-close-outline
-                                </v-icon>
-                            </div>
-                            <div class="dialog-message mt-4">
-                                削除に失敗しました<br />
-                                <span class="dialog-sub-message">通信状況を確認してください</span>
-                            </div>
-                            <v-btn class="mt-3" color="#eeeeee" rounded depressed @click="dialog = false" dense>
-                                閉じる
-                            </v-btn>
-                        </template>
-                    </v-card>
-                </v-dialog>
+                <EditDialog
+                    :show="dialog"
+                    @change="
+                        value => {
+                            dialog = value;
+                        }
+                    "
+                    :onComplete="moveTopPage"
+                    :onConfirm="onDeleteConfirm"
+                    :state="dialogState"
+                    :action="dialogAction"
+                />
                 <v-dialog v-model="showPasswordDialog" max-width="400" @click:outside="resetPasswordDialog">
                     <PasswordConfirmCard :onSubmit="onPasswordConfirm" @reset-event="setResetPasswordDialog($event)" />
                 </v-dialog>
@@ -436,17 +411,22 @@
 import Header from "../components/Header";
 import TextField from "../components/TextField";
 import PasswordConfirmCard from "../components/PasswordConfirmCard";
+import EditDialog from "../components/EditDialog";
+import PercentageSlider from "../components/PercentageSlider";
 
 export default {
     components: {
         Header,
         TextField,
         PasswordConfirmCard,
+        EditDialog,
+        PercentageSlider,
     },
     props: {
         _gacha: Object | Number,
         _rarity: Array | Number,
         _topics: Array | Number,
+        rarityImages: Array | Number,
     },
     data: function() {
         return {
@@ -454,9 +434,8 @@ export default {
             showPassword: false,
             tab: null,
             dialog: false,
-            dialogState: "loading", // loading or success or failed
-            deleteDialog: false,
-            deleteDialogState: "confirm",
+            dialogState: "none", // "loading" || "success" || "failure" || "confirm" || "none"
+            dialogAction: "none", // "create" || "edit" || "delete" || "none"
             showPasswordDialog: false,
             resetPasswordDialog: () => {},
             gacha: {
@@ -471,30 +450,40 @@ export default {
             },
             rarities: [
                 {
+                    id: 0,
                     rarityId: null,
                     rarity: 0,
                     rarityName: "ノーマル",
                     probability: 50,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X01",
                 },
                 {
+                    id: 1,
                     rarityId: null,
                     rarity: 1,
                     rarityName: "シルバー",
                     probability: 35,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X02",
                 },
                 {
+                    id: 2,
                     rarityId: null,
                     rarity: 2,
                     rarityName: "ゴールド",
                     probability: 13,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X03",
                 },
                 {
+                    id: 3,
                     rarityId: null,
                     rarity: 3,
                     rarityName: "プラチナ",
                     probability: 2,
+                    rarityImageId: "01E02KJWM2PHQT336MOP065X04",
                 },
             ],
+            rarityCount: 4,
+            removedRarities: [],
             topics: {},
             removedTopics: [],
             topicCount: 0,
@@ -513,7 +502,12 @@ export default {
                     v => !!v || "お題には1文字以上入力してください",
                     v => v === null || v.length <= 30 || "お題は30文字以内で入力してください",
                 ],
+                rarity: [
+                    v => !!v || "レア度には1文字以上入力してください",
+                    v => v === null || v.length <= 20 || "レア度は20文字以内で入力してください",
+                ],
             },
+            raritiesError: "",
             topicsError: "",
         };
     },
@@ -530,6 +524,13 @@ export default {
         },
         isEdit: function() {
             return !!this._gacha && !!this._rarity && !!this._topics;
+        },
+        rarityImageMap() {
+            const pair = this.rarityImages.map(obj => [obj.rarity_image_id, obj.rarity_image_path]);
+            return new Map(pair);
+        },
+        images() {
+            return this.rarities.map(r => this.rarityImageMap.get(r.rarityImageId));
         },
     },
     watch: {
@@ -577,9 +578,9 @@ export default {
         },
     },
     mounted() {
-        // レア度の初期化
+        // トピックの初期化
         for (const rarity of this.rarities) {
-            this.$set(this.topics, rarity.rarity, []);
+            this.$set(this.topics, rarity.id, []);
         }
         // console.log(this.isEdit);
         // console.log(this._gacha);
@@ -598,84 +599,140 @@ export default {
                 needDeletePass: this._gacha.needDeletePass,
             };
             this.rarities = [];
+            // console.log(this._rarity);
             for (const rarity of this._rarity) {
-                this.rarities.push({
-                    rarityId: rarity.rarity_id,
-                    rarity: rarity.rarity,
-                    rarityName: rarity.rarity_name,
-                    probability: rarity.probability / 10,
-                });
+                this.rarities.push(
+                    this.createRarity(
+                        rarity.rarity_id,
+                        rarity.rarity_name,
+                        Math.floor(rarity.probability / 10),
+                        rarity.rarity_image_id,
+                    ),
+                );
             }
-            const mapIdToRarity = new Map(
-                this._rarity.map(rarity => {
-                    return [rarity.rarity_id, rarity.rarity];
+            const mapRarityIdToId = new Map(
+                this.rarities.map(r => {
+                    return [r.rarityId, r.id];
                 }),
             );
+            // console.log(this.rarities);
+            // console.log(mapRarityIdToId);
+            // console.log(this._topics);
+            this.topics = {};
+            for (const rarity of this.rarities) {
+                this.$set(this.topics, rarity.id, []);
+            }
             for (const topic of this._topics) {
-                this.topics[mapIdToRarity.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
+                this.topics[mapRarityIdToId.get(topic.rarity_id)].push(this.Topic(topic.topic, topic.topic_id));
             }
         } else {
             for (const rarity of this.rarities) {
-                this.topics[rarity.rarity].push(this.Topic());
+                this.topics[rarity.id].push(this.Topic());
             }
         }
     },
     methods: {
+        updateGachaImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.addEventListener(
+                "load",
+                () => {
+                    this.gacha.imagePath = reader.result;
+                },
+                false,
+            );
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        },
+        deleteGachaImage() {
+            this.gacha.imagePath = null;
+        },
+        createRarity(rarityId = null, rarityName = "", probability = "", rarityImageId = null) {
+            return {
+                id: this.rarityCount++,
+                rarityId: rarityId,
+                rarity: 0,
+                rarityName,
+                probability,
+                rarityImageId,
+            };
+        },
+        addRarity() {
+            let targetRarity;
+            let index = 0;
+            for (const rarity of this.rarities) {
+                if (rarity.probability > 0) {
+                    targetRarity = rarity;
+                    break;
+                }
+                index++;
+            }
+            this.updateProbability(index, targetRarity.probability - 1);
+            const newRarity = this.createRarity(null, "", 1, "01E02KJWM2PHQT336MOP065X01");
+            this.rarities.push(newRarity);
+            this.addTopic(newRarity.id);
+        },
+        removeRarity(index) {
+            if (this.rarities.length <= 1) {
+                return;
+            }
+            const removed = this.rarities.splice(index, 1)[0];
+            if (removed.rarityId !== null) {
+                this.removedRarities.push(removed);
+            }
+            const length = this.rarities.length;
+            const targetIndex = index < length ? index : length - 1;
+            this.updateProbability(targetIndex, this.rarities[targetIndex].probability + removed.probability);
+
+            this.topics[removed.id].forEach((topic, index) => {
+                this.removeTopic(index, removed.id);
+            });
+            delete this.topics[removed.id];
+        },
+        updateRarityName(index, rarityName) {
+            this.rarities[index].rarityName = rarityName;
+            // 以下バリデーション
+            for (const rarity of this.rarities) {
+                if (rarity.rarityName === null || rarity.rarityName.length < 1 || rarity.rarityName.length > 20) {
+                    this.raritiesError = "レア度は1〜20文字で入力してください";
+                    return;
+                }
+            }
+            this.raritiesError = "";
+        },
+        updateRarityImage(index, rarityImageId) {
+            this.rarities[index].rarityImageId = rarityImageId;
+        },
+        updateProbability(index, probability) {
+            this.rarities[index].probability = probability;
+        },
         Topic(value = "", topicId = null) {
             return { value, id: this.topicCount++, topicId };
         },
-        async onSubmit() {
-            this.dialogState = "loading";
-            this.dialog = true;
-            const topics = [];
-            for (const rarity of Object.keys(this.topics)) {
-                const _topics = this.topics[rarity];
-                for (const topic of _topics) {
-                    if (!topic.value) {
-                        continue;
-                    }
-                    topics.push({
-                        topicId: topic.topicId,
-                        topic: topic.value,
-                        rarity,
-                    });
-                }
+        addTopic(_rarityId = null) {
+            const rarityId = _rarityId === null ? this.rarities[this.tab].id : _rarityId;
+            if (!this.topics[rarityId]) {
+                this.$set(this.topics, rarityId, []);
             }
-            const request = {
-                gacha: this.gacha,
-                rarity: this.rarities,
-                topics: topics,
-                removedTopics: this.removedTopics,
-            };
-            // console.log(request);
-            const method = this.isEdit
-                ? axios.put(`/gacha/${this._gacha.gacha_id}`, request)
-                : axios.post(`/gacha`, request);
-            return await method
-                .then(res => {
-                    this.dialogState = "success";
-                    window.location.href = `/gacha`;
-                })
-                .catch(error => {
-                    this.dialogState = "failed";
-                    // console.log(error.response.data.errors);
-                });
+            this.topics[rarityId].push(this.Topic());
         },
-        addTopic() {
-            this.topics[this.tab].push(this.Topic());
-        },
-        removeTopic(index) {
-            const removed = this.topics[this.tab].splice(index, 1)[0];
+        removeTopic(index, _rarityId = null) {
+            const rarityId = _rarityId === null ? this.rarities[this.tab].id : _rarityId;
+            const removed = this.topics[rarityId].splice(index, 1)[0];
             if (removed.topicId !== null) {
                 this.removedTopics.push(removed);
             }
         },
-        changeTopicRarity(index, rarity) {
-            const moveTopic = this.topics[this.tab].splice(index, 1)[0];
-            this.topics[rarity].push(moveTopic);
+        changeTopicRarity(index, id) {
+            const rarityId = this.rarities[this.tab].id;
+            const moveTopic = this.topics[rarityId].splice(index, 1)[0];
+            this.topics[id].push(moveTopic);
         },
-        onTopicUpdated(value, index, rarity, id, topicId) {
-            this.topics[rarity][index] = { value, id, topicId };
+        updateTopic(value, index, rarityId, id, topicId) {
+            this.topics[rarityId][index] = { value, id, topicId };
             // 以下バリデーション
             for (const key of Object.keys(this.topics)) {
                 for (const topic of this.topics[key]) {
@@ -687,24 +744,75 @@ export default {
             }
             this.topicsError = "";
         },
+        async onSubmit() {
+            this.dialogState = "loading";
+            this.dialogAction = this.isEdit ? "edit" : "create";
+            this.dialog = true;
+            const sortedRarities = this.rarities.sort((a, b) => b.probability - a.probability);
+            const rarities = sortedRarities.map((r, index) => ({ ...r, rarity: index }));
+            const idRarityMap = new Map(rarities.map(r => [`${r.id}`, r.rarity]));
+            const topics = [];
+            for (const id of Object.keys(this.topics)) {
+                const _topics = this.topics[id];
+                for (const topic of _topics) {
+                    if (!topic.value) {
+                        continue;
+                    }
+                    topics.push({
+                        topicId: topic.topicId,
+                        topic: topic.value,
+                        rarity: idRarityMap.get(id),
+                    });
+                }
+            }
+            const request = {
+                gacha: this.gacha,
+                rarity: rarities,
+                topics: topics,
+                removedTopics: this.removedTopics,
+                removedRarities: this.removedRarities,
+            };
+            // console.log(request);
+            const method = this.isEdit
+                ? axios.put(`/gacha/${this._gacha.gacha_id}`, request)
+                : axios.post(`/gacha`, request);
+            return await method
+                .then(res => {
+                    this.dialogState = "success";
+                })
+                .catch(error => {
+                    this.dialogState = "failure";
+                    // console.log(error.response.data.errors);
+                });
+        },
         onDeleteButton() {
             if (this._gacha.needDeletePass) {
                 this.showPasswordDialog = true;
             } else {
-                this.deleteDialogState = "confirm";
-                this.deleteDialog = true;
+                this.dialogState = "confirm";
+                this.dialogAction = "delete";
+                this.dialog = true;
+            }
+        },
+        onDeleteConfirm(confirm) {
+            if (confirm) {
+                this.deleteGacha();
+            } else {
+                this.resetPasswordDialog();
+                this.dialog = false;
             }
         },
         async deleteGacha() {
-            this.deleteDialogState = "loading";
+            this.dialogState = "loading";
+            this.dialogAction = "delete";
+            this.dialog = true;
             await axios
                 .delete(`/gacha/${this._gacha.gacha_id}`, {})
                 .then(res => {
-                    this.deleteDialogState = "success";
-                    window.location.href = `/gacha`;
+                    this.dialogState = "success";
                 })
                 .catch(error => {
-                    this.deleteDialogState = "failed";
+                    this.dialogState = "failure";
                     // console.log(error.response.data.errors);
                 });
         },
@@ -714,8 +822,9 @@ export default {
                 .post(`/api/gacha/${this._gacha.gacha_id}/auth`, request)
                 .then(res => {
                     this.showPasswordDialog = false;
-                    this.deleteDialogState = "confirm";
-                    this.deleteDialog = true;
+                    this.dialogState = "confirm";
+                    this.dialogAction = "delete";
+                    this.dialog = true;
                     return true;
                 })
                 .catch(error => {
@@ -724,6 +833,9 @@ export default {
         },
         setResetPasswordDialog(event) {
             this.resetPasswordDialog = event;
+        },
+        moveTopPage() {
+            window.location.href = `/gacha`;
         },
     },
 };
@@ -762,6 +874,13 @@ export default {
     cursor: pointer;
     border: solid 1px #aeaeae;
 }
+.percentage-box {
+    height: 40px;
+    width: 64px;
+    border-radius: 4px;
+    border: solid 1px #aeaeae;
+    color: #757575;
+}
 .v-list-item__title {
     font-size: 0.9rem !important;
 }
@@ -777,15 +896,16 @@ export default {
     opacity: 0;
     transform: translateX(100%);
 }
-.dialog-message {
-    text-align: center;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #333;
+.rarity-image-selection-hover {
+    background-color: #eeeeee;
 }
-.dialog-sub-message {
-    font-size: 12px;
-    color: #757575;
-    font-weight: 400;
+.rarity-image-selection-selected {
+    opacity: 0.3;
+}
+</style>
+
+<style>
+.v-text-field__details {
+    height: 18px !important;
 }
 </style>

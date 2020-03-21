@@ -136,9 +136,9 @@ export default {
         },
     },
     mounted() {
-        console.log("--- RarityForm.vue ---");
-        console.log(this.rarity);
-        console.log(this.rarityImages);
+        // console.log("--- RarityForm.vue ---");
+        // console.log(this.rarity);
+        // console.log(this.rarityImages);
         if (this.rarity) {
             this.rarities = this.rarity.map(r =>
                 this.createRarity(r.rarity_name, Math.floor(r.probability / 10), r.rarity_image_id, r.rarity_id),

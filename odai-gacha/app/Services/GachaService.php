@@ -81,6 +81,7 @@ class GachaService
             // ガチャマスタ
             $gacha = new Gacha();
             $gacha->gacha_name = $request['gacha']['gachaName'];
+            $gacha->image_path = $request['gacha']['imagePath'];
             $gacha->description = $request['gacha']['description'];
             $gacha->needUsePass = $request['gacha']['needUsePass'];
             $gacha->needEditPass = $request['gacha']['needEditPass'];
@@ -140,6 +141,7 @@ class GachaService
         try {
             // ガチャマスタ
             $gacha->gacha_name = $request['gacha']['gachaName'];
+            $gacha->image_path = $request['gacha']['imagePath'];
             $gacha->description = $request['gacha']['description'];
             $gacha->needUsePass = $request['gacha']['needUsePass'];
             $gacha->needEditPass = $request['gacha']['needEditPass'];

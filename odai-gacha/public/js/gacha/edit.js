@@ -3296,6 +3296,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3327,7 +3335,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // "create" || "edit" || "delete" || "none"
       showPasswordDialog: false,
       resetPasswordDialog: function resetPasswordDialog() {},
-      preview: null,
       gacha: {
         gachaId: null,
         gachaName: null,
@@ -3529,8 +3536,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         needEditPass: this._gacha.needEditPass,
         needDeletePass: this._gacha.needDeletePass
       });
-      this.rarities = [];
-      console.log(this._rarity);
+      this.rarities = []; // console.log(this._rarity);
+
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
@@ -3643,12 +3650,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var file = event.target.files[0];
       var reader = new FileReader();
       reader.addEventListener("load", function () {
-        _this2.preview = reader.result;
+        _this2.gacha.imagePath = reader.result;
       }, false);
 
       if (file) {
         reader.readAsDataURL(file);
       }
+    },
+    deleteGachaImage: function deleteGachaImage() {
+      this.gacha.imagePath = null;
     },
     createRarity: function createRarity() {
       var rarityId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -7589,10 +7599,29 @@ var render = function() {
                                   staticClass: "ml-4",
                                   staticStyle: {
                                     width: "200px",
-                                    "padding-top": "27px"
+                                    "padding-top": "27px",
+                                    position: "relative"
                                   }
                                 },
                                 [
+                                  _vm.gacha.imagePath !== null
+                                    ? _c(
+                                        "v-btn",
+                                        {
+                                          staticStyle: {
+                                            position: "absolute",
+                                            top: "31px",
+                                            right: "4px",
+                                            "z-index": "2"
+                                          },
+                                          attrs: { icon: "" },
+                                          on: { click: _vm.deleteGachaImage }
+                                        },
+                                        [_c("v-icon", [_vm._v("mdi-close")])],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
                                   _c(
                                     "label",
                                     {
@@ -7621,7 +7650,7 @@ var render = function() {
                                         on: { change: _vm.updateGachaImage }
                                       }),
                                       _vm._v(" "),
-                                      _vm.preview !== null
+                                      _vm.gacha.imagePath !== null
                                         ? [
                                             _c("img", {
                                               staticStyle: {
@@ -7630,7 +7659,7 @@ var render = function() {
                                                 "object-fit": "cover"
                                               },
                                               attrs: {
-                                                src: _vm.preview,
+                                                src: _vm.gacha.imagePath,
                                                 alt: "preview"
                                               }
                                             })
@@ -7683,7 +7712,8 @@ var render = function() {
                                     ],
                                     2
                                   )
-                                ]
+                                ],
+                                1
                               )
                             ]),
                             _vm._v(" "),

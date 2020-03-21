@@ -15,6 +15,7 @@ class Gacha extends Model
     protected $fillable = [
         'gacha_id',
         'gacha_name',
+        'image_path',
         'description',
         'needUsePass',
         'needEditPass',
@@ -46,6 +47,7 @@ class Gacha extends Model
         return $query->select([
             'gacha_id',
             'gacha_name',
+            'image_path',
             'needUsePass',
             'needEditPass',
             'needDeletePass',

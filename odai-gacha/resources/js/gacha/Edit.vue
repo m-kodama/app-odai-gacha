@@ -50,7 +50,15 @@
                                             :counter="500"
                                         ></v-textarea>
                                     </div>
-                                    <div style="width: 200px; padding-top:27px;" class="ml-4">
+                                    <div style="width: 200px; padding-top:27px; position: relative;" class="ml-4">
+                                        <v-btn
+                                            v-if="gacha.imagePath !== null"
+                                            icon
+                                            @click="deleteGachaImage"
+                                            style="position: absolute; top: 31px; right: 4px; z-index:2;"
+                                        >
+                                            <v-icon>mdi-close</v-icon>
+                                        </v-btn>
                                         <label
                                             for="thumbnail-form"
                                             style="border-radius: 4px; height: 284px; width:100%; user-select:none; cursor:pointer; overflow: hidden;"
@@ -65,9 +73,9 @@
                                                 style="display:none;"
                                                 @change="updateGachaImage"
                                             />
-                                            <template v-if="preview !== null">
+                                            <template v-if="gacha.imagePath !== null">
                                                 <img
-                                                    :src="preview"
+                                                    :src="gacha.imagePath"
                                                     alt="preview"
                                                     style="width:100%;height:100%;object-fit: cover;"
                                                 />
@@ -430,7 +438,6 @@ export default {
             dialogAction: "none", // "create" || "edit" || "delete" || "none"
             showPasswordDialog: false,
             resetPasswordDialog: () => {},
-            preview: null,
             gacha: {
                 gachaId: null,
                 gachaName: null,
@@ -592,7 +599,7 @@ export default {
                 needDeletePass: this._gacha.needDeletePass,
             };
             this.rarities = [];
-            console.log(this._rarity);
+            // console.log(this._rarity);
             for (const rarity of this._rarity) {
                 this.rarities.push(
                     this.createRarity(
@@ -631,7 +638,7 @@ export default {
             reader.addEventListener(
                 "load",
                 () => {
-                    this.preview = reader.result;
+                    this.gacha.imagePath = reader.result;
                 },
                 false,
             );
@@ -639,6 +646,9 @@ export default {
             if (file) {
                 reader.readAsDataURL(file);
             }
+        },
+        deleteGachaImage() {
+            this.gacha.imagePath = null;
         },
         createRarity(rarityId = null, rarityName = "", probability = "", rarityImageId = null) {
             return {

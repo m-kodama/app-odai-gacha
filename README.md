@@ -17,6 +17,7 @@
 - node v12.4.0
 - npm 6.13.6
 
+[任意のディレクトリ]
 - `git clone https://github.com/m-kodama/app-odai-gacha.git`
 - `cd app-odai-gacha`
 - `cp odai-gacha/.env.example odai-gacha/.env`
@@ -32,6 +33,7 @@
 - `php artisan db:seed`
 - `exit`
 
+[ローカル]
 - `cd odai-gacha`
 - `npm install`
 - `npm run watch` or `npm run watch-with-fmt`

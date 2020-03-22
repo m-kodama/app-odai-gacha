@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2005,8 +2005,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
-/* harmony import */ var _components_MainCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/MainCard */ "./resources/js/components/MainCard.vue");
 //
 //
 //
@@ -2019,13 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Header: _components_Header__WEBPACK_IMPORTED_MODULE_0__["default"],
-    MainCard: _components_MainCard__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
   props: {
     icon: String,
     title: String,
@@ -2045,28 +2037,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InfomationCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InfomationCard */ "./resources/js/components/InfomationCard.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2268,6 +2238,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2292,7 +2266,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2455,6 +2428,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     onSubmit: {
@@ -2496,7 +2473,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    this.$emit('reset-event', this.reset);
+    this.$emit("reset-event", this.reset);
   },
   methods: {
     onTap: function () {
@@ -2607,6 +2584,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2619,7 +2601,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     PasswordConfirmCard: _components_PasswordConfirmCard__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
-    _gachas: String
+    gachas: Array
   },
   data: function data() {
     return {
@@ -2635,16 +2617,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   computed: {
-    gachas: function gachas() {
-      var gacha = JSON.parse(this._gachas);
-
-      if (!gacha) {
-        this.messsasge = "すみません、該当するガチャは見つかりませんでした。";
-        return [];
-      }
-
-      return gacha;
-    },
     mainCardStyles: function mainCardStyles() {
       return {
         "--width": this.cardWidth
@@ -2653,6 +2625,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.onResize();
+
+    if (this.gachas.length === 0) {
+      this.messsasge = "すみません、該当するガチャは見つかりませんでした。";
+      return [];
+    }
   },
   methods: {
     onResize: function onResize() {
@@ -2680,7 +2657,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.selectedGachaId = gachaId;
-      this.selectedType = 'machine';
+      this.selectedType = "machine";
       this.authType = 0;
       this.showPasswordDialog = true;
     },
@@ -2691,7 +2668,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.selectedGachaId = gachaId;
-      this.selectedType = 'edit';
+      this.selectedType = "edit";
       this.authType = 1;
       this.showPasswordDialog = true;
     },
@@ -2711,7 +2688,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: this.authType
                 };
                 _context.next = 3;
-                return axios.post("/gacha/".concat(this.selectedGachaId, "/auth"), request).then(function (res) {
+                return axios.post("/api/gacha/".concat(this.selectedGachaId, "/auth"), request).then(function (res) {
                   window.location.href = "/gacha/".concat(res.data, "/").concat(_this.selectedType);
                   return true;
                 })["catch"](function (error) {
@@ -2813,7 +2790,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n    transform: scale(0.9);\n    transform-origin: left;\n}\n.logo[data-v-1f42fb90] {\n  user-select: none;\n  cursor: pointer;\n}\n.logo > a[data-v-1f42fb90] {\n  text-decoration: none;\n}\n.search-bar[data-v-1f42fb90] {\n    display: flex;\n    width: 100%;\n    height: 48px;\n    padding: 0 8px;\n    background: rgba(245, 240, 227, 0.9);\n    position: fixed;\n    top: -24px;\n    left: 0;\n    z-index: -1;\n    opacity: 0;\n    transition: all 0.1s ease-out;\n}\n.search-bar.show[data-v-1f42fb90] {\n    top: 0;\n    z-index: 9998;\n    opacity: 1;\n}\n.sidebar[data-v-1f42fb90] {\n    position: fixed;\n    width: 80px;\n    height: 100vh;\n    /* margin-top: 64px; */\n    padding: 16px 16px 16px 16px;\n    overflow: scroll;\n    transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n    width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n    user-select: none;\n    padding: 0 12px;\n    height: 48px;\n    width: 48px;\n    line-height: 48px;\n    font-size: 0.875rem;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: width 0.1s ease-out;\n    overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n    width: 100%;\n}\n.fab[data-v-1f42fb90] {\n    z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n    margin-top: 64px;\n    margin-left: 80px;\n    width: calc(100% - 80px);\n    transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 240px;\n    width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.compact-form[data-v-1f42fb90] {\n    transform: scale(0.9);\n    transform-origin: left;\n}\n.logo[data-v-1f42fb90] {\n    user-select: none;\n    cursor: pointer;\n}\n.logo > a[data-v-1f42fb90] {\n    text-decoration: none;\n}\n.search-bar[data-v-1f42fb90] {\n    display: flex;\n    width: 100%;\n    height: 48px;\n    padding: 0 8px;\n    background: rgba(245, 240, 227, 0.9);\n    position: fixed;\n    top: -24px;\n    left: 0;\n    z-index: -1;\n    opacity: 0;\n    transition: all 0.1s ease-out;\n}\n.search-bar.show[data-v-1f42fb90] {\n    top: 0;\n    z-index: 9998;\n    opacity: 1;\n}\n.sidebar[data-v-1f42fb90] {\n    position: fixed;\n    width: 80px;\n    height: 100vh;\n    /* margin-top: 64px; */\n    padding: 16px 16px 16px 16px;\n    overflow: scroll;\n    transition: width 0.1s ease-out;\n}\n.sidebar.expand[data-v-1f42fb90] {\n    width: 240px;\n}\n.sidebar-button[data-v-1f42fb90] {\n    user-select: none;\n    padding: 0 12px;\n    height: 48px;\n    width: 48px;\n    line-height: 48px;\n    font-size: 0.875rem;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: width 0.1s ease-out;\n    overflow: hidden;\n}\n.sidebar-button.expand[data-v-1f42fb90] {\n    width: 100%;\n}\n.fab[data-v-1f42fb90] {\n    z-index: 9999;\n}\n.main-content[data-v-1f42fb90] {\n    margin-top: 64px;\n    margin-left: 80px;\n    width: calc(100% - 80px);\n    transition: margin 0.1s ease-out;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n    margin-left: 240px;\n    width: calc(100% - 240px);\n}\n@media screen and (max-width: 600px) {\n.main-content[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n.main-content.with-sidebar-expand[data-v-1f42fb90] {\n        width: 100%;\n        margin-left: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -2851,7 +2828,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute; top: 0px; right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\n\n", ""]);
+exports.push([module.i, "\n.card-buttons[data-v-9343ad58] {\n    padding: 0px 16px 16px 16px;\n}\n.v-card__title[data-v-9343ad58] {\n    font-size: 1rem !important;\n    line-height: 1.75rem !important;\n    flex-wrap: nowrap;\n    align-items: flex-start;\n}\n.detail[data-v-9343ad58] {\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    height: 200px;\n    width: 100%;\n    opacity: 0.85;\n    font-size: 0.85rem;\n    color: #333333;\n    overflow-y: scroll;\n}\npre[data-v-9343ad58] {\n    white-space: pre-wrap;\n}\n.slide-enter-active[data-v-9343ad58] {\n    transition: all 0.2s ease-out;\n}\n.slide-leave-active[data-v-9343ad58] {\n    transition: all 0.3s ease-out;\n}\n.slide-enter[data-v-9343ad58],\n.slide-leave-to[data-v-9343ad58] {\n    transform: translateY(20px);\n    opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -2870,7 +2847,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n  visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n  animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n    transform: translateX(0px);\n}\n33% {\n    transform: translateX(10px);\n}\n66% {\n    transform: translateX(-8px);\n}\n100% {\n    transform: translateX(4px);\n}\n}\n", ""]);
+exports.push([module.i, "\n.hidden[data-v-58f26fba] {\n    visibility: hidden;\n}\n.vibration[data-v-58f26fba] {\n    animation: vibration-data-v-58f26fba 0.2s ease 0s 1 normal none running;\n}\n@keyframes vibration-data-v-58f26fba {\n0% {\n        transform: translateX(0px);\n}\n33% {\n        transform: translateX(10px);\n}\n66% {\n        transform: translateX(-8px);\n}\n100% {\n        transform: translateX(4px);\n}\n}\n", ""]);
 
 // exports
 
@@ -5290,11 +5267,13 @@ var render = function() {
             staticClass: "mb-1",
             staticStyle: { "font-weight": "bold", "font-size": "1.1rem" }
           },
-          [_vm._v("このサイトについて")]
+          [_vm._v("\n            このサイトについて\n        ")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "text" }, [
-          _vm._v("このサイトは無料で使えるガチャシュミレーターです。")
+          _vm._v(
+            "\n            このサイトは無料で使えるガチャシュミレーターです。\n        "
+          )
         ])
       ]),
       _vm._v(" "),
@@ -5312,7 +5291,7 @@ var render = function() {
               _c("Feature", {
                 attrs: {
                   icon: "mdi-currency-usd-off",
-                  title: "完全無料！！",
+                  title: "完全無料",
                   text:
                     "このサイトのコンテンツは全て無料で誰でも使用することが可能です。"
                 }
@@ -5331,7 +5310,7 @@ var render = function() {
               _c("Feature", {
                 attrs: {
                   icon: "mdi-battlenet",
-                  title: "ガチャ作成・使用",
+                  title: "ガチャの作成と使用",
                   text:
                     "独自のガチャを作成し、遊ぶことができます。公開し世界中に独自のガチャを共有しよう！"
                 }
@@ -5391,60 +5370,77 @@ var render = function() {
     "v-card",
     { staticStyle: { height: "100%" }, attrs: { outlined: "" } },
     [
-      _c("v-img", {
-        attrs: {
-          src: "https://picsum.photos/seed/" + _vm.gacha.gacha_id + "/510/300",
-          "lazy-src": "../img/default_image.png",
-          height: "200px"
-        },
-        scopedSlots: _vm._u([
-          {
-            key: "placeholder",
-            fn: function() {
-              return [
-                _c(
-                  "v-row",
-                  {
-                    staticClass: "fill-height ma-0",
-                    attrs: { align: "center", justify: "center" }
+      _vm.gacha.image_path !== null
+        ? [
+            _c("img", {
+              staticStyle: {
+                width: "100%",
+                height: "200px",
+                "object-fit": "cover"
+              },
+              attrs: { src: _vm.gacha.image_path, alt: "preview" }
+            })
+          ]
+        : [
+            _c("v-img", {
+              attrs: {
+                src:
+                  "https://picsum.photos/seed/" +
+                  _vm.gacha.gacha_id +
+                  "/510/300",
+                "lazy-src": "../img/default_image.png",
+                height: "200px"
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "placeholder",
+                  fn: function() {
+                    return [
+                      _c(
+                        "v-row",
+                        {
+                          staticClass: "fill-height ma-0",
+                          attrs: { align: "center", justify: "center" }
+                        },
+                        [
+                          _c("v-progress-circular", {
+                            attrs: {
+                              indeterminate: "",
+                              color: "grey lighten-5"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]
                   },
-                  [
-                    _c("v-progress-circular", {
-                      attrs: { indeterminate: "", color: "grey lighten-5" }
-                    })
-                  ],
-                  1
-                )
-              ]
-            },
-            proxy: true
-          }
-        ])
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.showDetail,
-              expression: "showDetail"
-            }
+                  proxy: true
+                }
+              ])
+            })
           ],
-          staticClass: "detail secondary"
-        },
-        [
-          _c("div", { staticClass: "ma-3" }, [
-            _vm._v(
-              "\n                " +
-                _vm._s(_vm.gacha.description) +
-                "\n            "
-            )
-          ])
-        ]
-      ),
+      _vm._v(" "),
+      _c("transition", { attrs: { name: "slide" } }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.showDetail,
+                expression: "showDetail"
+              }
+            ],
+            staticClass: "detail secondary"
+          },
+          [
+            _c("div", { staticClass: "ma-3" }, [
+              _c("pre", [_vm._v(_vm._s(_vm.gacha.description))])
+            ])
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "v-card-title",
@@ -5521,7 +5517,7 @@ var render = function() {
         1
       )
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -5616,7 +5612,7 @@ var render = function() {
           staticClass: "error--text mb-2",
           class: { hidden: _vm.isHiddenErrorMesssage }
         },
-        [_vm._v("パスワードが違います。")]
+        [_vm._v("\n        パスワードが違います。\n    ")]
       ),
       _vm._v(" "),
       _c(
@@ -5774,7 +5770,13 @@ var render = function() {
                   "text-align": "center"
                 }
               },
-              [_vm._v(_vm._s(_vm.messsasge))]
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.messsasge) +
+                    "\n            "
+                )
+              ]
             )
           ]),
           _vm._v(" "),
@@ -59321,14 +59323,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./resources/js/components/MainCard.vue ***!
   \**********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MainCard_vue_vue_type_template_id_9343ad58_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MainCard.vue?vue&type=template&id=9343ad58&scoped=true& */ "./resources/js/components/MainCard.vue?vue&type=template&id=9343ad58&scoped=true&");
 /* harmony import */ var _MainCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MainCard.vue?vue&type=script&lang=js& */ "./resources/js/components/MainCard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _MainCard_vue_vue_type_style_index_0_id_9343ad58_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainCard.vue?vue&type=style&index=0&id=9343ad58&scoped=true&lang=css& */ "./resources/js/components/MainCard.vue?vue&type=style&index=0&id=9343ad58&scoped=true&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _MainCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _MainCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _MainCard_vue_vue_type_style_index_0_id_9343ad58_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainCard.vue?vue&type=style&index=0&id=9343ad58&scoped=true&lang=css& */ "./resources/js/components/MainCard.vue?vue&type=style&index=0&id=9343ad58&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -59360,7 +59363,7 @@ component.options.__file = "resources/js/components/MainCard.vue"
 /*!***********************************************************************!*\
   !*** ./resources/js/components/MainCard.vue?vue&type=script&lang=js& ***!
   \***********************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59636,7 +59639,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
-/***/ 0:
+/***/ 1:
 /*!*****************************************!*\
   !*** multi ./resources/js/gacha/app.js ***!
   \*****************************************/

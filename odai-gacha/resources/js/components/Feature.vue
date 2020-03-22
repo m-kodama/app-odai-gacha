@@ -1,30 +1,23 @@
 <template>
-<div class="d-flex flex-column align-center">
-    <v-icon color="primary" size="48">{{ icon }}</v-icon>
-    <div class="title-text my-2">
-        {{ title }}
+    <div class="d-flex flex-column align-center">
+        <v-icon color="primary" size="48">{{ icon }}</v-icon>
+        <div class="title-text my-2">
+            {{ title }}
+        </div>
+        <div class="text">
+            {{ text }}
+        </div>
     </div>
-    <div class='text'>
-        {{ text }}
-    </div>
-</div>
 </template>
 
 <script>
-import Header from "../components/Header";
-import MainCard from "../components/MainCard";
-
 export default {
-    components: {
-        Header,
-        MainCard
-    },
     props: {
         icon: String,
         title: String,
-        text: String
+        text: String,
     },
-}
+};
 </script>
 
 <style scoped>

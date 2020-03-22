@@ -15,14 +15,16 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return redirect('/gacha');
 });
-// TODO グループ機能を使用する
-Route::get('/gacha', 'GachaController@index');
-Route::get('/gacha/{gachaId}/edit', 'GachaController@edit');
-Route::get('/gacha/create', 'GachaController@create');
-Route::post('/gacha', 'GachaController@createGachaDetail');
-Route::put('/gacha/{gachaId}', 'GachaController@updateGacha');
-Route::delete('/gacha/{gachaId}', 'GachaController@deleteGacha');
-Route::get('/gacha/{gachaId}/machine', 'GachaController@getMachine');
-// TODO api系　別ファイルに分ける
-Route::post('/gacha/{gachaId}/auth', 'GachaController@auth');
-Route::get('/api/gacha/', 'GachaController@get');
+Route::prefix('gacha')->group(function () {
+    Route::get('/', 'GachaController@index');
+    Route::get('/{gacha_id}/machine', 'GachaController@getMachine');
+    Route::get('/create', 'GachaController@create');
+    Route::get('/{gacha_id}/edit', 'GachaController@edit');
+    Route::post('/', 'GachaController@createGachaDetail');
+    Route::put('/{gacha_id}', 'GachaController@updateGacha');
+    Route::delete('/{gacha_id}', 'GachaController@deleteGacha');
+});
+Route::prefix('api/gacha')->group(function () {
+    Route::post('/{gacha_id}/auth', 'GachaController@auth');
+    Route::get('/', 'GachaController@index');
+});

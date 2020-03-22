@@ -1,5 +1,5 @@
 const mix = require("laravel-mix");
-
+const glob = require('glob');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,7 +14,11 @@ const mix = require("laravel-mix");
 mix.browserSync({
     proxy: "0.0.0.0:8000", // アプリの起動アドレス
     open: false // ブラウザを自動で開かない
-})
-    .js("resources/js/gacha/app.js", "public/js/gacha")
-    .js("resources/js/gacha/edit.js", "public/js/gacha")
-    .version();
+});
+
+const inDir = "resources"
+const outDir = "public";
+glob.sync(`${inDir}/js/**/*.js`).map((file) => {
+    const dir = file.split('/').slice(0, -1).join('/').replace(inDir, outDir);
+    mix.js(file, dir).version();
+});

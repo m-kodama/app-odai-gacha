@@ -4,21 +4,25 @@
             <v-icon>mdi-close</v-icon>
         </v-btn>
         <div class="d-flex flex-column align-center mb-4">
-            <div style="font-weight: bold; font-size: 1.1rem;" class="mb-1">このサイトについて</div>
-            <div class="text">このサイトは無料で使えるガチャシュミレーターです。</div>
+            <div style="font-weight: bold; font-size: 1.1rem;" class="mb-1">
+                このサイトについて
+            </div>
+            <div class="text">
+                このサイトは無料で使えるガチャシュミレーターです。
+            </div>
         </div>
         <v-row align="start">
             <v-col cols="12" xs="12" sm="4" class="px-2 py-4">
                 <Feature
                     icon="mdi-currency-usd-off"
-                    title="完全無料！！"
+                    title="完全無料"
                     text="このサイトのコンテンツは全て無料で誰でも使用することが可能です。"
                 />
             </v-col>
             <v-col cols="12" xs="12" sm="4" class="px-2 py-4">
                 <Feature
                     icon="mdi-battlenet"
-                    title="ガチャ作成・使用"
+                    title="ガチャの作成と使用"
                     text="独自のガチャを作成し、遊ぶことができます。公開し世界中に独自のガチャを共有しよう！"
                 />
             </v-col>
@@ -38,22 +42,20 @@ import Feature from "../components/Feature";
 
 export default {
     components: {
-        Feature
+        Feature,
     },
     props: {
         onClose: {
             type: Function,
-            default: () => {}
-        }
+            default: () => {},
+        },
     },
-}
- 
+};
 </script>
 
 <style scoped>
 .infomation-card {
     width: 100%;
-
 }
 .text {
     color: #757575;

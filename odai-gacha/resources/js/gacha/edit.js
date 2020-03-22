@@ -11,7 +11,7 @@ new Vue({
     el: "#app",
     vuetify: new Vuetify({
         icons: {
-            iconfont: "mdi"
+            iconfont: "mdi",
         },
         theme: {
             themes: {
@@ -19,16 +19,16 @@ new Vue({
                     primary: "#F0134D",
                     secondary: "#F5F0E3",
                     accent: "#40BFC1",
-                    warning: "#FF6F5E"
+                    warning: "#FF6F5E",
                 },
                 dark: {
                     primary: "#F0134D",
                     secondary: "#F5F0E3",
                     accent: "#40BFC1",
-                    warning: "#FF6F5E"
-                }
-            }
-        }
+                    warning: "#FF6F5E",
+                },
+            },
+        },
     }),
-    components: { Edit }
+    components: { Edit },
 });

@@ -8,19 +8,13 @@
                 class="d-none d-sm-block"
             ></v-app-bar-nav-icon>
             <div class="d-flex logo">
-              <a class="d-flex" href="/gacha">
-                <v-img src="/img/logo_icon.png" max-width="30"></v-img>
-                <v-toolbar-title class="primary--text font-weight-bold"
-                    >お題ガチャ</v-toolbar-title
-                >
-              </a>
+                <a class="d-flex" href="/gacha">
+                    <v-img src="/img/logo_icon.png" max-width="30"></v-img>
+                    <v-toolbar-title class="primary--text font-weight-bold">お題ガチャ</v-toolbar-title>
+                </a>
             </div>
             <v-spacer></v-spacer>
-            <div
-                v-if="showSearchBar"
-                class="compact-form d-none d-sm-flex"
-                style="max-width: 700px; width: 50%;"
-            >
+            <div v-if="showSearchBar" class="compact-form d-none d-sm-flex" style="max-width: 700px; width: 50%;">
                 <v-text-field
                     color="accent"
                     outlined
@@ -33,30 +27,25 @@
                     v-model="searchWord"
                     @submit="search"
                 ></v-text-field>
-                <v-btn
-                    depressed
-                    color="#F5F0E3"
-                    class="ml-1"
-                    style="height: 40px;"
-                    @click="search"
-                >
+                <v-btn depressed color="#F5F0E3" class="ml-1" style="height: 40px;" @click="search">
                     <v-icon color="grey darken-1">mdi-magnify</v-icon>
                 </v-btn>
             </div>
             <v-spacer></v-spacer>
-            <v-btn
-                v-if="showSearchBar"
-                icon
-                @click="showSearchForm = true"
-                class="d-xs-inline-flex d-sm-none"
-            >
+            <v-btn v-if="showSearchBar" icon @click="showSearchForm = true" class="d-xs-inline-flex d-sm-none">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
             <v-btn icon @click="infoDialog = true">
                 <v-icon>mdi-information-outline</v-icon>
             </v-btn>
             <v-dialog v-model="infoDialog" max-width="900">
-                <InfomationCard :onClose="()=>{ infoDialog=false }"/>
+                <InfomationCard
+                    :onClose="
+                        () => {
+                            infoDialog = false;
+                        }
+                    "
+                />
             </v-dialog>
         </v-app-bar>
         <!-- 検索バー（スマホサイズのみ） -->
@@ -80,10 +69,7 @@
             </v-btn>
         </div>
         <!-- サイドバー -->
-        <div
-            class="sidebar white d-none d-sm-block"
-            :class="{ expand: isSidebarExpanded }"
-        >
+        <div class="sidebar white d-none d-sm-block" :class="{ expand: isSidebarExpanded }">
             <div class="my-3">
                 <div
                     class="sidebar-button accent white--text"
@@ -96,12 +82,7 @@
                 </div>
             </div>
             <div class="my-3">
-                <div
-                    class="sidebar-button"
-                    :class="{ expand: isSidebarExpanded }"
-                    v-ripple
-                    @click="infoDialog = true"
-                >
+                <div class="sidebar-button" :class="{ expand: isSidebarExpanded }" v-ripple @click="infoDialog = true">
                     <v-icon left>mdi-information-outline</v-icon>
                     <span v-if="isSidebarExpanded">このサイトについて</span>
                 </div>
@@ -122,10 +103,7 @@
             <v-icon leff>mdi-plus-circle</v-icon>ガチャ作成
         </v-btn>
         <!-- メインコンテンツ -->
-        <div
-            class="main-content"
-            :class="{ 'with-sidebar-expand': isSidebarExpanded }"
-        >
+        <div class="main-content" :class="{ 'with-sidebar-expand': isSidebarExpanded }">
             <slot></slot>
         </div>
     </div>
@@ -134,18 +112,18 @@
 <script>
 import InfomationCard from "./InfomationCard";
 export default {
-      components: {
-        InfomationCard
+    components: {
+        InfomationCard,
     },
     props: {
         onNavIconTapped: {
             type: Function,
-            default: () => {}
+            default: () => {},
         },
         showSearchBar: {
             type: Boolean,
-            default: true
-        }
+            default: true,
+        },
     },
     data: function() {
         return {
@@ -166,12 +144,12 @@ export default {
             window.location.href = "/gacha/create";
         },
         search() {
-            if(!this.searchWord) {
+            if (!this.searchWord) {
                 return;
             }
             window.location.href = `/gacha?q=${this.searchWord}`;
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -181,11 +159,11 @@ export default {
     transform-origin: left;
 }
 .logo {
-  user-select: none;
-  cursor: pointer;
+    user-select: none;
+    cursor: pointer;
 }
 .logo > a {
-  text-decoration: none;
+    text-decoration: none;
 }
 .search-bar {
     display: flex;

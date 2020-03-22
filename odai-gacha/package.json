@@ -7,7 +7,14 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "fmt": "npm run fmt-front & npm run fmt-php",
+        "fmt-front": "prettier --config ./.prettierrc --write 'resources/**/*.{js,scss,json,css,vue}'",
+        "fmt-php": "prettier --config ./.prettierrc --write '**/*.php'",
+        "fmt-watch": "npm run fmt-front-watch & npm run fmt-php-watch",
+        "fmt-front-watch": "onchange 'resources/**/*.{js,scss,json,css,vue,php}' -- prettier --config ./.prettierrc --write {{changed}}",
+        "fmt-php-watch": "onchange '**/*.php' -- prettier --config ./.prettierrc --write {{changed}}",
+        "watch-with-fmt": "npm run fmt-watch & npm run watch"
     },
     "devDependencies": {
         "@mdi/font": "^4.8.95",
@@ -25,6 +32,11 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@prettier/plugin-php": "^0.13.0",
+        "glob": "^7.1.6",
+        "onchange": "^6.1.0",
+        "prettier": "^1.19.1",
+        "vue-slider-component": "^3.1.1",
         "vuetify": "^2.2.4"
     }
 }

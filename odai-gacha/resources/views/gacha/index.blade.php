@@ -11,7 +11,7 @@
 </head>
 <body>
   <div id="app">
-    <App _gachas="{{ $gachas }}"></App>
+    <App :gachas="{{ $gachas ?? []}}"></App>
   </div>
 </body>
 </html>

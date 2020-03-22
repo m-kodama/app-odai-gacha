@@ -1,6 +1,5 @@
 
 <?php
-
 use Illuminate\Database\Seeder;
 use Ulid\Ulid;
 
@@ -17,13 +16,14 @@ class GachaMasterTableSeeder extends Seeder
             'gacha_id' => '01E02KJWM2PHQT336EEP065X4N',
             'gacha_name' => 'シンクロナイズドシンキング',
             'user_id' => 1,
-            'password' => bcrypt('1234'),
-            'needUsePass' => true,
-            'needEditPass' => true,
-            'needDeletePass' => true,
+            'password' => null,
+            'needUsePass' => false,
+            'needEditPass' => false,
+            'needDeletePass' => false,
             'description' => 'アイスブレイクに使えるゲームです。',
             'created_at' => new DateTime(),
-            'updated_at' => new DateTime(),
+            'updated_at' => new DateTime()
         ]);
     }
 }
+

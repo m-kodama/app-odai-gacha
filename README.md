@@ -1,4 +1,4 @@
-# お題ガチャ｜Odai Gacha
+# お題ガチャ
 
 ![localhost_3000_gacha_](https://user-images.githubusercontent.com/28724739/74842408-b61b3b00-536d-11ea-869c-abfc83c06bb3.png)
 
